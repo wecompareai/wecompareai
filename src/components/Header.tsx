@@ -194,14 +194,6 @@ export default function Header() {
               Alternatives
             </Link>
 
-            <Link href="/directory" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-              Directory
-            </Link>
-
-            <Link href="/glossary" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-              Glossary
-            </Link>
-
             <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
               Blog
             </Link>
@@ -302,6 +294,15 @@ export default function Header() {
                     <div className="font-medium text-foreground flex items-center gap-1.5">🔒 Data Governance Simulator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Toggle region, PII & compliance — see who passes</div>
                   </Link>
+                  {divider}
+                  <Link href="/directory" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">📁 Directory <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Browse all AI tools in one place</div>
+                  </Link>
+                  <Link href="/glossary" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">📖 Glossary <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">AI terms, concepts & definitions explained</div>
+                  </Link>
                 </div>
               )}
             </div>
@@ -374,14 +375,6 @@ export default function Header() {
             Alternatives
           </Link>
 
-          <Link href="/directory" onClick={closeMobile} className="block px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-            Directory
-          </Link>
-
-          <Link href="/glossary" onClick={closeMobile} className="block px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-            Glossary
-          </Link>
-
           {/* Best For */}
           <MobileAccordion label="Best For" open={mobileBestForOpen} onToggle={() => setMobileBestForOpen(v => !v)}>
             <MobileLink href="/best/coding"            onClick={closeMobile}>💻 Best for Coding</MobileLink>
@@ -427,6 +420,8 @@ export default function Header() {
             <MobileLink href="/research/latency-heatmap"  onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
             <MobileLink href="/research/reasoning-tests"  onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
             <MobileLink href="/research/data-governance"  onClick={closeMobile}>🔒 Data Governance Simulator</MobileLink>
+            <MobileLink href="/directory"                 onClick={closeMobile}>📁 Directory</MobileLink>
+            <MobileLink href="/glossary"                  onClick={closeMobile}>📖 Glossary</MobileLink>
           </MobileAccordion>
 
           {/* Company */}
