@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for Sports",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for sports analytics, performance tracking, and fan engagement",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "aws", "name": "AWS Sports AI", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/sports" },
+    { "id": "google", "name": "Google Cloud Sports", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com" },
+    { "id": "azure", "name": "Azure Sports AI", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com" },
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" }
+  ],
+  "groups": [
+    {
+      "name": "Performance Analytics",
+      "rows": [
+        { "feature": "Player tracking", "values": { "aws": true, "google": true, "azure": true, "openai": false } },
+        { "feature": "Biomechanical analysis", "values": { "aws": true, "google": true, "azure": false, "openai": false } },
+        { "feature": "Injury risk prediction", "values": { "aws": true, "google": true, "azure": true, "openai": false } },
+        { "feature": "Tactical analysis", "values": { "aws": true, "google": true, "azure": true, "openai": true } },
+        { "feature": "Opponent scouting AI", "values": { "aws": true, "google": false, "azure": true, "openai": true } }
+      ]
+    },
+    {
+      "name": "Fan & Media",
+      "rows": [
+        { "feature": "Live stats generation", "values": { "aws": true, "google": true, "azure": true, "openai": false } },
+        { "feature": "Automated highlight reels", "values": { "aws": true, "google": true, "azure": false, "openai": false } },
+        { "feature": "Fan engagement AI", "values": { "aws": true, "google": false, "azure": true, "openai": true } },
+        { "feature": "Broadcast enhancement", "values": { "aws": true, "google": true, "azure": false, "openai": false } }
+      ]
+    },
+    {
+      "name": "Platform & Pricing",
+      "rows": [
+        { "feature": "Computer vision APIs", "values": { "aws": true, "google": true, "azure": true, "openai": true } },
+        { "feature": "Real-time processing", "values": { "aws": true, "google": true, "azure": true, "openai": false } },
+        { "feature": "Sports-specific models", "values": { "aws": true, "google": true, "azure": false, "openai": false } },
+        { "feature": "Pay-as-you-go pricing", "values": { "aws": true, "google": true, "azure": true, "openai": true } }
+      ]
+    }
+  ]
+}

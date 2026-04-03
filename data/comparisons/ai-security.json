@@ -1,0 +1,630 @@
+{
+  "id": "ai-security",
+  "title": "AI Security & Safety Platforms Comparison",
+  "description": "Compare AI model security and safety platforms - adversarial protection, model scanning, red teaming, guardrails, and compliance.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "protectai",
+      "name": "Protect AI",
+      "provider": "Protect AI Inc.",
+      "logo": "/logos/protectai.svg",
+      "url": "https://protectai.com"
+    },
+    {
+      "id": "hiddenlayer",
+      "name": "HiddenLayer",
+      "provider": "HiddenLayer Inc.",
+      "logo": "/logos/hiddenlayer.svg",
+      "url": "https://hiddenlayer.com"
+    },
+    {
+      "id": "robust-intelligence",
+      "name": "Robust Intelligence",
+      "provider": "Cisco (acquired)",
+      "logo": "/logos/robust-intelligence.svg",
+      "url": "https://robustintelligence.com"
+    },
+    {
+      "id": "lakera",
+      "name": "Lakera",
+      "provider": "Lakera AI",
+      "logo": "/logos/lakera.svg",
+      "url": "https://lakera.ai"
+    },
+    {
+      "id": "calypsoai",
+      "name": "CalypsoAI",
+      "provider": "CalypsoAI Inc.",
+      "logo": "/logos/calypsoai.svg",
+      "url": "https://calypsoai.com"
+    },
+    {
+      "id": "adversa",
+      "name": "Adversa AI",
+      "provider": "Adversa AI",
+      "logo": "/logos/adversa.svg",
+      "url": "https://adversa.ai"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Headquarters",
+          "values": {
+            "protectai": "Seattle, WA",
+            "hiddenlayer": "Austin, TX",
+            "robust-intelligence": "San Francisco, CA (now Cisco)",
+            "lakera": "Zurich, Switzerland",
+            "calypsoai": "Washington, D.C.",
+            "adversa": "Tel Aviv, Israel"
+          }
+        },
+        {
+          "feature": "Founded",
+          "values": {
+            "protectai": "2022",
+            "hiddenlayer": "2022",
+            "robust-intelligence": "2020 (acquired by Cisco 2024)",
+            "lakera": "2021",
+            "calypsoai": "2018",
+            "adversa": "2019"
+          }
+        },
+        {
+          "feature": "Company Type",
+          "values": {
+            "protectai": "Private",
+            "hiddenlayer": "Private",
+            "robust-intelligence": "Acquired (Cisco, public: CSCO)",
+            "lakera": "Private",
+            "calypsoai": "Private",
+            "adversa": "Private"
+          }
+        },
+        {
+          "feature": "Total Funding",
+          "values": {
+            "protectai": "~$108M (Series B, Oct 2024)",
+            "hiddenlayer": "~$56M (Series A, 2023)",
+            "robust-intelligence": "~$44M pre-acquisition",
+            "lakera": "~$20M (Series A, 2024)",
+            "calypsoai": "~$68M+ (incl. U.S. gov contracts)",
+            "adversa": "~$5M (Seed)"
+          }
+        },
+        {
+          "feature": "Core Focus",
+          "values": {
+            "protectai": "End-to-end ML security platform & supply chain",
+            "hiddenlayer": "Model-level threat detection & protection",
+            "robust-intelligence": "AI validation, red teaming & firewall",
+            "lakera": "LLM guardrails & prompt injection defense",
+            "calypsoai": "AI security, governance & policy enforcement",
+            "adversa": "Adversarial AI red teaming & robustness testing"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Core Capabilities",
+      "rows": [
+        {
+          "feature": "Model Vulnerability Scanning",
+          "tooltip": "Scans ML models for security vulnerabilities (e.g., serialization exploits, backdoors)",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": false,
+            "calypsoai": false,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Prompt Injection Protection",
+          "tooltip": "Detects and blocks prompt injection, jailbreaking, and prompt leaking attacks",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "LLM Guardrails / Content Filtering",
+          "tooltip": "Runtime guardrails for LLM inputs/outputs including toxicity, PII, and topic filtering",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": "Limited",
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Adversarial Testing / Red Teaming",
+          "tooltip": "Automated adversarial attacks and red teaming against AI models",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": "Limited",
+            "calypsoai": false,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Data Poisoning Detection",
+          "tooltip": "Detects manipulation or corruption of training data",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": false,
+            "calypsoai": false,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Model Supply Chain Security",
+          "tooltip": "Secures the ML model supply chain (e.g., Hugging Face model scanning, dependency checks)",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": "Limited",
+            "lakera": false,
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "AI Firewall / Gateway",
+          "tooltip": "Inline proxy or firewall that inspects and filters AI model traffic in real time",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Compliance & Governance",
+          "tooltip": "Reporting, audit trails, and frameworks for AI regulations (EU AI Act, NIST AI RMF, etc.)",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": "Limited",
+            "calypsoai": true,
+            "adversa": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products & Technology",
+      "rows": [
+        {
+          "feature": "Primary Product(s)",
+          "values": {
+            "protectai": "Guardian (model scanning), Radar (ML BOM/visibility), Layer (guardrails runtime)",
+            "hiddenlayer": "AISec Platform (Model Scanner, MLDR, AI Detection & Response)",
+            "robust-intelligence": "AI Firewall, AI Validation (continuous testing), RI Red Teaming",
+            "lakera": "Lakera Guard (API-based guardrails & prompt injection defense)",
+            "calypsoai": "Moderator (real-time AI policy enforcement & content filtering)",
+            "adversa": "AI Red Teaming Platform (automated adversarial testing & audits)"
+          }
+        },
+        {
+          "feature": "Open Source Tools",
+          "values": {
+            "protectai": "ModelScan, NB Defense, LLM Guard (OSS portfolio)",
+            "hiddenlayer": false,
+            "robust-intelligence": false,
+            "lakera": "Gandalf (prompt injection game/benchmark)",
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Bug Bounty / Community",
+          "tooltip": "AI-specific bug bounty or vulnerability disclosure program",
+          "values": {
+            "protectai": "huntr.com (AI/ML bug bounty platform, largest in world)",
+            "hiddenlayer": false,
+            "robust-intelligence": false,
+            "lakera": "Gandalf community challenge",
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "AI/ML SBOM (Software Bill of Materials)",
+          "tooltip": "Generates bill of materials for ML models and their dependencies",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": false,
+            "lakera": false,
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Model Risk Scoring",
+          "tooltip": "Provides a risk or vulnerability score for AI models",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": false,
+            "calypsoai": false,
+            "adversa": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deployment & Architecture",
+      "rows": [
+        {
+          "feature": "SaaS / Cloud-Hosted",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "On-Premise / Self-Hosted",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "API-Based Integration",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Air-Gapped / FedRAMP",
+          "tooltip": "Supports air-gapped or government-classified environments",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": "Via Cisco",
+            "lakera": false,
+            "calypsoai": true,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Low-Latency Inline Mode",
+          "tooltip": "Can operate inline with minimal latency impact on AI inference",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Integrations & Compatibility",
+      "rows": [
+        {
+          "feature": "OpenAI / GPT Models",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Anthropic / Claude",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Google / Gemini",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "Hugging Face Models",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": "Limited",
+            "calypsoai": "Limited",
+            "adversa": true
+          }
+        },
+        {
+          "feature": "AWS Bedrock / SageMaker",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": "Limited"
+          }
+        },
+        {
+          "feature": "Azure AI / Azure ML",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": "Limited"
+          }
+        },
+        {
+          "feature": "Open Source Models (Llama, Mistral, etc.)",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "CI/CD Pipeline Integration",
+          "tooltip": "Integrates into MLOps/DevOps pipelines for automated security checks",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": "Limited",
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "SIEM / SOC Integration",
+          "tooltip": "Feeds alerts into security information and event management systems",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": "Via Cisco SecureX",
+            "lakera": false,
+            "calypsoai": true,
+            "adversa": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Compliance Frameworks",
+      "rows": [
+        {
+          "feature": "OWASP Top 10 for LLMs",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "NIST AI Risk Management Framework",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": "Limited",
+            "calypsoai": true,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "EU AI Act Readiness",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": true,
+            "calypsoai": "Limited",
+            "adversa": true
+          }
+        },
+        {
+          "feature": "MITRE ATLAS Coverage",
+          "tooltip": "Maps to MITRE ATLAS adversarial ML threat framework",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": false,
+            "calypsoai": false,
+            "adversa": true
+          }
+        },
+        {
+          "feature": "SOC 2 Certified",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": "Via Cisco",
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": "Not disclosed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing & Licensing",
+      "rows": [
+        {
+          "feature": "Pricing Model",
+          "values": {
+            "protectai": "Enterprise subscription + open source tools",
+            "hiddenlayer": "Enterprise subscription",
+            "robust-intelligence": "Enterprise (via Cisco)",
+            "lakera": "Freemium (free tier + usage-based + enterprise)",
+            "calypsoai": "Enterprise subscription",
+            "adversa": "Enterprise subscription + assessment engagements"
+          }
+        },
+        {
+          "feature": "Free / Open Source Tier",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": false,
+            "robust-intelligence": false,
+            "lakera": true,
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Usage-Based Pricing",
+          "values": {
+            "protectai": false,
+            "hiddenlayer": false,
+            "robust-intelligence": false,
+            "lakera": true,
+            "calypsoai": false,
+            "adversa": false
+          }
+        },
+        {
+          "feature": "Free Trial / Demo",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": "Via Cisco sales",
+            "lakera": true,
+            "calypsoai": true,
+            "adversa": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers & Partnerships",
+      "rows": [
+        {
+          "feature": "Target Segments",
+          "values": {
+            "protectai": "Enterprise, financial services, government/defense",
+            "hiddenlayer": "Enterprise, government, defense/intel community",
+            "robust-intelligence": "Enterprise (now Cisco's AI security offering)",
+            "lakera": "Startups to enterprise building LLM apps",
+            "calypsoai": "U.S. government, defense, federal agencies",
+            "adversa": "Enterprise, regulated industries, government"
+          }
+        },
+        {
+          "feature": "Notable Customers / Partners",
+          "values": {
+            "protectai": "AWS, Accenture, Dell; U.S. DoD contracts",
+            "hiddenlayer": "U.S. DoD, Intel community; Gartner Cool Vendor 2023",
+            "robust-intelligence": "Cisco portfolio; J.P. Morgan, ADP (pre-acquisition)",
+            "lakera": "Dropbox, Musixmatch; backed by Redpoint Ventures",
+            "calypsoai": "U.S. Air Force, DoD; In-Q-Tel backed",
+            "adversa": "Banking and defense sector clients; OWASP contributor"
+          }
+        },
+        {
+          "feature": "Government / Defense Focus",
+          "values": {
+            "protectai": true,
+            "hiddenlayer": true,
+            "robust-intelligence": true,
+            "lakera": false,
+            "calypsoai": true,
+            "adversa": "Limited"
+          }
+        },
+        {
+          "feature": "Key Investors / Backers",
+          "values": {
+            "protectai": "Evolution Equity, Salesforce Ventures, Acrew Capital",
+            "hiddenlayer": "Ten Eleven Ventures, Moore Strategic Ventures, M12 (Microsoft)",
+            "robust-intelligence": "Sequoia Capital, Tiger Global (acquired by Cisco ~$500M, 2024)",
+            "lakera": "Redpoint Ventures, Citi Ventures",
+            "calypsoai": "In-Q-Tel, Paladin Capital, National Security Innovation Fund",
+            "adversa": "Undisclosed seed investors"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Differentiators",
+      "rows": [
+        {
+          "feature": "Key Strength",
+          "values": {
+            "protectai": "Broadest ML security platform with open source ecosystem (ModelScan, huntr)",
+            "hiddenlayer": "Deep model-level threat detection without needing access to training data",
+            "robust-intelligence": "Cisco network-level integration; continuous AI validation pipeline",
+            "lakera": "Developer-friendly API; best-in-class prompt injection detection",
+            "calypsoai": "Strong government/defense pedigree; policy-driven AI governance",
+            "adversa": "Deep adversarial ML research expertise; comprehensive red teaming"
+          }
+        },
+        {
+          "feature": "Key Limitation",
+          "values": {
+            "protectai": "Newer company; enterprise features still maturing",
+            "hiddenlayer": "Less focus on LLM-specific guardrails vs. model-level threats",
+            "robust-intelligence": "Acquisition integration; standalone availability unclear",
+            "lakera": "Focused primarily on LLM guardrails; less model scanning depth",
+            "calypsoai": "Heavily gov-focused; smaller commercial ecosystem",
+            "adversa": "Smaller team; less product maturity vs. larger competitors"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for IT Development",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for software development, code generation, and developer productivity",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "anthropic", "name": "Anthropic", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "google", "name": "Google Cloud AI", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com/ai" },
+    { "id": "aws", "name": "AWS CodeWhisperer", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/codewhisperer" }
+  ],
+  "groups": [
+    {
+      "name": "Code Generation",
+      "rows": [
+        { "feature": "Multi-language support", "values": { "openai": "40+", "anthropic": "30+", "google": "25+", "aws": "15+" } },
+        { "feature": "Code completion", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "Full function generation", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "Code refactoring", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "Architecture suggestions", "values": { "openai": true, "anthropic": true, "google": true, "aws": false } }
+      ]
+    },
+    {
+      "name": "Developer Tools",
+      "rows": [
+        { "feature": "IDE integration", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "CLI tools", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "API access", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "Git integration", "values": { "openai": true, "anthropic": true, "google": false, "aws": true } }
+      ]
+    },
+    {
+      "name": "Pricing & Enterprise",
+      "rows": [
+        { "feature": "Free tier", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "Enterprise SSO", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "IP indemnification", "values": { "openai": true, "anthropic": true, "google": true, "aws": true } },
+        { "feature": "Private model deployment", "values": { "openai": false, "anthropic": false, "google": true, "aws": true } }
+      ]
+    }
+  ]
+}

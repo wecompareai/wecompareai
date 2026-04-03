@@ -1,0 +1,1190 @@
+{
+  "id": "ai-platforms",
+  "title": "AI Providers & Platforms Comparison",
+  "description": "Comprehensive comparison of leading AI providers and platforms — including pure AI companies, cloud AI services, inference platforms, and model hubs. Compare models portfolio, pricing, features, use cases, and enterprise capabilities.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "provider": "OpenAI",
+      "logo": "/logos/openai.svg",
+      "url": "https://platform.openai.com"
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "provider": "Anthropic",
+      "logo": "/logos/anthropic.svg",
+      "url": "https://console.anthropic.com"
+    },
+    {
+      "id": "google-ai",
+      "name": "Google AI",
+      "provider": "Google",
+      "logo": "/logos/google.svg",
+      "url": "https://aistudio.google.com"
+    },
+    {
+      "id": "meta",
+      "name": "Meta AI",
+      "provider": "Meta",
+      "logo": "/logos/meta.svg",
+      "url": "https://ai.meta.com"
+    },
+    {
+      "id": "azure-ai",
+      "name": "Azure AI",
+      "provider": "Microsoft",
+      "logo": "/logos/azure.svg",
+      "url": "https://azure.microsoft.com/en-us/products/ai-services"
+    },
+    {
+      "id": "aws-bedrock",
+      "name": "AWS Bedrock",
+      "provider": "Amazon",
+      "logo": "/logos/aws.svg",
+      "url": "https://aws.amazon.com/bedrock/"
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "provider": "Mistral AI",
+      "logo": "/logos/mistral.svg",
+      "url": "https://mistral.ai"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "provider": "DeepSeek",
+      "logo": "/logos/deepseek.svg",
+      "url": "https://deepseek.com"
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "provider": "xAI",
+      "logo": "/logos/xai.svg",
+      "url": "https://x.ai"
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "provider": "Cohere",
+      "logo": "/logos/cohere.svg",
+      "url": "https://cohere.com"
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "provider": "Hugging Face",
+      "logo": "/logos/huggingface.svg",
+      "url": "https://huggingface.co"
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "provider": "Perplexity",
+      "logo": "/logos/perplexity.svg",
+      "url": "https://docs.perplexity.ai"
+    },
+    {
+      "id": "together",
+      "name": "Together AI",
+      "provider": "Together AI",
+      "logo": "/logos/together.svg",
+      "url": "https://together.ai"
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "provider": "Groq",
+      "logo": "/logos/groq.svg",
+      "url": "https://groq.com"
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA NIM",
+      "provider": "NVIDIA",
+      "logo": "/logos/nvidia.svg",
+      "url": "https://build.nvidia.com"
+    },
+    {
+      "id": "ibm",
+      "name": "IBM watsonx",
+      "provider": "IBM",
+      "logo": "/logos/ibm.svg",
+      "url": "https://www.ibm.com/watsonx"
+    },
+    {
+      "id": "alibaba",
+      "name": "Alibaba Cloud",
+      "provider": "Alibaba",
+      "logo": "/logos/alibaba.svg",
+      "url": "https://www.alibabacloud.com/en/solutions/generative-ai"
+    },
+    {
+      "id": "stability",
+      "name": "Stability AI",
+      "provider": "Stability AI",
+      "logo": "/logos/stability.svg",
+      "url": "https://stability.ai"
+    },
+    {
+      "id": "ai21",
+      "name": "AI21 Labs",
+      "provider": "AI21 Labs",
+      "logo": "/logos/ai21.svg",
+      "url": "https://www.ai21.com"
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "provider": "Replicate",
+      "logo": "/logos/replicate.svg",
+      "url": "https://replicate.com"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Provider Type",
+          "values": {
+            "openai": "AI Company",
+            "anthropic": "AI Company",
+            "google-ai": "Big Tech AI",
+            "meta": "Big Tech AI",
+            "azure-ai": "Cloud AI Service",
+            "aws-bedrock": "Cloud AI Service",
+            "mistral": "AI Company",
+            "deepseek": "AI Company",
+            "xai": "AI Company",
+            "cohere": "AI Company",
+            "huggingface": "Model Hub",
+            "perplexity": "Search AI",
+            "together": "Inference Platform",
+            "groq": "Inference Platform",
+            "nvidia": "Inference Platform",
+            "ibm": "Cloud AI Service",
+            "alibaba": "Cloud AI Service",
+            "stability": "AI Company",
+            "ai21": "AI Company",
+            "replicate": "Inference Platform"
+          }
+        },
+        {
+          "feature": "Company",
+          "values": {
+            "openai": "OpenAI",
+            "anthropic": "Anthropic",
+            "google-ai": "Google / DeepMind",
+            "meta": "Meta Platforms",
+            "azure-ai": "Microsoft",
+            "aws-bedrock": "Amazon Web Services",
+            "mistral": "Mistral AI",
+            "deepseek": "DeepSeek (High-Flyer)",
+            "xai": "xAI (Elon Musk)",
+            "cohere": "Cohere Inc.",
+            "huggingface": "Hugging Face",
+            "perplexity": "Perplexity AI",
+            "together": "Together AI",
+            "groq": "Groq Inc.",
+            "nvidia": "NVIDIA",
+            "ibm": "IBM",
+            "alibaba": "Alibaba Cloud",
+            "stability": "Stability AI",
+            "ai21": "AI21 Labs",
+            "replicate": "Replicate"
+          }
+        },
+        {
+          "feature": "Headquarters",
+          "values": {
+            "openai": "San Francisco, USA",
+            "anthropic": "San Francisco, USA",
+            "google-ai": "Mountain View, USA",
+            "meta": "Menlo Park, USA",
+            "azure-ai": "Redmond, USA",
+            "aws-bedrock": "Seattle, USA",
+            "mistral": "Paris, France",
+            "deepseek": "Hangzhou, China",
+            "xai": "San Francisco, USA",
+            "cohere": "Toronto, Canada",
+            "huggingface": "New York, USA",
+            "perplexity": "San Francisco, USA",
+            "together": "San Francisco, USA",
+            "groq": "Mountain View, USA",
+            "nvidia": "Santa Clara, USA",
+            "ibm": "Armonk, USA",
+            "alibaba": "Hangzhou, China",
+            "stability": "London, UK",
+            "ai21": "Tel Aviv, Israel",
+            "replicate": "San Francisco, USA"
+          }
+        },
+        {
+          "feature": "Platform Type",
+          "values": {
+            "openai": "Model Provider + API",
+            "anthropic": "Model Provider + API",
+            "google-ai": "Model Provider + Cloud",
+            "meta": "Open Source Models",
+            "azure-ai": "Multi-Model Cloud",
+            "aws-bedrock": "Multi-Model Cloud",
+            "mistral": "Model Provider + API",
+            "deepseek": "Model Provider + API",
+            "xai": "Model Provider + API",
+            "cohere": "Enterprise NLP API",
+            "huggingface": "Model Hub + Inference",
+            "perplexity": "Search-Augmented AI",
+            "together": "Open Model Hosting",
+            "groq": "Fast Inference Engine",
+            "nvidia": "Inference Microservices",
+            "ibm": "Enterprise AI Platform",
+            "alibaba": "Model Provider + Cloud",
+            "stability": "Generative Media API",
+            "ai21": "Enterprise LLM API",
+            "replicate": "Model Hosting Platform"
+          }
+        },
+        {
+          "feature": "Free Tier",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": false,
+            "aws-bedrock": false,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Pay-as-you-go",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Open Source Models",
+          "values": {
+            "openai": false,
+            "anthropic": false,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": false,
+            "huggingface": true,
+            "perplexity": false,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": false,
+            "replicate": true
+          }
+        }
+      ]
+    },   
+    {
+      "name": "API & Developer Experience",
+      "rows": [
+        {
+          "feature": "REST API",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Python SDK",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Node.js / TypeScript SDK",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": false,
+            "together": true,
+            "groq": true,
+            "nvidia": false,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "OpenAI-Compatible API",
+          "values": {
+            "openai": true,
+            "anthropic": false,
+            "google-ai": false,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": false,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": false,
+            "alibaba": true,
+            "stability": false,
+            "ai21": false,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "Playground / Studio",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Batch API",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": false,
+            "xai": false,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": false,
+            "together": true,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Streaming Support",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Platform Features",
+      "rows": [
+        {
+          "feature": "Fine-tuning",
+          "values": {
+            "openai": true,
+            "anthropic": false,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": false,
+            "xai": false,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": false,
+            "together": true,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": false,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Function / Tool Calling",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": false,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "RAG / Search Integration",
+          "values": {
+            "openai": true,
+            "anthropic": false,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": false,
+            "deepseek": false,
+            "xai": true,
+            "cohere": true,
+            "huggingface": false,
+            "perplexity": true,
+            "together": false,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "Structured Output (JSON)",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": true,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "Custom Model Hosting",
+          "values": {
+            "openai": false,
+            "anthropic": false,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": false,
+            "deepseek": false,
+            "xai": false,
+            "cohere": false,
+            "huggingface": true,
+            "perplexity": false,
+            "together": true,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": false,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "Content Moderation",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": true,
+            "xai": false,
+            "cohere": false,
+            "huggingface": false,
+            "perplexity": false,
+            "together": false,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": true,
+            "ai21": false,
+            "replicate": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing (Flagship Model per 1M tokens)",
+      "rows": [
+        {
+          "feature": "Input Price",
+          "values": {
+            "openai": "$2.50 (GPT-4o)",
+            "anthropic": "$15.00 (Opus 4)",
+            "google-ai": "$1.25 (Gemini 2.5 Pro)",
+            "meta": "Free (open source)",
+            "azure-ai": "$2.50 (GPT-4o via Azure)",
+            "aws-bedrock": "$15.00 (Opus via Bedrock)",
+            "mistral": "$2.00 (Mistral Large 2)",
+            "deepseek": "$0.27 (DeepSeek V3)",
+            "xai": "$3.00 (Grok 3)",
+            "cohere": "$2.50 (Command R+)",
+            "huggingface": "Varies by model",
+            "perplexity": "$3.00 (Sonar Pro)",
+            "together": "$0.90 (Llama 405B)",
+            "groq": "$0.59 (Llama 70B)",
+            "nvidia": "Varies by model",
+            "ibm": "$0.60 (Granite 3.0 8B)",
+            "alibaba": "$0.40 (Qwen 2.5 72B)",
+            "stability": "$0.04/image (SD 3.5)",
+            "ai21": "$2.00 (Jamba 1.5 Large)",
+            "replicate": "Varies by model"
+          }
+        },
+        {
+          "feature": "Output Price",
+          "values": {
+            "openai": "$10.00 (GPT-4o)",
+            "anthropic": "$75.00 (Opus 4)",
+            "google-ai": "$10.00 (Gemini 2.5 Pro)",
+            "meta": "Free (open source)",
+            "azure-ai": "$10.00 (GPT-4o via Azure)",
+            "aws-bedrock": "$75.00 (Opus via Bedrock)",
+            "mistral": "$6.00 (Mistral Large 2)",
+            "deepseek": "$1.10 (DeepSeek V3)",
+            "xai": "$15.00 (Grok 3)",
+            "cohere": "$10.00 (Command R+)",
+            "huggingface": "Varies by model",
+            "perplexity": "$15.00 (Sonar Pro)",
+            "together": "$0.90 (Llama 405B)",
+            "groq": "$0.79 (Llama 70B)",
+            "nvidia": "Varies by model",
+            "ibm": "$0.60 (Granite 3.0 8B)",
+            "alibaba": "$0.40 (Qwen 2.5 72B)",
+            "stability": "Per image pricing",
+            "ai21": "$8.00 (Jamba 1.5 Large)",
+            "replicate": "Varies by model"
+          }
+        },
+        {
+          "feature": "Budget Model Input",
+          "values": {
+            "openai": "$0.15 (GPT-4o mini)",
+            "anthropic": "$0.80 (Haiku 3.5)",
+            "google-ai": "$0.10 (Flash 2.0)",
+            "meta": "Free (open source)",
+            "azure-ai": "$0.15 (GPT-4o mini)",
+            "aws-bedrock": "$0.80 (Haiku 3.5)",
+            "mistral": "$0.10 (Mistral Small)",
+            "deepseek": "$0.07 (DeepSeek V3 cache)",
+            "xai": "$0.30 (Grok 3 Mini)",
+            "cohere": "$0.15 (Command R)",
+            "huggingface": "Varies by model",
+            "perplexity": "$1.00 (Sonar)",
+            "together": "$0.10 (Llama 8B)",
+            "groq": "$0.04 (Llama 8B)",
+            "nvidia": "Varies by model",
+            "ibm": "$0.20 (Granite 2B)",
+            "alibaba": "$0.10 (Qwen 7B)",
+            "stability": "$0.02/image (SDXL)",
+            "ai21": "$0.20 (Jamba Mini)",
+            "replicate": "Varies by model"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enterprise & Compliance",
+      "rows": [
+        {
+          "feature": "SOC 2 Compliance",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": "N/A (open source)",
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": false,
+            "xai": false,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": true
+          }
+        },
+        {
+          "feature": "HIPAA Compliance",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": "N/A (open source)",
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": false,
+            "deepseek": false,
+            "xai": false,
+            "cohere": true,
+            "huggingface": false,
+            "perplexity": false,
+            "together": false,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": false,
+            "stability": false,
+            "ai21": false,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "Data Residency Options",
+          "values": {
+            "openai": true,
+            "anthropic": false,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": false,
+            "xai": false,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": false,
+            "together": false,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": false,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "On-Premises Deployment",
+          "values": {
+            "openai": false,
+            "anthropic": false,
+            "google-ai": true,
+            "meta": true,
+            "azure-ai": true,
+            "aws-bedrock": false,
+            "mistral": true,
+            "deepseek": true,
+            "xai": false,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": false,
+            "together": false,
+            "groq": false,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": false,
+            "replicate": false
+          }
+        },
+        {
+          "feature": "SLA Available",
+          "values": {
+            "openai": true,
+            "anthropic": true,
+            "google-ai": true,
+            "meta": false,
+            "azure-ai": true,
+            "aws-bedrock": true,
+            "mistral": true,
+            "deepseek": false,
+            "xai": false,
+            "cohere": true,
+            "huggingface": true,
+            "perplexity": true,
+            "together": true,
+            "groq": true,
+            "nvidia": true,
+            "ibm": true,
+            "alibaba": true,
+            "stability": false,
+            "ai21": true,
+            "replicate": true
+          }
+        }
+      ]
+    },
+     {
+      "name": "Models Portfolio - Text & Chat",
+      "rows": [
+        {
+          "feature": "Flagship LLM",
+          "values": {
+            "openai": "GPT-4o",
+            "anthropic": "Claude Opus 4",
+            "google-ai": "Gemini 2.5 Pro",
+            "meta": "Llama 3.1 405B",
+            "azure-ai": "GPT-4o (via Azure OpenAI)",
+            "aws-bedrock": "Claude Opus 4 (via Bedrock)",
+            "mistral": "Mistral Large 2",
+            "deepseek": "DeepSeek V3",
+            "xai": "Grok 3",
+            "cohere": "Command R+",
+            "huggingface": "Community Models (500K+)",
+            "perplexity": "Sonar Pro",
+            "together": "Llama 3.1 405B (hosted)",
+            "groq": "Llama 3.3 70B (hosted)",
+            "nvidia": "Nemotron 340B",
+            "ibm": "Granite 3.0 8B",
+            "alibaba": "Qwen 2.5 72B",
+            "stability": "Stable LM 2 12B",
+            "ai21": "Jamba 1.5 Large",
+            "replicate": "Community Models (100K+)"
+          }
+        },
+        {
+          "feature": "Fast/Lite Model",
+          "values": {
+            "openai": "GPT-4o mini",
+            "anthropic": "Claude Haiku 3.5",
+            "google-ai": "Gemini 2.0 Flash",
+            "meta": "Llama 3.2 3B",
+            "azure-ai": "GPT-4o mini / Phi-4",
+            "aws-bedrock": "Claude Haiku / Titan Lite",
+            "mistral": "Mistral Small",
+            "deepseek": "DeepSeek V3 (cost-efficient)",
+            "xai": "Grok 3 Mini",
+            "cohere": "Command R",
+            "huggingface": "Varies by model",
+            "perplexity": "Sonar",
+            "together": "Llama 3.2 3B (hosted)",
+            "groq": "Llama 3.2 3B (hosted)",
+            "nvidia": "Mistral NeMo 12B",
+            "ibm": "Granite 3.0 2B",
+            "alibaba": "Qwen 2.5 7B",
+            "stability": "Stable LM 2 1.6B",
+            "ai21": "Jamba 1.5 Mini",
+            "replicate": "Varies by model"
+          }
+        },
+        {
+          "feature": "Reasoning Model",
+          "values": {
+            "openai": "o3 / o3-mini / o1",
+            "anthropic": "Claude with Extended Thinking",
+            "google-ai": "Gemini 2.5 Pro (thinking)",
+            "meta": "N/A",
+            "azure-ai": "o3 (via Azure OpenAI)",
+            "aws-bedrock": "N/A",
+            "mistral": "N/A",
+            "deepseek": "DeepSeek R1",
+            "xai": "Grok 3 (reasoning mode)",
+            "cohere": "N/A",
+            "huggingface": "DeepSeek R1 (hosted)",
+            "perplexity": "Sonar Reasoning",
+            "together": "DeepSeek R1 (hosted)",
+            "groq": "DeepSeek R1 (hosted)",
+            "nvidia": "N/A",
+            "ibm": "N/A",
+            "alibaba": "QwQ 32B",
+            "stability": "N/A",
+            "ai21": "N/A",
+            "replicate": "N/A"
+          }
+        },
+        {
+          "feature": "Code Specialist",
+          "values": {
+            "openai": "GPT-4o / o3 (built-in)",
+            "anthropic": "Claude Sonnet 4.5 (built-in)",
+            "google-ai": "Gemini Code Assist",
+            "meta": "Code Llama 70B",
+            "azure-ai": "GitHub Copilot (Codex)",
+            "aws-bedrock": "Claude / CodeWhisperer",
+            "mistral": "Codestral / Codestral Mamba",
+            "deepseek": "DeepSeek Coder V2",
+            "xai": "Grok (built-in)",
+            "cohere": "N/A",
+            "huggingface": "StarCoder2 / CodeLlama",
+            "perplexity": "N/A",
+            "together": "Code Llama / StarCoder2",
+            "groq": "Code Llama (hosted)",
+            "nvidia": "StarCoder2 (via NIM)",
+            "ibm": "Granite Code 20B",
+            "alibaba": "Qwen 2.5 Coder",
+            "stability": "Stable Code 3B",
+            "ai21": "N/A",
+            "replicate": "Code Llama (hosted)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Models Portfolio - Multimodal & Media",
+      "rows": [
+        {
+          "feature": "Vision/Multimodal",
+          "values": {
+            "openai": "GPT-4o (native vision)",
+            "anthropic": "Claude Opus 4 (vision)",
+            "google-ai": "Gemini 2.5 Pro (vision)",
+            "meta": "Llama 3.2 90B Vision",
+            "azure-ai": "GPT-4o Vision / Florence",
+            "aws-bedrock": "Claude Vision / Titan",
+            "mistral": "Pixtral Large / Pixtral 12B",
+            "deepseek": "DeepSeek VL2",
+            "xai": "Grok Vision",
+            "cohere": "N/A",
+            "huggingface": "LLaVA / BLIP-2 / IDEFICS",
+            "perplexity": "N/A",
+            "together": "Llama Vision (hosted)",
+            "groq": "Llama 3.2 Vision (hosted)",
+            "nvidia": "NVLM / NeVA",
+            "ibm": "N/A",
+            "alibaba": "Qwen VL (Vision-Language)",
+            "stability": "N/A",
+            "ai21": "N/A",
+            "replicate": "LLaVA / CogVLM"
+          }
+        },
+        {
+          "feature": "Image Generation",
+          "values": {
+            "openai": "DALL-E 3 / GPT-4o Image Gen",
+            "anthropic": "N/A",
+            "google-ai": "Imagen 3",
+            "meta": "N/A",
+            "azure-ai": "DALL-E 3 (via Azure)",
+            "aws-bedrock": "Titan Image Gen / SDXL",
+            "mistral": "N/A",
+            "deepseek": "N/A",
+            "xai": "Aurora (Grok image gen)",
+            "cohere": "N/A",
+            "huggingface": "SDXL / FLUX / PixArt",
+            "perplexity": "N/A",
+            "together": "FLUX / SDXL (hosted)",
+            "groq": "N/A",
+            "nvidia": "SDXL (via NIM)",
+            "ibm": "N/A",
+            "alibaba": "Wanx / Tongyi Image",
+            "stability": "Stable Diffusion 3.5 / SDXL",
+            "ai21": "N/A",
+            "replicate": "FLUX / SDXL / Midjourney-alt"
+          }
+        },
+        {
+          "feature": "Embedding Model",
+          "values": {
+            "openai": "text-embedding-3-small/large",
+            "anthropic": "N/A",
+            "google-ai": "Gecko / text-embedding-004",
+            "meta": "N/A",
+            "azure-ai": "text-embedding-3 (via Azure)",
+            "aws-bedrock": "Titan Embeddings V2",
+            "mistral": "Mistral Embed",
+            "deepseek": "N/A",
+            "xai": "N/A",
+            "cohere": "Embed v3 (multilingual)",
+            "huggingface": "BGE / E5 / GTE",
+            "perplexity": "N/A",
+            "together": "BGE / E5 (hosted)",
+            "groq": "N/A",
+            "nvidia": "NV-Embed-v2",
+            "ibm": "Granite Embedding",
+            "alibaba": "GTE-Qwen2",
+            "stability": "N/A",
+            "ai21": "N/A",
+            "replicate": "N/A"
+          }
+        },
+        {
+          "feature": "Speech & Audio",
+          "values": {
+            "openai": "Whisper (STT) / TTS-1 / GPT-4o Audio",
+            "anthropic": "N/A",
+            "google-ai": "Chirp (STT) / Cloud TTS",
+            "meta": "SeamlessM4T / MMS",
+            "azure-ai": "Azure Speech (STT + TTS)",
+            "aws-bedrock": "Amazon Transcribe / Polly",
+            "mistral": "N/A",
+            "deepseek": "N/A",
+            "xai": "N/A",
+            "cohere": "N/A",
+            "huggingface": "Whisper / Bark / XTTS",
+            "perplexity": "N/A",
+            "together": "Whisper (hosted)",
+            "groq": "Whisper Large V3 (fast)",
+            "nvidia": "Riva (STT + TTS)",
+            "ibm": "Watson Speech",
+            "alibaba": "Tongyi Qianwen Audio",
+            "stability": "Stable Audio 2.0",
+            "ai21": "N/A",
+            "replicate": "Whisper / Bark / MusicGen"
+          }
+        },
+        {
+          "feature": "Video Generation",
+          "values": {
+            "openai": "Sora",
+            "anthropic": "N/A",
+            "google-ai": "Veo 2",
+            "meta": "N/A",
+            "azure-ai": "N/A",
+            "aws-bedrock": "N/A",
+            "mistral": "N/A",
+            "deepseek": "N/A",
+            "xai": "N/A",
+            "cohere": "N/A",
+            "huggingface": "CogVideo / AnimateDiff",
+            "perplexity": "N/A",
+            "together": "N/A",
+            "groq": "N/A",
+            "nvidia": "N/A",
+            "ibm": "N/A",
+            "alibaba": "Tongyi Video",
+            "stability": "Stable Video Diffusion",
+            "ai21": "N/A",
+            "replicate": "AnimateDiff / CogVideo"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Models Portfolio - Key Use Cases",
+      "rows": [
+        {
+          "feature": "Primary Strength",
+          "values": {
+            "openai": "Most versatile model ecosystem",
+            "anthropic": "Safety-focused, best for coding",
+            "google-ai": "Largest context window (1M+)",
+            "meta": "Leading open source LLMs",
+            "azure-ai": "Enterprise integration with Microsoft stack",
+            "aws-bedrock": "Multi-model with AWS ecosystem",
+            "mistral": "Efficient European AI models",
+            "deepseek": "Cost-effective reasoning & code",
+            "xai": "Real-time knowledge via X/Twitter",
+            "cohere": "Enterprise search & RAG",
+            "huggingface": "Largest open model community",
+            "perplexity": "AI-powered search engine",
+            "together": "Scalable open model inference",
+            "groq": "Ultra-fast inference (LPU chips)",
+            "nvidia": "GPU-optimized model serving",
+            "ibm": "Enterprise governance & compliance",
+            "alibaba": "Strong multilingual (CJK)",
+            "stability": "Best-in-class image generation",
+            "ai21": "Enterprise text comprehension",
+            "replicate": "Easy model deployment & sharing"
+          }
+        },
+        {
+          "feature": "Best For",
+          "values": {
+            "openai": "Chatbots, content creation, coding, enterprise apps",
+            "anthropic": "Coding assistants, analysis, long documents, safety-critical apps",
+            "google-ai": "Long document analysis, multimodal apps, search",
+            "meta": "Self-hosting, research, custom fine-tuning",
+            "azure-ai": "Enterprise apps, Office 365 integration, compliance",
+            "aws-bedrock": "Multi-model apps, AWS-native workloads",
+            "mistral": "Multilingual apps, code generation, EU compliance",
+            "deepseek": "Budget-friendly coding, math, reasoning tasks",
+            "xai": "Real-time information, social media analysis",
+            "cohere": "Enterprise search, RAG, document processing",
+            "huggingface": "Research, prototyping, custom model training",
+            "perplexity": "Research, fact-checking, cited AI answers",
+            "together": "Scaling open source models in production",
+            "groq": "Real-time AI, low-latency applications",
+            "nvidia": "On-premises deployment, GPU-optimized inference",
+            "ibm": "Regulated industries, enterprise governance",
+            "alibaba": "Asian market apps, e-commerce AI",
+            "stability": "Image/video/audio generation, creative tools",
+            "ai21": "Text summarization, paraphrasing, enterprise writing",
+            "replicate": "Quick prototyping, model experimentation"
+          }
+        },
+        {
+          "feature": "Target Audience",
+          "values": {
+            "openai": "Developers, enterprises, consumers",
+            "anthropic": "Developers, enterprises",
+            "google-ai": "Developers, enterprises, researchers",
+            "meta": "Researchers, developers, companies",
+            "azure-ai": "Enterprises, government",
+            "aws-bedrock": "Enterprises, startups on AWS",
+            "mistral": "Developers, EU enterprises",
+            "deepseek": "Developers, researchers",
+            "xai": "Developers, X/Twitter users",
+            "cohere": "Enterprises, data teams",
+            "huggingface": "Researchers, ML engineers",
+            "perplexity": "Knowledge workers, researchers",
+            "together": "ML engineers, startups",
+            "groq": "Developers needing speed",
+            "nvidia": "Enterprises, data centers",
+            "ibm": "Enterprises, regulated industries",
+            "alibaba": "APAC enterprises, developers",
+            "stability": "Creatives, designers, developers",
+            "ai21": "Enterprises, content teams",
+            "replicate": "Indie developers, prototypers"
+          }
+        }
+      ]
+    }
+  ]
+}

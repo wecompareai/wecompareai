@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for IT Testing",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered testing tools, QA platforms, and test automation solutions",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "testim", "name": "Testim", "provider": "Tricentis", "logo": "/logos/huggingface.svg", "url": "https://testim.io" },
+    { "id": "mabl", "name": "mabl", "provider": "mabl", "logo": "/logos/huggingface.svg", "url": "https://mabl.com" },
+    { "id": "applitools", "name": "Applitools", "provider": "Applitools", "logo": "/logos/huggingface.svg", "url": "https://applitools.com" },
+    { "id": "katalon", "name": "Katalon", "provider": "Katalon", "logo": "/logos/huggingface.svg", "url": "https://katalon.com" }
+  ],
+  "groups": [
+    {
+      "name": "Test Automation",
+      "rows": [
+        { "feature": "Codeless test creation", "values": { "testim": true, "mabl": true, "applitools": false, "katalon": true } },
+        { "feature": "Self-healing tests", "values": { "testim": true, "mabl": true, "applitools": false, "katalon": true } },
+        { "feature": "Visual regression testing", "values": { "testim": false, "mabl": true, "applitools": true, "katalon": true } },
+        { "feature": "Cross-browser testing", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": true } },
+        { "feature": "Mobile testing", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": true } }
+      ]
+    },
+    {
+      "name": "AI Capabilities",
+      "rows": [
+        { "feature": "Smart element locators", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": true } },
+        { "feature": "Auto-maintenance", "values": { "testim": true, "mabl": true, "applitools": false, "katalon": true } },
+        { "feature": "Test impact analysis", "values": { "testim": false, "mabl": true, "applitools": false, "katalon": false } },
+        { "feature": "Root cause analysis", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": false } }
+      ]
+    },
+    {
+      "name": "Pricing & Integration",
+      "rows": [
+        { "feature": "Free tier", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": true } },
+        { "feature": "CI/CD integration", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": true } },
+        { "feature": "Jira integration", "values": { "testim": true, "mabl": true, "applitools": true, "katalon": true } },
+        { "feature": "Starting price/month", "values": { "testim": "$450+", "mabl": "Custom", "applitools": "$150+", "katalon": "Free/$175+" } }
+      ]
+    }
+  ]
+}

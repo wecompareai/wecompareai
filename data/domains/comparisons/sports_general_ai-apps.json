@@ -1,0 +1,43 @@
+{
+  "title": "AI Apps for Sports",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered applications for sports performance, coaching, and fan experience",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "statsperform", "name": "Stats Perform", "provider": "Stats Perform", "logo": "/logos/huggingface.svg", "url": "https://statsperform.com" },
+    { "id": "catapult", "name": "Catapult", "provider": "Catapult Sports", "logo": "/logos/huggingface.svg", "url": "https://catapultsports.com" },
+    { "id": "hudl", "name": "Hudl", "provider": "Hudl", "logo": "/logos/huggingface.svg", "url": "https://hudl.com" },
+    { "id": "secondspectrum", "name": "Second Spectrum", "provider": "Genius Sports", "logo": "/logos/huggingface.svg", "url": "https://secondspectrum.com" }
+  ],
+  "groups": [
+    {
+      "name": "Analytics Features",
+      "rows": [
+        { "feature": "Player tracking (GPS/optical)", "values": { "statsperform": true, "catapult": true, "hudl": false, "secondspectrum": true } },
+        { "feature": "Tactical board AI", "values": { "statsperform": true, "catapult": false, "hudl": true, "secondspectrum": true } },
+        { "feature": "Expected goals/points models", "values": { "statsperform": true, "catapult": false, "hudl": false, "secondspectrum": true } },
+        { "feature": "Wearable data integration", "values": { "statsperform": false, "catapult": true, "hudl": false, "secondspectrum": false } },
+        { "feature": "Video analysis", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": true } }
+      ]
+    },
+    {
+      "name": "Sports Covered",
+      "rows": [
+        { "feature": "Football/Soccer", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": true } },
+        { "feature": "Basketball", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": true } },
+        { "feature": "American Football", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": false } },
+        { "feature": "Cricket", "values": { "statsperform": true, "catapult": true, "hudl": false, "secondspectrum": false } },
+        { "feature": "Tennis", "values": { "statsperform": true, "catapult": false, "hudl": false, "secondspectrum": true } }
+      ]
+    },
+    {
+      "name": "Deployment & Pricing",
+      "rows": [
+        { "feature": "Cloud platform", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": true } },
+        { "feature": "Mobile app", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": false } },
+        { "feature": "API access", "values": { "statsperform": true, "catapult": true, "hudl": true, "secondspectrum": true } },
+        { "feature": "Pricing model", "values": { "statsperform": "Enterprise", "catapult": "Per-team", "hudl": "Per-team/$100+", "secondspectrum": "Enterprise" } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "title": "AI Apps for Pharmaceutical",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered applications designed for pharmaceutical workflows and drug development",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "benevolent", "name": "BenevolentAI", "provider": "BenevolentAI", "logo": "/logos/huggingface.svg", "url": "https://benevolent.ai" },
+    { "id": "insilico", "name": "Insilico Medicine", "provider": "Insilico", "logo": "/logos/huggingface.svg", "url": "https://insilico.com" },
+    { "id": "atomwise", "name": "Atomwise", "provider": "Atomwise", "logo": "/logos/huggingface.svg", "url": "https://atomwise.com" },
+    { "id": "tempus", "name": "Tempus", "provider": "Tempus AI", "logo": "/logos/huggingface.svg", "url": "https://tempus.com" }
+  ],
+  "groups": [
+    {
+      "name": "Core Features",
+      "rows": [
+        { "feature": "Drug target identification", "values": { "benevolent": true, "insilico": true, "atomwise": true, "tempus": false } },
+        { "feature": "Virtual screening", "values": { "benevolent": true, "insilico": true, "atomwise": true, "tempus": false } },
+        { "feature": "Clinical data analytics", "values": { "benevolent": true, "insilico": false, "atomwise": false, "tempus": true } },
+        { "feature": "Biomarker discovery", "values": { "benevolent": true, "insilico": true, "atomwise": false, "tempus": true } },
+        { "feature": "Patient stratification", "values": { "benevolent": false, "insilico": false, "atomwise": false, "tempus": true } }
+      ]
+    },
+    {
+      "name": "Technology",
+      "rows": [
+        { "feature": "Generative chemistry", "values": { "benevolent": true, "insilico": true, "atomwise": false, "tempus": false } },
+        { "feature": "Knowledge graph", "values": { "benevolent": true, "insilico": false, "atomwise": false, "tempus": true } },
+        { "feature": "Deep learning models", "values": { "benevolent": true, "insilico": true, "atomwise": true, "tempus": true } },
+        { "feature": "Real-world evidence", "values": { "benevolent": false, "insilico": false, "atomwise": false, "tempus": true } }
+      ]
+    },
+    {
+      "name": "Pipeline & Results",
+      "rows": [
+        { "feature": "Drugs in clinical trials", "values": { "benevolent": "3+", "insilico": "5+", "atomwise": "2+", "tempus": "N/A" } },
+        { "feature": "Discovery-to-trial speed", "values": { "benevolent": "~18 months", "insilico": "~12 months", "atomwise": "~24 months", "tempus": "N/A" } },
+        { "feature": "Therapeutic areas", "values": { "benevolent": "5+", "insilico": "10+", "atomwise": "4+", "tempus": "Oncology" } },
+        { "feature": "Partner pharma companies", "values": { "benevolent": "AstraZeneca", "insilico": "Pfizer", "atomwise": "Multiple", "tempus": "Multiple" } }
+      ]
+    },
+    {
+      "name": "Pricing & Deployment",
+      "rows": [
+        { "feature": "SaaS platform", "values": { "benevolent": true, "insilico": true, "atomwise": true, "tempus": true } },
+        { "feature": "Custom partnerships", "values": { "benevolent": true, "insilico": true, "atomwise": true, "tempus": true } },
+        { "feature": "Academic access", "values": { "benevolent": false, "insilico": true, "atomwise": true, "tempus": false } },
+        { "feature": "Pricing model", "values": { "benevolent": "Enterprise", "insilico": "Enterprise", "atomwise": "Per-project", "tempus": "Enterprise" } }
+      ]
+    }
+  ]
+}

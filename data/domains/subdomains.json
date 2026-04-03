@@ -1,0 +1,12 @@
+[
+  { "domainSlug": "pharmaceutical", "name": "General", "slug": "general", "description": "AI across all pharmaceutical applications", "icon": "brain", "order": 1 },
+  { "domainSlug": "law", "name": "International Law", "slug": "international-law", "description": "AI for international treaties, cross-border disputes, and global compliance", "icon": "globe", "order": 1 },
+  { "domainSlug": "law", "name": "Domestic Law", "slug": "domestic-law", "description": "AI for country-specific legislation, local courts, and national regulations", "icon": "shield", "order": 2 },
+  { "domainSlug": "education", "name": "General", "slug": "general", "description": "AI across all education applications", "icon": "layers", "order": 1 },
+  { "domainSlug": "defence", "name": "General", "slug": "general", "description": "AI across all defence applications", "icon": "lock", "order": 1 },
+  { "domainSlug": "medical", "name": "General", "slug": "general", "description": "AI across all medical applications", "icon": "zap", "order": 1 },
+  { "domainSlug": "it-development", "name": "General", "slug": "general", "description": "AI across all IT development applications", "icon": "code", "order": 1 },
+  { "domainSlug": "it-testing", "name": "General", "slug": "general", "description": "AI across all IT testing applications", "icon": "cpu", "order": 1 },
+  { "domainSlug": "it-management", "name": "General", "slug": "general", "description": "AI across all IT management applications", "icon": "server", "order": 1 },
+  { "domainSlug": "sports", "name": "General", "slug": "general", "description": "AI across all sports applications", "icon": "globe", "order": 1 }
+]

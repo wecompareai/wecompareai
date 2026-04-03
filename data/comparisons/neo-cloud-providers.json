@@ -1,0 +1,537 @@
+{
+  "id": "neo-cloud-providers",
+  "title": "Neo Cloud Providers Comparison",
+  "description": "Compare GPU-first and AI-native cloud providers - GPU availability, pricing, performance, and specialized AI infrastructure.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "coreweave",
+      "name": "CoreWeave",
+      "provider": "CoreWeave Inc.",
+      "logo": "/logos/coreweave.svg",
+      "url": "https://www.coreweave.com"
+    },
+    {
+      "id": "lambda",
+      "name": "Lambda",
+      "provider": "Lambda Inc.",
+      "logo": "/logos/lambda.svg",
+      "url": "https://lambdalabs.com"
+    },
+    {
+      "id": "together",
+      "name": "Together AI",
+      "provider": "Together AI",
+      "logo": "/logos/together.svg",
+      "url": "https://www.together.ai"
+    },
+    {
+      "id": "crusoe",
+      "name": "Crusoe Cloud",
+      "provider": "Crusoe Energy Systems",
+      "logo": "/logos/crusoe.svg",
+      "url": "https://www.crusoe.ai"
+    },
+    {
+      "id": "voltagepark",
+      "name": "Voltage Park",
+      "provider": "Voltage Park",
+      "logo": "/logos/voltagepark.svg",
+      "url": "https://www.voltagepark.com"
+    },
+    {
+      "id": "runpod",
+      "name": "RunPod",
+      "provider": "RunPod Inc.",
+      "logo": "/logos/runpod.svg",
+      "url": "https://www.runpod.io"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Headquarters",
+          "values": {
+            "coreweave": "Livingston, NJ",
+            "lambda": "San Francisco, CA",
+            "together": "San Francisco, CA",
+            "crusoe": "San Francisco, CA",
+            "voltagepark": "San Francisco, CA",
+            "runpod": "Cherry Hill, NJ"
+          }
+        },
+        {
+          "feature": "Founded",
+          "values": {
+            "coreweave": "2017",
+            "lambda": "2012",
+            "together": "2022",
+            "crusoe": "2018",
+            "voltagepark": "2023",
+            "runpod": "2022"
+          }
+        },
+        {
+          "feature": "Company Type",
+          "values": {
+            "coreweave": "Private (~$35B valuation)",
+            "lambda": "Private (~$1.5B valuation)",
+            "together": "Private (~$3.3B valuation)",
+            "crusoe": "Private (~$10B valuation)",
+            "voltagepark": "Private",
+            "runpod": "Private (~$500M+ valuation)"
+          }
+        },
+        {
+          "feature": "Total Funding",
+          "values": {
+            "coreweave": "~$12B+ (debt + equity)",
+            "lambda": "~$800M+",
+            "together": "~$400M+",
+            "crusoe": "~$1.4B+ (Series E)",
+            "voltagepark": "~$100M+",
+            "runpod": "~$20M+"
+          }
+        },
+        {
+          "feature": "Business Model",
+          "values": {
+            "coreweave": "GPU cloud IaaS (bare metal & VMs)",
+            "lambda": "GPU cloud + on-prem GPU servers",
+            "together": "AI inference & training API platform",
+            "crusoe": "Clean-energy GPU cloud",
+            "voltagepark": "GPU-as-a-service marketplace",
+            "runpod": "Serverless GPU cloud for AI"
+          }
+        },
+        {
+          "feature": "Target Customers",
+          "values": {
+            "coreweave": "AI labs, enterprises, hyperscalers",
+            "lambda": "ML researchers, startups, enterprises",
+            "together": "AI developers, startups, researchers",
+            "crusoe": "AI companies, enterprises",
+            "voltagepark": "Startups, researchers, AI companies",
+            "runpod": "Indie developers, startups, researchers"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GPU Availability",
+      "rows": [
+        {
+          "feature": "Nvidia H100",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": true,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Nvidia H200",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": true,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": "Limited"
+          }
+        },
+        {
+          "feature": "Nvidia B200 (Blackwell)",
+          "values": {
+            "coreweave": "Coming 2025-2026",
+            "lambda": "Coming 2026",
+            "together": "Coming 2026",
+            "crusoe": "Coming 2026 (GB200)",
+            "voltagepark": "TBD",
+            "runpod": "TBD"
+          }
+        },
+        {
+          "feature": "Nvidia A100",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": true,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Nvidia L40S / L4",
+          "values": {
+            "coreweave": true,
+            "lambda": false,
+            "together": false,
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Consumer GPUs (RTX 4090, etc.)",
+          "values": {
+            "coreweave": false,
+            "lambda": false,
+            "together": false,
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Total GPU Fleet Size",
+          "tooltip": "Approximate total GPU count in their fleet",
+          "values": {
+            "coreweave": "100,000+ H100s (growing to 250K+)",
+            "lambda": "10,000+ H100s",
+            "together": "Thousands (not disclosed exactly)",
+            "crusoe": "Planned 400,000 GB200s (Abilene)",
+            "voltagepark": "Thousands of H100s",
+            "runpod": "Thousands (community + owned)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing",
+      "rows": [
+        {
+          "feature": "H100 On-Demand (per GPU/hr)",
+          "values": {
+            "coreweave": "~$2.23/hr",
+            "lambda": "~$1.99/hr",
+            "together": "~$2.50/hr (dedicated)",
+            "crusoe": "~$2.35/hr",
+            "voltagepark": "~$1.89/hr",
+            "runpod": "~$2.49/hr"
+          }
+        },
+        {
+          "feature": "A100 80GB On-Demand (per GPU/hr)",
+          "values": {
+            "coreweave": "~$1.28/hr",
+            "lambda": "~$1.10/hr",
+            "together": "~$1.25/hr",
+            "crusoe": "~$1.20/hr",
+            "voltagepark": "~$0.99/hr",
+            "runpod": "~$1.64/hr"
+          }
+        },
+        {
+          "feature": "Reserved / Contract Pricing",
+          "values": {
+            "coreweave": "1-3 year contracts (significant discount)",
+            "lambda": "Reserved instances available",
+            "together": "Custom enterprise pricing",
+            "crusoe": "Long-term contracts available",
+            "voltagepark": "Flexible commitments",
+            "runpod": "Savings Plans available"
+          }
+        },
+        {
+          "feature": "Spot / Interruptible",
+          "values": {
+            "coreweave": true,
+            "lambda": false,
+            "together": false,
+            "crusoe": false,
+            "voltagepark": true,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Serverless (Pay-per-token/sec)",
+          "values": {
+            "coreweave": false,
+            "lambda": false,
+            "together": true,
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Price Competitiveness",
+          "tooltip": "General pricing position vs. hyperscalers (AWS/Azure/GCP)",
+          "values": {
+            "coreweave": "~50-70% cheaper than hyperscalers",
+            "lambda": "~60-75% cheaper than hyperscalers",
+            "together": "Competitive for inference APIs",
+            "crusoe": "~50-65% cheaper than hyperscalers",
+            "voltagepark": "~60-80% cheaper than hyperscalers",
+            "runpod": "~50-70% cheaper than hyperscalers"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Services & Features",
+      "rows": [
+        {
+          "feature": "Managed Inference API",
+          "values": {
+            "coreweave": false,
+            "lambda": false,
+            "together": true,
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "Model Fine-tuning Service",
+          "values": {
+            "coreweave": false,
+            "lambda": false,
+            "together": true,
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": false
+          }
+        },
+        {
+          "feature": "Pre-built Model Catalog",
+          "values": {
+            "coreweave": false,
+            "lambda": false,
+            "together": "100+ open source models (Llama, Mistral, etc.)",
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": "Community templates"
+          }
+        },
+        {
+          "feature": "Bare Metal Servers",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": false,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": false
+          }
+        },
+        {
+          "feature": "Virtual Machines",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": "Dedicated endpoints",
+            "crusoe": true,
+            "voltagepark": false,
+            "runpod": "GPU Pods"
+          }
+        },
+        {
+          "feature": "Kubernetes Native",
+          "values": {
+            "coreweave": true,
+            "lambda": false,
+            "together": false,
+            "crusoe": true,
+            "voltagepark": false,
+            "runpod": false
+          }
+        },
+        {
+          "feature": "On-Prem GPU Servers (Purchase)",
+          "tooltip": "Sells physical GPU server hardware for on-premise use",
+          "values": {
+            "coreweave": false,
+            "lambda": true,
+            "together": false,
+            "crusoe": false,
+            "voltagepark": false,
+            "runpod": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Networking & Storage",
+      "rows": [
+        {
+          "feature": "InfiniBand",
+          "tooltip": "High-bandwidth GPU-to-GPU interconnect for training",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": true,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": "Limited"
+          }
+        },
+        {
+          "feature": "RDMA Support",
+          "tooltip": "Remote Direct Memory Access for low-latency networking",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": true,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": "Limited"
+          }
+        },
+        {
+          "feature": "NVLink / NVSwitch",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": true,
+            "crusoe": true,
+            "voltagepark": true,
+            "runpod": true
+          }
+        },
+        {
+          "feature": "High-Performance Storage",
+          "values": {
+            "coreweave": "NVMe SSD, shared filesystems",
+            "lambda": "NVMe SSD, persistent storage",
+            "together": "Managed (transparent to user)",
+            "crusoe": "NVMe SSD, object storage",
+            "voltagepark": "NVMe SSD",
+            "runpod": "Network volumes, NVMe pods"
+          }
+        },
+        {
+          "feature": "Object Storage",
+          "values": {
+            "coreweave": true,
+            "lambda": true,
+            "together": false,
+            "crusoe": true,
+            "voltagepark": false,
+            "runpod": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Infrastructure & Regions",
+      "rows": [
+        {
+          "feature": "Data Center Locations",
+          "values": {
+            "coreweave": "US (NJ, TX, IL, WA), Europe (London, Norway)",
+            "lambda": "US (TX, UT, AZ)",
+            "together": "US-based",
+            "crusoe": "US (TX, WY), Iceland",
+            "voltagepark": "US-based",
+            "runpod": "US, EU (distributed community + owned)"
+          }
+        },
+        {
+          "feature": "Number of Regions",
+          "values": {
+            "coreweave": "6+",
+            "lambda": "3+",
+            "together": "1-2",
+            "crusoe": "3+",
+            "voltagepark": "1-2",
+            "runpod": "10+ (incl. community)"
+          }
+        },
+        {
+          "feature": "Clean / Renewable Energy",
+          "values": {
+            "coreweave": "Partial (varies by location)",
+            "lambda": "Not emphasized",
+            "together": "Not emphasized",
+            "crusoe": true,
+            "voltagepark": "Not emphasized",
+            "runpod": "Not emphasized"
+          }
+        },
+        {
+          "feature": "Uptime SLA",
+          "values": {
+            "coreweave": "99.9%+",
+            "lambda": "99.9%",
+            "together": "99.9% (API)",
+            "crusoe": "99.9%+",
+            "voltagepark": "Best effort",
+            "runpod": "99.9% (varies by tier)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notable Customers & Partnerships",
+      "rows": [
+        {
+          "feature": "Key Customers",
+          "values": {
+            "coreweave": "Microsoft, Nvidia, Cohere, Stability AI",
+            "lambda": "ML researchers, universities, startups",
+            "together": "Scale AI, Stanford HAI, Hugging Face",
+            "crusoe": "AI labs, enterprise GPU tenants",
+            "voltagepark": "AI startups, researchers",
+            "runpod": "Indie AI developers, Stable Diffusion community"
+          }
+        },
+        {
+          "feature": "Strategic Investors",
+          "values": {
+            "coreweave": "Nvidia, Microsoft, Magnetar, Coatue, Cisco",
+            "lambda": "G Squared, Gradient Ventures (Google)",
+            "together": "Nvidia, Salesforce, Kleiner Perkins",
+            "crusoe": "Nvidia, Fidelity, Mubadala",
+            "voltagepark": "Not publicly disclosed",
+            "runpod": "Dell Technologies Capital, Intel Capital"
+          }
+        },
+        {
+          "feature": "Nvidia Partnership",
+          "values": {
+            "coreweave": "Preferred cloud partner, DGX Cloud",
+            "lambda": "Cloud partner, hardware reseller",
+            "together": "Investor + GPU partner",
+            "crusoe": "Strategic investor",
+            "voltagepark": "GPU customer",
+            "runpod": "GPU customer"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Key Differentiators",
+      "rows": [
+        {
+          "feature": "Primary Strength",
+          "values": {
+            "coreweave": "Largest independent GPU cloud; Nvidia-preferred; enterprise-grade Kubernetes",
+            "lambda": "Simplicity + best GPU cloud pricing; also sells on-prem servers",
+            "together": "Best platform for open-source model inference + fine-tuning APIs",
+            "crusoe": "Clean energy powered; vertically integrated (energy + compute)",
+            "voltagepark": "Lowest-cost H100 access; flexible commitments",
+            "runpod": "Most accessible GPU cloud; serverless + community marketplace"
+          }
+        },
+        {
+          "feature": "Best For",
+          "values": {
+            "coreweave": "Large-scale AI training, enterprise GPU infrastructure",
+            "lambda": "ML researchers and teams wanting simple, affordable GPU access",
+            "together": "Developers building AI apps with open-source models",
+            "crusoe": "AI companies wanting sustainable, clean-energy compute",
+            "voltagepark": "Budget-conscious teams needing bulk H100 access",
+            "runpod": "Individual developers, hobbyists, small teams, inference workloads"
+          }
+        }
+      ]
+    }
+  ]
+}

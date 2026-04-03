@@ -1,0 +1,42 @@
+{
+  "title": "AI Models for Medical",
+  "slug": "ai-models",
+  "description": "Compare AI models designed for medical diagnostics, clinical reasoning, and healthcare research",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "medpalm", "name": "Med-PaLM 2", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com/blog/topics/healthcare-life-sciences/sharing-google-med-palm-2" },
+    { "id": "gpt4", "name": "GPT-4o", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude 4.5 Sonnet", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "meditron", "name": "Meditron-70B", "provider": "EPFL", "logo": "/logos/huggingface.svg", "url": "https://huggingface.co/epfl-llm/meditron-70b" }
+  ],
+  "groups": [
+    {
+      "name": "Clinical Performance",
+      "rows": [
+        { "feature": "USMLE performance", "values": { "medpalm": "86%+", "gpt4": "90%+", "claude": "85%+", "meditron": "70%+" } },
+        { "feature": "Diagnosis accuracy", "values": { "medpalm": "Excellent", "gpt4": "Good", "claude": "Good", "meditron": "Fair" } },
+        { "feature": "Medical Q&A quality", "values": { "medpalm": "Excellent", "gpt4": "Good", "claude": "Good", "meditron": "Good" } },
+        { "feature": "Radiology report generation", "values": { "medpalm": true, "gpt4": true, "claude": true, "meditron": false } },
+        { "feature": "Clinical note summarization", "values": { "medpalm": true, "gpt4": true, "claude": true, "meditron": true } }
+      ]
+    },
+    {
+      "name": "Safety & Reliability",
+      "rows": [
+        { "feature": "Hallucination rate (medical)", "values": { "medpalm": "Very Low", "gpt4": "Low", "claude": "Low", "meditron": "Medium" } },
+        { "feature": "Uncertainty expression", "values": { "medpalm": "Excellent", "gpt4": "Good", "claude": "Excellent", "meditron": "Fair" } },
+        { "feature": "Harmful advice refusal", "values": { "medpalm": true, "gpt4": true, "claude": true, "meditron": true } },
+        { "feature": "Specialist review recommended flag", "values": { "medpalm": true, "gpt4": false, "claude": true, "meditron": false } }
+      ]
+    },
+    {
+      "name": "Access & Licensing",
+      "rows": [
+        { "feature": "Generally available", "values": { "medpalm": "Limited", "gpt4": true, "claude": true, "meditron": true } },
+        { "feature": "Open source", "values": { "medpalm": false, "gpt4": false, "claude": false, "meditron": true } },
+        { "feature": "Fine-tuning available", "values": { "medpalm": false, "gpt4": true, "claude": false, "meditron": true } },
+        { "feature": "Context window", "values": { "medpalm": "32K", "gpt4": "128K", "claude": "200K", "meditron": "4K" } }
+      ]
+    }
+  ]
+}

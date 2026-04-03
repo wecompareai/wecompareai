@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for IT Management",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for IT operations, infrastructure management, and service delivery",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "azure", "name": "Azure AI Ops", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com" },
+    { "id": "aws", "name": "AWS AI Ops", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com" },
+    { "id": "google", "name": "Google Cloud Ops", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com/products/operations" },
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" }
+  ],
+  "groups": [
+    {
+      "name": "IT Operations",
+      "rows": [
+        { "feature": "Incident detection", "values": { "azure": true, "aws": true, "google": true, "openai": false } },
+        { "feature": "Anomaly detection", "values": { "azure": true, "aws": true, "google": true, "openai": false } },
+        { "feature": "Log analysis", "values": { "azure": true, "aws": true, "google": true, "openai": true } },
+        { "feature": "Automated remediation", "values": { "azure": true, "aws": true, "google": true, "openai": false } },
+        { "feature": "Capacity planning", "values": { "azure": true, "aws": true, "google": true, "openai": false } }
+      ]
+    },
+    {
+      "name": "Service Management",
+      "rows": [
+        { "feature": "Ticket classification", "values": { "azure": true, "aws": false, "google": true, "openai": true } },
+        { "feature": "Knowledge base AI", "values": { "azure": true, "aws": true, "google": true, "openai": true } },
+        { "feature": "SLA prediction", "values": { "azure": true, "aws": true, "google": false, "openai": false } },
+        { "feature": "Change risk assessment", "values": { "azure": true, "aws": true, "google": true, "openai": false } }
+      ]
+    },
+    {
+      "name": "Infrastructure",
+      "rows": [
+        { "feature": "Cost optimization AI", "values": { "azure": true, "aws": true, "google": true, "openai": false } },
+        { "feature": "Security posture management", "values": { "azure": true, "aws": true, "google": true, "openai": false } },
+        { "feature": "Compliance monitoring", "values": { "azure": true, "aws": true, "google": true, "openai": false } },
+        { "feature": "Multi-cloud support", "values": { "azure": "Limited", "aws": "Limited", "google": "Limited", "openai": "N/A" } }
+      ]
+    }
+  ]
+}

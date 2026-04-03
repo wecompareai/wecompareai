@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 52" fill="none">
+  <!-- Icon: two panels being compared with a spark/AI node in the middle -->
+  <rect x="2" y="8" width="22" height="36" rx="5" fill="#6366f1" opacity="0.15"/>
+  <rect x="2" y="8" width="22" height="36" rx="5" stroke="#6366f1" stroke-width="1.8"/>
+  <line x1="8" y1="19" x2="18" y2="19" stroke="#6366f1" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="8" y1="26" x2="18" y2="26" stroke="#6366f1" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="8" y1="33" x2="14" y2="33" stroke="#6366f1" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- vs divider -->
+  <circle cx="32" cy="26" r="5" fill="#6366f1"/>
+  <text x="32" y="30" text-anchor="middle" font-family="system-ui,sans-serif" font-size="6" font-weight="700" fill="white">vs</text>
+
+  <rect x="42" y="8" width="22" height="36" rx="5" fill="#6366f1" opacity="0.15"/>
+  <rect x="42" y="8" width="22" height="36" rx="5" stroke="#6366f1" stroke-width="1.8"/>
+  <line x1="48" y1="19" x2="58" y2="19" stroke="#6366f1" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="48" y1="26" x2="58" y2="26" stroke="#6366f1" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="48" y1="33" x2="54" y2="33" stroke="#6366f1" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text x="74" y="32" font-family="'Segoe UI',system-ui,sans-serif" font-size="20" font-weight="800" fill="#0f172a" letter-spacing="-0.5">We Compare</text>
+  <text x="202" y="32" font-family="'Segoe UI',system-ui,sans-serif" font-size="20" font-weight="800" fill="#6366f1" letter-spacing="-0.5"> AI</text>
+</svg>

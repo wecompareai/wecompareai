@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for Medical",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for clinical diagnostics, patient care, and healthcare management",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "google", "name": "Google Health AI", "provider": "Google", "logo": "/logos/google.svg", "url": "https://health.google" },
+    { "id": "azure", "name": "Azure Health AI", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com/en-us/solutions/health" },
+    { "id": "aws", "name": "AWS HealthLake", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/healthlake" },
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" }
+  ],
+  "groups": [
+    {
+      "name": "Clinical Applications",
+      "rows": [
+        { "feature": "Medical imaging analysis", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "Clinical decision support", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "EHR data analytics", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "Pathology AI", "values": { "google": true, "azure": true, "aws": false, "openai": false } },
+        { "feature": "Genomics analysis", "values": { "google": true, "azure": true, "aws": true, "openai": false } }
+      ]
+    },
+    {
+      "name": "Patient Care",
+      "rows": [
+        { "feature": "Virtual health assistants", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "Remote patient monitoring", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "Appointment scheduling AI", "values": { "google": false, "azure": true, "aws": true, "openai": false } },
+        { "feature": "Patient triage automation", "values": { "google": true, "azure": true, "aws": true, "openai": true } }
+      ]
+    },
+    {
+      "name": "Compliance & Interoperability",
+      "rows": [
+        { "feature": "HIPAA compliant", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "HL7 FHIR support", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "DICOM integration", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "FDA cleared algorithms", "values": { "google": true, "azure": true, "aws": false, "openai": false } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for IT Testing",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for software testing, quality assurance, and test automation",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "google", "name": "Google Cloud Testing AI", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com" },
+    { "id": "azure", "name": "Azure DevOps AI", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com/en-us/products/devops" },
+    { "id": "aws", "name": "AWS DevOps AI", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/devops" },
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" }
+  ],
+  "groups": [
+    {
+      "name": "Test Generation",
+      "rows": [
+        { "feature": "Unit test generation", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "Integration test scaffolding", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "E2E test creation", "values": { "google": true, "azure": true, "aws": false, "openai": true } },
+        { "feature": "API test generation", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "Performance test scenarios", "values": { "google": true, "azure": true, "aws": true, "openai": false } }
+      ]
+    },
+    {
+      "name": "Quality Analysis",
+      "rows": [
+        { "feature": "Code coverage analysis", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "Bug prediction", "values": { "google": true, "azure": true, "aws": false, "openai": true } },
+        { "feature": "Flaky test detection", "values": { "google": true, "azure": true, "aws": false, "openai": false } },
+        { "feature": "Regression risk scoring", "values": { "google": false, "azure": true, "aws": false, "openai": false } }
+      ]
+    },
+    {
+      "name": "CI/CD Integration",
+      "rows": [
+        { "feature": "GitHub Actions", "values": { "google": true, "azure": true, "aws": true, "openai": true } },
+        { "feature": "Jenkins support", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "Pipeline optimization", "values": { "google": true, "azure": true, "aws": true, "openai": false } },
+        { "feature": "Parallel test execution", "values": { "google": true, "azure": true, "aws": true, "openai": false } }
+      ]
+    }
+  ]
+}

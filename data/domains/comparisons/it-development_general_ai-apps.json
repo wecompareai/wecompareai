@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for IT Development",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered development tools, coding assistants, and IDE integrations",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "copilot", "name": "GitHub Copilot", "provider": "GitHub/Microsoft", "logo": "/logos/copilot.svg", "url": "https://github.com/features/copilot" },
+    { "id": "cursor", "name": "Cursor", "provider": "Cursor", "logo": "/logos/cursor.svg", "url": "https://cursor.com" },
+    { "id": "windsurf", "name": "Windsurf", "provider": "Codeium", "logo": "/logos/windsurf.svg", "url": "https://windsurf.com" },
+    { "id": "cody", "name": "Cody", "provider": "Sourcegraph", "logo": "/logos/sourcegraph.svg", "url": "https://sourcegraph.com/cody" }
+  ],
+  "groups": [
+    {
+      "name": "Code Assistance",
+      "rows": [
+        { "feature": "Inline code completion", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Multi-file context", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Chat interface", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Agentic mode", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": false } },
+        { "feature": "Terminal integration", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": false } }
+      ]
+    },
+    {
+      "name": "Codebase Understanding",
+      "rows": [
+        { "feature": "Full repo indexing", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Code search", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Dependency analysis", "values": { "copilot": false, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Custom knowledge bases", "values": { "copilot": true, "cursor": true, "windsurf": false, "cody": true } }
+      ]
+    },
+    {
+      "name": "Pricing & Platform",
+      "rows": [
+        { "feature": "Free tier", "values": { "copilot": true, "cursor": true, "windsurf": true, "cody": true } },
+        { "feature": "Pro price/month", "values": { "copilot": "$10", "cursor": "$20", "windsurf": "$15", "cody": "$9" } },
+        { "feature": "VS Code support", "values": { "copilot": true, "cursor": "Fork", "windsurf": "Fork", "cody": true } },
+        { "feature": "JetBrains support", "values": { "copilot": true, "cursor": false, "windsurf": false, "cody": true } }
+      ]
+    }
+  ]
+}

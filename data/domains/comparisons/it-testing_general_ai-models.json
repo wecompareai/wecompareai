@@ -1,0 +1,41 @@
+{
+  "title": "AI Models for IT Testing",
+  "slug": "ai-models",
+  "description": "Compare AI models suited for test case generation, bug detection, and quality assurance automation",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "gpt4", "name": "GPT-4o", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude 4.5 Sonnet", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "gemini", "name": "Gemini 2.5 Pro", "provider": "Google", "logo": "/logos/google.svg", "url": "https://deepmind.google/technologies/gemini" },
+    { "id": "deepseek", "name": "DeepSeek V3", "provider": "DeepSeek", "logo": "/logos/deepseek.svg", "url": "https://deepseek.com" }
+  ],
+  "groups": [
+    {
+      "name": "Test Generation Quality",
+      "rows": [
+        { "feature": "Unit test accuracy", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "deepseek": "Good" } },
+        { "feature": "Edge case coverage", "values": { "gpt4": "Good", "claude": "Excellent", "gemini": "Good", "deepseek": "Good" } },
+        { "feature": "Test data generation", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "deepseek": "Good" } },
+        { "feature": "BDD scenario writing", "values": { "gpt4": "Good", "claude": "Excellent", "gemini": "Good", "deepseek": "Fair" } }
+      ]
+    },
+    {
+      "name": "Bug Detection",
+      "rows": [
+        { "feature": "Code smell detection", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } },
+        { "feature": "Security vulnerability scanning", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } },
+        { "feature": "Race condition identification", "values": { "gpt4": true, "claude": true, "gemini": false, "deepseek": false } },
+        { "feature": "Memory leak detection", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } }
+      ]
+    },
+    {
+      "name": "Framework Support",
+      "rows": [
+        { "feature": "Jest/Vitest", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } },
+        { "feature": "Playwright/Cypress", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } },
+        { "feature": "Selenium", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } },
+        { "feature": "JUnit/TestNG", "values": { "gpt4": true, "claude": true, "gemini": true, "deepseek": true } }
+      ]
+    }
+  ]
+}

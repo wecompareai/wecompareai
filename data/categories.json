@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ai-platforms",
+    "name": "AI Providers",
+    "slug": "ai-platforms",
+    "description": "Compare top 20 AI providers - models portfolio, pricing, use cases, features, and enterprise capabilities.",
+    "icon": "layers"
+  },
+  {
+    "id": "ai-models",
+    "name": "AI Models",
+    "slug": "ai-models",
+    "description": "Compare large language models across providers - pricing, context windows, capabilities, and performance benchmarks.",
+    "icon": "brain"
+  },  
+  {
+    "id": "ai-coding-tools",
+    "name": "AI Coding Tools",
+    "slug": "ai-coding-tools",
+    "description": "Compare AI-powered coding assistants - IDE support, AI models used, features, and pricing plans.",
+    "icon": "code"
+  },
+  {
+    "id": "ai-energy-providers",
+    "name": "AI Energy Providers",
+    "slug": "ai-energy-providers",
+    "description": "Compare energy providers powering AI data centers - capacity, energy type, sustainability, key partnerships, and financial outlook.",
+    "icon": "zap"
+  },
+  {
+    "id": "ai-security-tools",
+    "name": "AI Security Tools",
+    "slug": "ai-security-tools",
+    "description": "Compare AI-powered cybersecurity tools - threat detection, endpoint protection, AI capabilities, and pricing.",
+    "icon": "shield"
+  },
+  {
+    "id": "ai-security",
+    "name": "AI Security",
+    "slug": "ai-security",
+    "description": "Compare AI model security and safety platforms - adversarial protection, model scanning, red teaming, and compliance.",
+    "icon": "lock"
+  },
+  {
+    "id": "ai-chip-providers",
+    "name": "AI Chip Providers",
+    "slug": "ai-chip-providers",
+    "description": "Compare AI chip and accelerator providers - GPU/TPU performance, power efficiency, memory, and pricing.",
+    "icon": "cpu"
+  },
+  {
+    "id": "ai-cloud-providers",
+    "name": "AI Cloud Providers",
+    "slug": "ai-cloud-providers",
+    "description": "Compare major cloud providers for AI workloads - GPU instances, AI services, pricing, and global infrastructure.",
+    "icon": "cloud"
+  },
+  {
+    "id": "neo-cloud-providers",
+    "name": "Neo Cloud Providers",
+    "slug": "neo-cloud-providers",
+    "description": "Compare GPU-first and AI-native cloud providers - GPU availability, pricing, performance, and specialized AI infrastructure.",
+    "icon": "server"
+  }
+]

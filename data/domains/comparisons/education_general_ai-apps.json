@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for Education",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered applications for learning, teaching, and educational management",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "khan", "name": "Khanmigo", "provider": "Khan Academy", "logo": "/logos/huggingface.svg", "url": "https://khanacademy.org/khan-labs" },
+    { "id": "duolingo", "name": "Duolingo Max", "provider": "Duolingo", "logo": "/logos/huggingface.svg", "url": "https://duolingo.com" },
+    { "id": "coursera", "name": "Coursera Coach", "provider": "Coursera", "logo": "/logos/huggingface.svg", "url": "https://coursera.org" },
+    { "id": "quizlet", "name": "Quizlet Q-Chat", "provider": "Quizlet", "logo": "/logos/huggingface.svg", "url": "https://quizlet.com" }
+  ],
+  "groups": [
+    {
+      "name": "Learning Features",
+      "rows": [
+        { "feature": "Personalized tutoring", "values": { "khan": true, "duolingo": true, "coursera": true, "quizlet": true } },
+        { "feature": "Adaptive difficulty", "values": { "khan": true, "duolingo": true, "coursera": false, "quizlet": true } },
+        { "feature": "Progress tracking", "values": { "khan": true, "duolingo": true, "coursera": true, "quizlet": true } },
+        { "feature": "Interactive exercises", "values": { "khan": true, "duolingo": true, "coursera": true, "quizlet": true } },
+        { "feature": "Parent/teacher dashboard", "values": { "khan": true, "duolingo": false, "coursera": false, "quizlet": true } }
+      ]
+    },
+    {
+      "name": "Subject Coverage",
+      "rows": [
+        { "feature": "Mathematics", "values": { "khan": true, "duolingo": false, "coursera": true, "quizlet": true } },
+        { "feature": "Language learning", "values": { "khan": false, "duolingo": true, "coursera": true, "quizlet": true } },
+        { "feature": "Science", "values": { "khan": true, "duolingo": false, "coursera": true, "quizlet": true } },
+        { "feature": "Professional skills", "values": { "khan": false, "duolingo": false, "coursera": true, "quizlet": false } }
+      ]
+    },
+    {
+      "name": "Pricing",
+      "rows": [
+        { "feature": "Free tier", "values": { "khan": true, "duolingo": true, "coursera": true, "quizlet": true } },
+        { "feature": "Premium price/month", "values": { "khan": "$9", "duolingo": "$7", "coursera": "$49", "quizlet": "$8" } },
+        { "feature": "School/institution plans", "values": { "khan": true, "duolingo": true, "coursera": true, "quizlet": true } },
+        { "feature": "Mobile app", "values": { "khan": true, "duolingo": true, "coursera": true, "quizlet": true } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { auth } from "@/lib/auth";
+import { getArticleBySlug } from "@/lib/articles";
+import { getCommentsByArticle } from "@/lib/comments";
+import ArticleContent from "@/components/blog/ArticleContent";
+import CommentSection from "@/components/blog/CommentSection";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
+  if (!article || !article.published) return { title: "Not Found" };
+
+  const pageUrl = `${SITE_URL}/blog/${slug}`;
+  return {
+    title: `${article.title} - AI Compare Blog`,
+    description: article.excerpt || article.title,
+    openGraph: {
+      type: "article" as const,
+      url: pageUrl,
+      title: article.title,
+      description: article.excerpt || article.title,
+      publishedTime: article.createdAt.toISOString(),
+      modifiedTime: article.updatedAt.toISOString(),
+      authors: [article.author.name],
+      ...(article.coverImage && { images: [{ url: article.coverImage }] }),
+    },
+    alternates: { canonical: pageUrl },
+  };
+}
+
+export default async function BlogArticlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
+
+  if (!article || !article.published) notFound();
+
+  const comments = await getCommentsByArticle(article.id);
+  const session = await auth();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.createdAt.toISOString(),
+    dateModified: article.updatedAt.toISOString(),
+    url: `${SITE_URL}/blog/${slug}`,
+    author: { "@type": "Person", name: article.author.name },
+    publisher: {
+      "@type": "Organization",
+      name: "AI Compare",
+      url: SITE_URL,
+    },
+    ...(article.coverImage && { image: article.coverImage }),
+    commentCount: article._count.comments,
+  };
+
+  function getYouTubeId(url: string): string | null {
+    const match = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/
+    );
+    return match ? match[1] : null;
+  }
+
+  const date = article.createdAt.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return (
+    <div className="py-8 sm:py-12 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="max-w-4xl mx-auto">
+        <nav className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+          <Link
+            href="/"
+            className="hover:text-foreground transition-colors"
+          >
+            Home
+          </Link>
+          <span>/</span>
+          <Link
+            href="/blog"
+            className="hover:text-foreground transition-colors"
+          >
+            Blog
+          </Link>
+          <span>/</span>
+          <span className="text-foreground truncate max-w-[200px]">
+            {article.title}
+          </span>
+        </nav>
+
+        <header className="mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+            {article.title}
+          </h1>
+          <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-primary font-medium text-sm">
+                  {article.author.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <span>{article.author.name}</span>
+            </div>
+            <span>{date}</span>
+            <span>{article._count.comments} comments</span>
+          </div>
+          {session?.user?.id === article.authorId && (
+            <Link
+              href={`/blog/${slug}/edit`}
+              className="mt-4 inline-block px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Edit Article
+            </Link>
+          )}
+        </header>
+
+        {article.coverImage && (
+          <div className="mb-8 rounded-xl overflow-hidden">
+            <img
+              src={article.coverImage}
+              alt={article.title}
+              className="w-full"
+            />
+          </div>
+        )}
+
+        {article.youtubeUrl && (() => {
+          const videoId = getYouTubeId(article.youtubeUrl!);
+          return videoId ? (
+            <div className="mb-8 rounded-xl overflow-hidden aspect-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}`}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Article Video"
+              />
+            </div>
+          ) : null;
+        })()}
+
+        <ArticleContent content={article.content} />
+
+        <hr className="my-12 border-border" />
+
+        <CommentSection
+          articleSlug={slug}
+          initialComments={comments}
+          currentUserId={session?.user?.id || null}
+        />
+      </div>
+    </div>
+  );
+}

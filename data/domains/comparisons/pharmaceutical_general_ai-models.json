@@ -1,0 +1,42 @@
+{
+  "title": "AI Models for Pharmaceutical",
+  "slug": "ai-models",
+  "description": "Compare AI models used in pharmaceutical research, drug discovery, and biomedical applications",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "alphafold", "name": "AlphaFold 3", "provider": "Google DeepMind", "logo": "/logos/google.svg", "url": "https://deepmind.google/technologies/alphafold" },
+    { "id": "gpt4", "name": "GPT-4o", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude 4.5 Sonnet", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "meditron", "name": "Meditron-70B", "provider": "EPFL", "logo": "/logos/huggingface.svg", "url": "https://huggingface.co/epfl-llm/meditron-70b" }
+  ],
+  "groups": [
+    {
+      "name": "Model Capabilities",
+      "rows": [
+        { "feature": "Protein structure prediction", "values": { "alphafold": true, "gpt4": false, "claude": false, "meditron": false } },
+        { "feature": "Biomedical text analysis", "values": { "alphafold": false, "gpt4": true, "claude": true, "meditron": true } },
+        { "feature": "Chemical formula parsing", "values": { "alphafold": true, "gpt4": true, "claude": true, "meditron": false } },
+        { "feature": "Literature review automation", "values": { "alphafold": false, "gpt4": true, "claude": true, "meditron": true } },
+        { "feature": "Multi-modal input (images)", "values": { "alphafold": true, "gpt4": true, "claude": true, "meditron": false } }
+      ]
+    },
+    {
+      "name": "Pharma-Specific Performance",
+      "rows": [
+        { "feature": "PubMed benchmark accuracy", "values": { "alphafold": "N/A", "gpt4": "86%", "claude": "84%", "meditron": "82%" } },
+        { "feature": "Drug interaction queries", "values": { "alphafold": "N/A", "gpt4": "High", "claude": "High", "meditron": "Medium" } },
+        { "feature": "Clinical note summarization", "values": { "alphafold": "N/A", "gpt4": "Excellent", "claude": "Excellent", "meditron": "Good" } },
+        { "feature": "Molecular property prediction", "values": { "alphafold": "Excellent", "gpt4": "Good", "claude": "Good", "meditron": "Fair" } }
+      ]
+    },
+    {
+      "name": "Access & Licensing",
+      "rows": [
+        { "feature": "Open source", "values": { "alphafold": true, "gpt4": false, "claude": false, "meditron": true } },
+        { "feature": "API available", "values": { "alphafold": true, "gpt4": true, "claude": true, "meditron": false } },
+        { "feature": "Fine-tuning supported", "values": { "alphafold": false, "gpt4": true, "claude": false, "meditron": true } },
+        { "feature": "Context window", "values": { "alphafold": "N/A", "gpt4": "128K", "claude": "200K", "meditron": "4K" } }
+      ]
+    }
+  ]
+}

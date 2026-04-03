@@ -1,0 +1,41 @@
+{
+  "title": "AI Models for Defence",
+  "slug": "ai-models",
+  "description": "Compare AI models applicable to defence intelligence, strategy, and operational planning",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "gpt4", "name": "GPT-4o (Gov)", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude 4.5 Sonnet", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "gemini", "name": "Gemini 2.5 Pro", "provider": "Google", "logo": "/logos/google.svg", "url": "https://deepmind.google/technologies/gemini" },
+    { "id": "mistral", "name": "Mistral Large", "provider": "Mistral AI", "logo": "/logos/mistral.svg", "url": "https://mistral.ai" }
+  ],
+  "groups": [
+    {
+      "name": "Intelligence Analysis",
+      "rows": [
+        { "feature": "Document classification", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "mistral": "Good" } },
+        { "feature": "Geospatial reasoning", "values": { "gpt4": "Good", "claude": "Good", "gemini": "Excellent", "mistral": "Fair" } },
+        { "feature": "Multi-language translation", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Excellent", "mistral": "Good" } },
+        { "feature": "Report generation", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "mistral": "Good" } }
+      ]
+    },
+    {
+      "name": "Operational Capabilities",
+      "rows": [
+        { "feature": "Scenario simulation", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": false } },
+        { "feature": "Decision support", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": true } },
+        { "feature": "Image/video analysis", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": false } },
+        { "feature": "Real-time data processing", "values": { "gpt4": false, "claude": false, "gemini": true, "mistral": false } }
+      ]
+    },
+    {
+      "name": "Deployment & Security",
+      "rows": [
+        { "feature": "On-premise deployment", "values": { "gpt4": false, "claude": false, "gemini": false, "mistral": true } },
+        { "feature": "Sovereign cloud available", "values": { "gpt4": false, "claude": false, "gemini": true, "mistral": true } },
+        { "feature": "EU-hosted option", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": true } },
+        { "feature": "Open weights", "values": { "gpt4": false, "claude": false, "gemini": false, "mistral": true } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for International Law",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered applications for international legal practice, treaty research, and global compliance",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "lexisnexis", "name": "Lexis+ AI", "provider": "LexisNexis", "logo": "/logos/huggingface.svg", "url": "https://lexisnexis.com" },
+    { "id": "westlaw", "name": "Westlaw Precision", "provider": "Thomson Reuters", "logo": "/logos/huggingface.svg", "url": "https://westlaw.com" },
+    { "id": "casetext", "name": "CoCounsel", "provider": "Thomson Reuters", "logo": "/logos/huggingface.svg", "url": "https://casetext.com" },
+    { "id": "harvey", "name": "Harvey AI", "provider": "Harvey", "logo": "/logos/huggingface.svg", "url": "https://harvey.ai" }
+  ],
+  "groups": [
+    {
+      "name": "International Legal Research",
+      "rows": [
+        { "feature": "Treaty database", "values": { "lexisnexis": true, "westlaw": true, "casetext": false, "harvey": false } },
+        { "feature": "ICJ case law", "values": { "lexisnexis": true, "westlaw": true, "casetext": false, "harvey": true } },
+        { "feature": "Multi-jurisdiction search", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": true } },
+        { "feature": "International arbitration", "values": { "lexisnexis": true, "westlaw": true, "casetext": false, "harvey": true } },
+        { "feature": "EU regulation analysis", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": true } }
+      ]
+    },
+    {
+      "name": "AI Features",
+      "rows": [
+        { "feature": "Natural language queries", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": true } },
+        { "feature": "Document drafting", "values": { "lexisnexis": true, "westlaw": false, "casetext": true, "harvey": true } },
+        { "feature": "Contract analysis", "values": { "lexisnexis": true, "westlaw": false, "casetext": true, "harvey": true } },
+        { "feature": "Due diligence automation", "values": { "lexisnexis": false, "westlaw": false, "casetext": true, "harvey": true } }
+      ]
+    },
+    {
+      "name": "Pricing & Access",
+      "rows": [
+        { "feature": "Free trial", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": false } },
+        { "feature": "Per-seat pricing", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": true } },
+        { "feature": "Academic access", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": false } },
+        { "feature": "Solo practitioner plan", "values": { "lexisnexis": true, "westlaw": true, "casetext": true, "harvey": false } }
+      ]
+    }
+  ]
+}

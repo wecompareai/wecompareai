@@ -1,0 +1,548 @@
+{
+  "id": "ai-cloud-providers",
+  "title": "AI Cloud Providers Comparison",
+  "description": "Compare major cloud providers for AI workloads - GPU instances, AI services, pricing, and global infrastructure.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "aws",
+      "name": "AWS",
+      "provider": "Amazon",
+      "logo": "/logos/aws.svg",
+      "url": "https://aws.amazon.com"
+    },
+    {
+      "id": "azure",
+      "name": "Microsoft Azure",
+      "provider": "Microsoft",
+      "logo": "/logos/azure.svg",
+      "url": "https://azure.microsoft.com"
+    },
+    {
+      "id": "gcp",
+      "name": "Google Cloud",
+      "provider": "Google",
+      "logo": "/logos/google.svg",
+      "url": "https://cloud.google.com"
+    },
+    {
+      "id": "oci",
+      "name": "Oracle Cloud (OCI)",
+      "provider": "Oracle",
+      "logo": "/logos/oracle.svg",
+      "url": "https://www.oracle.com/cloud/"
+    },
+    {
+      "id": "ibm",
+      "name": "IBM Cloud",
+      "provider": "IBM",
+      "logo": "/logos/ibm.svg",
+      "url": "https://www.ibm.com/cloud"
+    },
+    {
+      "id": "alibaba",
+      "name": "Alibaba Cloud",
+      "provider": "Alibaba Group",
+      "logo": "/logos/alibaba.svg",
+      "url": "https://www.alibabacloud.com"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Parent Company",
+          "values": {
+            "aws": "Amazon",
+            "azure": "Microsoft",
+            "gcp": "Alphabet / Google",
+            "oci": "Oracle Corporation",
+            "ibm": "IBM",
+            "alibaba": "Alibaba Group"
+          }
+        },
+        {
+          "feature": "Cloud Market Share (IaaS)",
+          "tooltip": "Approximate global IaaS market share as of 2025",
+          "values": {
+            "aws": "~31%",
+            "azure": "~25%",
+            "gcp": "~11%",
+            "oci": "~2%",
+            "ibm": "~1%",
+            "alibaba": "~4%"
+          }
+        },
+        {
+          "feature": "Annual Cloud Revenue",
+          "values": {
+            "aws": "~$105B+ (2024)",
+            "azure": "~$96B+ (Intelligent Cloud, FY2024)",
+            "gcp": "~$43B+ (2024)",
+            "oci": "~$20B+ (FY2025)",
+            "ibm": "~$6B+ (Cloud, 2024)",
+            "alibaba": "~$15B+ (Cloud, FY2025)"
+          }
+        },
+        {
+          "feature": "Global Regions",
+          "values": {
+            "aws": "34 regions, 108 AZs",
+            "azure": "60+ regions",
+            "gcp": "40 regions, 121 zones",
+            "oci": "49 regions",
+            "ibm": "16 regions",
+            "alibaba": "30+ regions"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI/ML Platform",
+      "rows": [
+        {
+          "feature": "Managed ML Platform",
+          "values": {
+            "aws": "SageMaker",
+            "azure": "Azure Machine Learning",
+            "gcp": "Vertex AI",
+            "oci": "OCI Data Science",
+            "ibm": "watsonx.ai",
+            "alibaba": "PAI (Platform for AI)"
+          }
+        },
+        {
+          "feature": "AutoML",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "MLOps / Model Registry",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "Notebooks (Managed)",
+          "values": {
+            "aws": "SageMaker Studio Notebooks",
+            "azure": "Azure ML Notebooks",
+            "gcp": "Vertex AI Workbench / Colab Enterprise",
+            "oci": "OCI Data Science Notebooks",
+            "ibm": "watsonx.ai Prompt Lab",
+            "alibaba": "PAI-DSW Notebooks"
+          }
+        },
+        {
+          "feature": "Vector Database",
+          "values": {
+            "aws": "OpenSearch, Aurora pgvector, Neptune",
+            "azure": "Azure AI Search, Cosmos DB",
+            "gcp": "AlloyDB, Vertex AI Vector Search",
+            "oci": "Oracle 23ai (vector), OpenSearch",
+            "ibm": "watsonx.data (Milvus), PostgreSQL",
+            "alibaba": "AnalyticDB, DashVector"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GPU & AI Accelerators",
+      "rows": [
+        {
+          "feature": "Nvidia H100",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Nvidia H200",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Nvidia B200 (Blackwell)",
+          "values": {
+            "aws": "Coming 2025-2026",
+            "azure": "Coming 2025-2026",
+            "gcp": "Coming 2025-2026",
+            "oci": "Coming 2026",
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Nvidia A100",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": false,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "AMD MI300X",
+          "values": {
+            "aws": false,
+            "azure": true,
+            "gcp": false,
+            "oci": false,
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Custom AI Chips",
+          "values": {
+            "aws": "Trainium2, Inferentia2",
+            "azure": "Maia 100 (coming)",
+            "gcp": "TPU v5p, TPU v6e (Trillium)",
+            "oci": false,
+            "ibm": false,
+            "alibaba": "Hanguang 800 (inference)"
+          }
+        },
+        {
+          "feature": "Max GPUs per Instance",
+          "values": {
+            "aws": "8x H100 (p5.48xlarge)",
+            "azure": "8x H100 (ND H100 v5)",
+            "gcp": "8x H100 (a3-highgpu-8g)",
+            "oci": "8x H100 (BM.GPU.H100.8)",
+            "ibm": "N/A",
+            "alibaba": "8x A100 (ecs.gn7e)"
+          }
+        },
+        {
+          "feature": "GPU Cluster / SuperPod",
+          "tooltip": "Ability to provision large multi-node GPU clusters",
+          "values": {
+            "aws": "UltraClusters (up to 20,000+ GPUs)",
+            "azure": "ND H100 v5 clusters (InfiniBand)",
+            "gcp": "A3 Mega (up to 26,000 H100s)",
+            "oci": "SuperClusters (up to 65,536 GPUs)",
+            "ibm": false,
+            "alibaba": "HPC / EFLOPS clusters"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GenAI / LLM Services",
+      "rows": [
+        {
+          "feature": "GenAI Service Name",
+          "values": {
+            "aws": "Amazon Bedrock",
+            "azure": "Azure OpenAI Service",
+            "gcp": "Vertex AI (Model Garden)",
+            "oci": "OCI Generative AI",
+            "ibm": "watsonx.ai",
+            "alibaba": "Model Studio (Bailian)"
+          }
+        },
+        {
+          "feature": "OpenAI Models (GPT-4o)",
+          "values": {
+            "aws": false,
+            "azure": true,
+            "gcp": false,
+            "oci": false,
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Claude (Anthropic)",
+          "values": {
+            "aws": true,
+            "azure": false,
+            "gcp": true,
+            "oci": false,
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Llama (Meta)",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "Gemini (Google)",
+          "values": {
+            "aws": false,
+            "azure": false,
+            "gcp": true,
+            "oci": false,
+            "ibm": false,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Mistral",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": false,
+            "ibm": true,
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Model Fine-tuning",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "RAG (Retrieval-Augmented Gen.)",
+          "tooltip": "Built-in retrieval-augmented generation capabilities",
+          "values": {
+            "aws": "Bedrock Knowledge Bases",
+            "azure": "Azure AI Search + OpenAI",
+            "gcp": "Vertex AI Search / Grounding",
+            "oci": "OCI Generative AI Agents",
+            "ibm": "watsonx.ai RAG",
+            "alibaba": "PAI-RAG"
+          }
+        },
+        {
+          "feature": "AI Agents / Orchestration",
+          "values": {
+            "aws": "Bedrock Agents",
+            "azure": "Azure AI Agent Service",
+            "gcp": "Vertex AI Agent Builder",
+            "oci": "OCI AI Agents",
+            "ibm": "watsonx Orchestrate",
+            "alibaba": "Alibaba Cloud AI Agents"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Infrastructure",
+      "rows": [
+        {
+          "feature": "InfiniBand Networking",
+          "tooltip": "High-bandwidth GPU interconnect for training clusters",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": false,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "High-Performance Storage",
+          "values": {
+            "aws": "FSx for Lustre, S3",
+            "azure": "Azure Managed Lustre, Blob Storage",
+            "gcp": "Parallelstore, Cloud Storage FUSE",
+            "oci": "File Storage, Object Storage",
+            "ibm": "Cloud Object Storage",
+            "alibaba": "NAS, OSS"
+          }
+        },
+        {
+          "feature": "Kubernetes (Managed)",
+          "values": {
+            "aws": "EKS",
+            "azure": "AKS",
+            "gcp": "GKE",
+            "oci": "OKE",
+            "ibm": "IKS / Red Hat OpenShift",
+            "alibaba": "ACK"
+          }
+        },
+        {
+          "feature": "Serverless Inference",
+          "values": {
+            "aws": "SageMaker Serverless Inference",
+            "azure": "Azure ML Serverless Endpoints",
+            "gcp": "Vertex AI Endpoints (autoscaling)",
+            "oci": "OCI Data Science Model Deployment",
+            "ibm": "watsonx.ai API",
+            "alibaba": "PAI-EAS"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing (H100 GPU Instances)",
+      "rows": [
+        {
+          "feature": "On-Demand (8x H100, per hr)",
+          "tooltip": "Approximate on-demand pricing for 8x H100 GPU instance",
+          "values": {
+            "aws": "~$98/hr (p5.48xlarge)",
+            "azure": "~$100/hr (ND H100 v5)",
+            "gcp": "~$98/hr (a3-highgpu-8g)",
+            "oci": "~$78/hr (BM.GPU.H100.8)",
+            "ibm": "N/A",
+            "alibaba": "N/A (A100 available)"
+          }
+        },
+        {
+          "feature": "Reserved / Committed (1yr)",
+          "values": {
+            "aws": "~40-60% discount",
+            "azure": "~40-60% discount",
+            "gcp": "~40-55% discount (CUDs)",
+            "oci": "~50-65% discount",
+            "ibm": "N/A",
+            "alibaba": "~30-50% discount"
+          }
+        },
+        {
+          "feature": "Spot / Preemptible",
+          "values": {
+            "aws": "Spot Instances (~60-90% off)",
+            "azure": "Spot VMs (~60-80% off)",
+            "gcp": "Spot VMs (~60-91% off)",
+            "oci": "Preemptible (~50% off)",
+            "ibm": false,
+            "alibaba": "Preemptible (~50-90% off)"
+          }
+        },
+        {
+          "feature": "Free Tier (AI/ML)",
+          "values": {
+            "aws": "SageMaker free tier (250 hrs/mo for 2 months)",
+            "azure": "$200 credit + free tier services",
+            "gcp": "$300 credit + free tier",
+            "oci": "Always Free tier + $300 credit",
+            "ibm": "Lite plan (limited free usage)",
+            "alibaba": "Free trial credits available"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enterprise & Security",
+      "rows": [
+        {
+          "feature": "SOC 2 Type II",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "HIPAA Compliant",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": "Limited"
+          }
+        },
+        {
+          "feature": "FedRAMP Authorized",
+          "values": {
+            "aws": "High (GovCloud)",
+            "azure": "High (Azure Government)",
+            "gcp": "High",
+            "oci": "High (OCI Gov)",
+            "ibm": "Moderate",
+            "alibaba": false
+          }
+        },
+        {
+          "feature": "Private Networking / VPC",
+          "values": {
+            "aws": true,
+            "azure": true,
+            "gcp": true,
+            "oci": true,
+            "ibm": true,
+            "alibaba": true
+          }
+        },
+        {
+          "feature": "SLA (Compute)",
+          "values": {
+            "aws": "99.99%",
+            "azure": "99.99%",
+            "gcp": "99.99%",
+            "oci": "99.99%",
+            "ibm": "99.99%",
+            "alibaba": "99.95%"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Key Differentiators",
+      "rows": [
+        {
+          "feature": "AI Strength",
+          "values": {
+            "aws": "Broadest AI service portfolio; custom Trainium chips; Bedrock multi-model",
+            "azure": "Exclusive OpenAI partnership; deepest enterprise AI integration",
+            "gcp": "Best-in-class TPUs; native Gemini; strongest ML research heritage",
+            "oci": "Best price-performance for GPU clusters; largest SuperClusters",
+            "ibm": "Enterprise AI governance (watsonx); hybrid cloud with Red Hat",
+            "alibaba": "Leading cloud in Asia; strong Qwen model ecosystem"
+          }
+        },
+        {
+          "feature": "Best For",
+          "values": {
+            "aws": "Broadest ecosystem, startups to enterprise, multi-model flexibility",
+            "azure": "Enterprise orgs using Microsoft stack, OpenAI-first development",
+            "gcp": "ML researchers, data-intensive workloads, Google ecosystem",
+            "oci": "Cost-optimized GPU training at scale, Oracle DB workloads",
+            "ibm": "Regulated industries, hybrid cloud, AI governance",
+            "alibaba": "Asia-Pacific market, Chinese language AI, e-commerce AI"
+          }
+        }
+      ]
+    }
+  ]
+}

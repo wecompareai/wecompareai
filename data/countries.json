@@ -1,0 +1,182 @@
+[
+  {
+    "country": "United States",
+    "flag": "🇺🇸",
+    "providers": [
+      {
+        "name": "OpenAI",
+        "model": "GPT-4o",
+        "description": "Flagship multimodal model handling text, images, and audio with industry-leading reasoning and coding capabilities.",
+        "features": ["Multimodal (text, image, audio)", "128K context window", "Function calling", "JSON mode", "Vision"]
+      },
+      {
+        "name": "Anthropic",
+        "model": "Claude 3.5 Sonnet",
+        "description": "Safety-focused model excelling at complex reasoning, coding, and extremely long-context document analysis.",
+        "features": ["200K context window", "Computer use (beta)", "Vision capabilities", "Constitutional AI", "Coding"]
+      },
+      {
+        "name": "Google DeepMind",
+        "model": "Gemini 1.5 Pro",
+        "description": "Google's flagship model featuring the largest context window in the industry with full multimodal support.",
+        "features": ["2M context window", "Video & audio understanding", "Code generation", "Google Search grounding", "Multilingual"]
+      },
+      {
+        "name": "Meta AI",
+        "model": "Llama 3.1 405B",
+        "description": "Open-source powerhouse rivaling proprietary models, freely available for research and commercial use.",
+        "features": ["Open source (free)", "128K context window", "Multilingual", "Fine-tuning support", "On-premise deployment"]
+      },
+      {
+        "name": "xAI",
+        "model": "Grok-2",
+        "description": "Real-time information access via X (Twitter) integration with strong coding and STEM reasoning abilities.",
+        "features": ["Real-time X/Twitter data", "Image generation", "STEM reasoning", "128K context", "Uncensored mode"]
+      }
+    ]
+  },
+  {
+    "country": "France",
+    "flag": "🇫🇷",
+    "providers": [
+      {
+        "name": "Mistral AI",
+        "model": "Mistral Large 2",
+        "description": "Europe's leading frontier model with best-in-class multilingual support and Apache 2.0 licensed smaller variants.",
+        "features": ["128K context window", "Top multilingual support", "Function calling", "Code generation", "Open-weight models"]
+      }
+    ]
+  },
+  {
+    "country": "China",
+    "flag": "🇨🇳",
+    "providers": [
+      {
+        "name": "DeepSeek",
+        "model": "DeepSeek-V3",
+        "description": "Open-source model achieving GPT-4-level performance at a fraction of the training cost, trained with only $6M.",
+        "features": ["Open source", "671B MoE architecture", "128K context window", "Coding & math", "Cost-efficient"]
+      },
+      {
+        "name": "Alibaba Cloud",
+        "model": "Qwen2.5-72B",
+        "description": "Top-performing open-source model from Alibaba excelling at coding, math, and multilingual tasks.",
+        "features": ["Open source", "128K context window", "29 languages", "Code & math specialist", "Instruction tuned"]
+      },
+      {
+        "name": "Baidu",
+        "model": "ERNIE 4.0",
+        "description": "Baidu's flagship large language model deeply integrated with its search engine and enterprise ecosystem.",
+        "features": ["Multimodal", "Chinese language expert", "Search integration", "Plugin system", "Enterprise ready"]
+      }
+    ]
+  },
+  {
+    "country": "Canada",
+    "flag": "🇨🇦",
+    "providers": [
+      {
+        "name": "Cohere",
+        "model": "Command R+",
+        "description": "Enterprise-grade model purpose-built for retrieval-augmented generation (RAG) and grounded business workflows.",
+        "features": ["128K context window", "RAG optimized", "Tool use / function calling", "10 languages", "On-premise available"]
+      }
+    ]
+  },
+  {
+    "country": "United Kingdom",
+    "flag": "🇬🇧",
+    "providers": [
+      {
+        "name": "Google DeepMind",
+        "model": "Gemma 2 27B",
+        "description": "Lightweight open-weights model from DeepMind offering strong performance with a small, deployable footprint.",
+        "features": ["Open weights", "8K context window", "Instruction tuned", "On-device capable", "Safety built-in"]
+      }
+    ]
+  },
+  {
+    "country": "India",
+    "flag": "🇮🇳",
+    "providers": [
+      {
+        "name": "Sarvam AI",
+        "model": "Sarvam-2B",
+        "description": "India's leading open-source language model fine-tuned for 10+ Indian languages, built on Mistral and trained on diverse Indic corpora.",
+        "features": ["10+ Indian languages", "Open source", "Speech-to-text", "Translation", "Low-resource language support"]
+      },
+      {
+        "name": "Krutrim (Ola)",
+        "model": "Krutrim-1",
+        "description": "India's first homegrown large language model by Ola, trained on 2 trillion tokens with deep support for Indian languages and cultural context.",
+        "features": ["22 Indian languages", "2T token training", "Multilingual generation", "Indian cultural context", "Enterprise API"]
+      },
+      {
+        "name": "CoRover AI",
+        "model": "BharatGPT",
+        "description": "Government-backed conversational AI built for Bharat, powering services across Indian Railways, banking, and public sector portals.",
+        "features": ["12+ Indian languages", "Voice & text", "Government integrations", "Domain-specific fine-tuning", "On-premise available"]
+      }
+    ]
+  },
+  {
+    "country": "Israel",
+    "flag": "🇮🇱",
+    "providers": [
+      {
+        "name": "AI21 Labs",
+        "model": "Jamba 1.5",
+        "description": "Hybrid SSM-Transformer architecture delivering 256K context at breakthrough speed and efficiency.",
+        "features": ["256K context window", "Hybrid SSM-Transformer", "Function calling", "Structured output", "Enterprise API"]
+      }
+    ]
+  },
+  {
+    "country": "United Arab Emirates",
+    "flag": "🇦🇪",
+    "providers": [
+      {
+        "name": "Technology Innovation Institute",
+        "model": "Falcon 180B",
+        "description": "One of the largest open-source language models, trained on 3.5 trillion tokens by the UAE government.",
+        "features": ["Open source", "180B parameters", "Multimodal variant", "Arabic language support", "Commercial use"]
+      }
+    ]
+  },
+  {
+    "country": "South Korea",
+    "flag": "🇰🇷",
+    "providers": [
+      {
+        "name": "NAVER",
+        "model": "HyperCLOVA X",
+        "description": "Korean-language specialist model trained on massive Korean corpora, deeply embedded in NAVER's ecosystem.",
+        "features": ["Korean language expert", "Multimodal", "Search integration", "Cultural nuance", "Enterprise ready"]
+      }
+    ]
+  },
+  {
+    "country": "Japan",
+    "flag": "🇯🇵",
+    "providers": [
+      {
+        "name": "Preferred Networks",
+        "model": "PLaMo-100B",
+        "description": "Japan's first 100-billion parameter model trained extensively on Japanese text for native language quality.",
+        "features": ["Japanese language expert", "100B parameters", "Open source", "Low latency inference", "Enterprise API"]
+      }
+    ]
+  },
+  {
+    "country": "Germany",
+    "flag": "🇩🇪",
+    "providers": [
+      {
+        "name": "Aleph Alpha",
+        "model": "Pharia-1 7B",
+        "description": "European sovereign AI designed for GDPR compliance and data-sensitive government and enterprise workloads.",
+        "features": ["GDPR compliant", "On-premise deployment", "Explainability API", "Multilingual (EU)", "Sovereign AI"]
+      }
+    ]
+  }
+]

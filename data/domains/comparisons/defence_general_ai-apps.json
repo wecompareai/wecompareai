@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for Defence",
+  "slug": "ai-apps",
+  "description": "Compare AI applications built for defence operations, intelligence gathering, and military logistics",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "palantir", "name": "Palantir AIP", "provider": "Palantir", "logo": "/logos/huggingface.svg", "url": "https://palantir.com" },
+    { "id": "anduril", "name": "Anduril Lattice", "provider": "Anduril", "logo": "/logos/huggingface.svg", "url": "https://anduril.com" },
+    { "id": "shield", "name": "Shield AI Hivemind", "provider": "Shield AI", "logo": "/logos/huggingface.svg", "url": "https://shield.ai" },
+    { "id": "c3", "name": "C3 AI Defence", "provider": "C3.ai", "logo": "/logos/huggingface.svg", "url": "https://c3.ai" }
+  ],
+  "groups": [
+    {
+      "name": "Core Capabilities",
+      "rows": [
+        { "feature": "Command & control", "values": { "palantir": true, "anduril": true, "shield": true, "c3": false } },
+        { "feature": "Sensor fusion", "values": { "palantir": true, "anduril": true, "shield": true, "c3": false } },
+        { "feature": "Predictive analytics", "values": { "palantir": true, "anduril": false, "shield": false, "c3": true } },
+        { "feature": "Autonomous navigation", "values": { "palantir": false, "anduril": true, "shield": true, "c3": false } },
+        { "feature": "Logistics optimization", "values": { "palantir": true, "anduril": false, "shield": false, "c3": true } }
+      ]
+    },
+    {
+      "name": "Deployment",
+      "rows": [
+        { "feature": "Edge computing", "values": { "palantir": true, "anduril": true, "shield": true, "c3": false } },
+        { "feature": "Disconnected operations", "values": { "palantir": true, "anduril": true, "shield": true, "c3": false } },
+        { "feature": "Cloud-native", "values": { "palantir": true, "anduril": true, "shield": false, "c3": true } },
+        { "feature": "Cross-domain solutions", "values": { "palantir": true, "anduril": false, "shield": false, "c3": true } }
+      ]
+    },
+    {
+      "name": "Contracts & Compliance",
+      "rows": [
+        { "feature": "US DoD contracts", "values": { "palantir": true, "anduril": true, "shield": true, "c3": true } },
+        { "feature": "NATO compatible", "values": { "palantir": true, "anduril": true, "shield": false, "c3": true } },
+        { "feature": "Five Eyes nations", "values": { "palantir": true, "anduril": true, "shield": false, "c3": false } },
+        { "feature": "FedRAMP authorized", "values": { "palantir": true, "anduril": false, "shield": false, "c3": true } }
+      ]
+    }
+  ]
+}

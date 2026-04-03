@@ -1,0 +1,288 @@
+{
+  "id": "ai-models",
+  "title": "AI Models Comparison",
+  "description": "Compare popular large language models across providers, pricing, capabilities, and performance.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o",
+      "provider": "OpenAI",
+      "logo": "/logos/openai.svg",
+      "url": "https://openai.com"
+    },
+    {
+      "id": "claude-opus",
+      "name": "Claude Opus 4",
+      "provider": "Anthropic",
+      "logo": "/logos/anthropic.svg",
+      "url": "https://anthropic.com"
+    },
+    {
+      "id": "gemini-2",
+      "name": "Gemini 2.5 Pro",
+      "provider": "Google",
+      "logo": "/logos/google.svg",
+      "url": "https://deepmind.google/technologies/gemini/"
+    },
+    {
+      "id": "llama-3",
+      "name": "LLaMA 3.1 405B",
+      "provider": "Meta",
+      "logo": "/logos/meta.svg",
+      "url": "https://ai.meta.com/llama/"
+    },
+    {
+      "id": "mistral-large",
+      "name": "Mistral Large",
+      "provider": "Mistral AI",
+      "logo": "/logos/mistral.svg",
+      "url": "https://mistral.ai"
+    },
+    {
+      "id": "deepseek-v3",
+      "name": "DeepSeek V3",
+      "provider": "DeepSeek",
+      "logo": "/logos/deepseek.svg",
+      "url": "https://deepseek.com"
+    },
+    {
+      "id": "sonar-pro",
+      "name": "Sonar Pro",
+      "provider": "Perplexity",
+      "logo": "/logos/perplexity.svg",
+      "url": "https://docs.perplexity.ai"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Provider",
+          "values": {
+            "gpt-4o": "OpenAI",
+            "claude-opus": "Anthropic",
+            "gemini-2": "Google",
+            "llama-3": "Meta",
+            "mistral-large": "Mistral AI",
+            "deepseek-v3": "DeepSeek",
+            "sonar-pro": "Perplexity"
+          }
+        },
+        {
+          "feature": "Release Date",
+          "values": {
+            "gpt-4o": "May 2024",
+            "claude-opus": "May 2025",
+            "gemini-2": "Mar 2025",
+            "llama-3": "Jul 2024",
+            "mistral-large": "Feb 2024",
+            "deepseek-v3": "Dec 2024",
+            "sonar-pro": "Feb 2025"
+          }
+        },
+        {
+          "feature": "Open Source",
+          "values": {
+            "gpt-4o": false,
+            "claude-opus": false,
+            "gemini-2": false,
+            "llama-3": true,
+            "mistral-large": false,
+            "deepseek-v3": true,
+            "sonar-pro": false
+          }
+        },
+        {
+          "feature": "Parameters",
+          "values": {
+            "gpt-4o": "Undisclosed",
+            "claude-opus": "Undisclosed",
+            "gemini-2": "Undisclosed",
+            "llama-3": "405B",
+            "mistral-large": "Undisclosed",
+            "deepseek-v3": "671B MoE",
+            "sonar-pro": "Undisclosed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Context & Tokens",
+      "rows": [
+        {
+          "feature": "Max Context Window",
+          "values": {
+            "gpt-4o": "128K",
+            "claude-opus": "200K",
+            "gemini-2": "1M",
+            "llama-3": "128K",
+            "mistral-large": "128K",
+            "deepseek-v3": "128K",
+            "sonar-pro": "200K"
+          }
+        },
+        {
+          "feature": "Max Output Tokens",
+          "values": {
+            "gpt-4o": "16K",
+            "claude-opus": "32K",
+            "gemini-2": "65K",
+            "llama-3": "4K",
+            "mistral-large": "8K",
+            "deepseek-v3": "8K",
+            "sonar-pro": "8K"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing (per 1M tokens)",
+      "rows": [
+        {
+          "feature": "Input Price",
+          "values": {
+            "gpt-4o": "$2.50",
+            "claude-opus": "$15.00",
+            "gemini-2": "$1.25",
+            "llama-3": "Free / Varies",
+            "mistral-large": "$2.00",
+            "deepseek-v3": "$0.27",
+            "sonar-pro": "$3.00"
+          }
+        },
+        {
+          "feature": "Output Price",
+          "values": {
+            "gpt-4o": "$10.00",
+            "claude-opus": "$75.00",
+            "gemini-2": "$10.00",
+            "llama-3": "Free / Varies",
+            "mistral-large": "$6.00",
+            "deepseek-v3": "$1.10",
+            "sonar-pro": "$15.00"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Capabilities",
+      "rows": [
+        {
+          "feature": "Vision (Image Input)",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": true,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": false,
+            "sonar-pro": false
+          }
+        },
+        {
+          "feature": "Function / Tool Calling",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": true,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": true,
+            "sonar-pro": false
+          }
+        },
+        {
+          "feature": "Code Generation",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": true,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": true,
+            "sonar-pro": true
+          }
+        },
+        {
+          "feature": "Structured Output (JSON)",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": true,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": true,
+            "sonar-pro": true
+          }
+        },
+        {
+          "feature": "System Prompts",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": true,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": true,
+            "sonar-pro": true
+          }
+        },
+        {
+          "feature": "Streaming",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": true,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": true,
+            "sonar-pro": true
+          }
+        },
+        {
+          "feature": "Fine-tuning Available",
+          "values": {
+            "gpt-4o": true,
+            "claude-opus": false,
+            "gemini-2": true,
+            "llama-3": true,
+            "mistral-large": true,
+            "deepseek-v3": false,
+            "sonar-pro": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Benchmarks",
+      "rows": [
+        {
+          "feature": "MMLU Score",
+          "values": {
+            "gpt-4o": "88.7%",
+            "claude-opus": "~90%",
+            "gemini-2": "90.0%",
+            "llama-3": "88.6%",
+            "mistral-large": "84.0%",
+            "deepseek-v3": "88.5%",
+            "sonar-pro": "N/A"
+          }
+        },
+        {
+          "feature": "HumanEval (Code)",
+          "values": {
+            "gpt-4o": "90.2%",
+            "claude-opus": "~93%",
+            "gemini-2": "89.0%",
+            "llama-3": "89.0%",
+            "mistral-large": "81.0%",
+            "deepseek-v3": "82.6%",
+            "sonar-pro": "N/A"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,448 @@
+{
+  "id": "ai-energy-providers",
+  "title": "AI Energy Providers Comparison",
+  "description": "Compare energy providers powering AI data centers - capacity, energy type, sustainability, key partnerships, and financial outlook.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "constellation",
+      "name": "Constellation Energy",
+      "provider": "Constellation Energy Corp.",
+      "logo": "/logos/constellation.svg",
+      "url": "https://www.constellationenergy.com"
+    },
+    {
+      "id": "nextera",
+      "name": "NextEra Energy",
+      "provider": "NextEra Energy Inc.",
+      "logo": "/logos/nextera.svg",
+      "url": "https://www.nexteraenergy.com"
+    },
+    {
+      "id": "crusoe",
+      "name": "Crusoe Energy",
+      "provider": "Crusoe Energy Systems",
+      "logo": "/logos/crusoe.svg",
+      "url": "https://www.crusoe.ai"
+    },
+    {
+      "id": "lancium",
+      "name": "Lancium",
+      "provider": "Lancium Inc.",
+      "logo": "/logos/lancium.svg",
+      "url": "https://lancium.com"
+    },
+    {
+      "id": "oklo",
+      "name": "Oklo",
+      "provider": "Oklo Inc.",
+      "logo": "/logos/oklo.svg",
+      "url": "https://oklo.com"
+    },
+    {
+      "id": "nuscale",
+      "name": "NuScale Power",
+      "provider": "NuScale Power Corp.",
+      "logo": "/logos/nuscale.svg",
+      "url": "https://www.nuscalepower.com"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Headquarters",
+          "values": {
+            "constellation": "Baltimore, MD",
+            "nextera": "Juno Beach, FL",
+            "crusoe": "San Francisco, CA",
+            "lancium": "Houston, TX",
+            "oklo": "Santa Clara, CA",
+            "nuscale": "Portland, OR"
+          }
+        },
+        {
+          "feature": "Founded",
+          "values": {
+            "constellation": "2022 (spun off from Exelon)",
+            "nextera": "1925",
+            "crusoe": "2018",
+            "lancium": "2017",
+            "oklo": "2013",
+            "nuscale": "2007"
+          }
+        },
+        {
+          "feature": "Company Type",
+          "values": {
+            "constellation": "Public (NASDAQ: CEG)",
+            "nextera": "Public (NYSE: NEE)",
+            "crusoe": "Private (~$10B valuation)",
+            "lancium": "Private",
+            "oklo": "Public (NYSE: OKLO)",
+            "nuscale": "Public (NYSE: SMR)"
+          }
+        },
+        {
+          "feature": "Business Model",
+          "values": {
+            "constellation": "Utility / Power Generator",
+            "nextera": "Utility / Renewable Developer",
+            "crusoe": "AI Cloud + Data Center Operator",
+            "lancium": "Clean Energy Campus Developer",
+            "oklo": "Advanced Reactor Developer",
+            "nuscale": "Small Modular Reactor Developer"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Energy Type & Source",
+      "rows": [
+        {
+          "feature": "Primary Energy Source",
+          "values": {
+            "constellation": "Nuclear",
+            "nextera": "Wind & Solar",
+            "crusoe": "Natural Gas (Stranded/Flared) + Renewables",
+            "lancium": "Wind + Solar + Battery Storage",
+            "oklo": "Advanced Fission (Fast Reactor)",
+            "nuscale": "Nuclear (Small Modular Reactor)"
+          }
+        },
+        {
+          "feature": "Nuclear Power",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": false,
+            "lancium": false,
+            "oklo": true,
+            "nuscale": true
+          }
+        },
+        {
+          "feature": "Wind Energy",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": false,
+            "lancium": true,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Solar Energy",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": false,
+            "lancium": true,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Natural Gas",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": true,
+            "lancium": false,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Battery Storage",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": false,
+            "lancium": true,
+            "oklo": false,
+            "nuscale": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Capacity & Scale",
+      "rows": [
+        {
+          "feature": "Total Generation Capacity",
+          "values": {
+            "constellation": "~32 GW (largest US nuclear fleet)",
+            "nextera": "~73 GW (largest renewable fleet)",
+            "crusoe": "~3 GW (planned by 2026)",
+            "lancium": "~1.2 GW (Clean Campus)",
+            "oklo": "Pre-commercial (75 MWe per unit)",
+            "nuscale": "Pre-commercial (77 MWe per module)"
+          }
+        },
+        {
+          "feature": "AI-Dedicated Capacity",
+          "values": {
+            "constellation": "~2+ GW (Crane Clean Energy Center + contracts)",
+            "nextera": "~15 GW planned for data centers by 2035",
+            "crusoe": "1.2 GW (Abilene campus) + 1.8 GW (Wyoming)",
+            "lancium": "1.2 GW (Abilene Clean Campus)",
+            "oklo": "12 GW pipeline (Switch deal through 2044)",
+            "nuscale": "6 GW (ENTRA1/TVA deployment program)"
+          }
+        },
+        {
+          "feature": "Largest Single Facility",
+          "values": {
+            "constellation": "Crane Clean Energy Center (835 MW)",
+            "nextera": "GW-scale data center hubs (planned)",
+            "crusoe": "1.2 GW Abilene, TX campus",
+            "lancium": "1.2 GW Abilene Clean Campus",
+            "oklo": "1.2 GW Meta campus (Ohio, planned)",
+            "nuscale": "924 MWe (12-module plant)"
+          }
+        },
+        {
+          "feature": "Scalability",
+          "tooltip": "Ability to scale up capacity for growing AI demands",
+          "values": {
+            "constellation": "Existing fleet + restart projects",
+            "nextera": "Massive pipeline (up to 30 GW by 2035)",
+            "crusoe": "Rapid expansion with VC funding",
+            "lancium": "Modular campus design",
+            "oklo": "Modular reactor deployments",
+            "nuscale": "Scalable 1-12 module configurations"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Data Center Infrastructure",
+      "rows": [
+        {
+          "feature": "Owns/Operates AI Data Centers",
+          "values": {
+            "constellation": false,
+            "nextera": false,
+            "crusoe": true,
+            "lancium": true,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "GPU Cloud Services",
+          "values": {
+            "constellation": false,
+            "nextera": false,
+            "crusoe": true,
+            "lancium": false,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "GPU Support (Nvidia)",
+          "values": {
+            "constellation": "N/A (power only)",
+            "nextera": "N/A (power only)",
+            "crusoe": "Up to 400,000 GB200 GPUs",
+            "lancium": "Campus hosts GPU tenants",
+            "oklo": "N/A (power only)",
+            "nuscale": "N/A (power only)"
+          }
+        },
+        {
+          "feature": "Co-located Power & Compute",
+          "tooltip": "Power generation on-site or directly connected to data center",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": true,
+            "lancium": true,
+            "oklo": "Planned",
+            "nuscale": "Planned"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Key AI Partnerships",
+      "rows": [
+        {
+          "feature": "Microsoft",
+          "values": {
+            "constellation": "20-year PPA (Crane restart)",
+            "nextera": false,
+            "crusoe": false,
+            "lancium": false,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Google",
+          "values": {
+            "constellation": false,
+            "nextera": "Landmark energy & AI partnership (3.5 GW+)",
+            "crusoe": false,
+            "lancium": false,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Meta",
+          "values": {
+            "constellation": false,
+            "nextera": "2.5 GW across 11 PPAs",
+            "crusoe": false,
+            "lancium": false,
+            "oklo": "1.2 GW nuclear campus (Ohio)",
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Nvidia",
+          "values": {
+            "constellation": false,
+            "nextera": false,
+            "crusoe": "Strategic investor + GPU partner",
+            "lancium": false,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "Other Major Partners",
+          "values": {
+            "constellation": "Calpine (acquired Jan 2026)",
+            "nextera": "Basin Electric, multiple utilities",
+            "crusoe": "Blue Owl Capital ($3.4B JV)",
+            "lancium": "Crusoe (campus tenant), Blackstone ($500M)",
+            "oklo": "Switch (12 GW through 2044)",
+            "nuscale": "ENTRA1 Energy, TVA (6 GW program)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sustainability & Carbon Profile",
+      "rows": [
+        {
+          "feature": "Carbon-Free Energy %",
+          "values": {
+            "constellation": "~90% (largest clean energy producer in US)",
+            "nextera": "~70%+ (largest wind/solar operator)",
+            "crusoe": "Partial (reduces methane flaring by ~99%)",
+            "lancium": "High (wind + solar + storage)",
+            "oklo": "100% (zero-emission nuclear)",
+            "nuscale": "100% (zero-emission nuclear)"
+          }
+        },
+        {
+          "feature": "Net Zero Target",
+          "values": {
+            "constellation": "2040",
+            "nextera": "2045",
+            "crusoe": "Not disclosed",
+            "lancium": "Not disclosed",
+            "oklo": "Carbon-free by design",
+            "nuscale": "Carbon-free by design"
+          }
+        },
+        {
+          "feature": "Uses Recycled/Waste Energy",
+          "tooltip": "Utilizes waste energy sources or recycled fuel",
+          "values": {
+            "constellation": false,
+            "nextera": false,
+            "crusoe": true,
+            "lancium": false,
+            "oklo": true,
+            "nuscale": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Financial Overview",
+      "rows": [
+        {
+          "feature": "Revenue (Latest)",
+          "values": {
+            "constellation": "~$25B (2024)",
+            "nextera": "~$24B (2024)",
+            "crusoe": "~$1B (2025 projected)",
+            "lancium": "Not disclosed",
+            "oklo": "Pre-revenue",
+            "nuscale": "Pre-revenue"
+          }
+        },
+        {
+          "feature": "Market Cap / Valuation",
+          "values": {
+            "constellation": "~$75B+",
+            "nextera": "~$150B+",
+            "crusoe": "~$10B (Series E, Oct 2025)",
+            "lancium": "Not disclosed",
+            "oklo": "~$5B+",
+            "nuscale": "~$3B+"
+          }
+        },
+        {
+          "feature": "Recent Major Funding / Deal",
+          "values": {
+            "constellation": "Calpine acquisition (Jan 2026)",
+            "nextera": "Google partnership (Dec 2025)",
+            "crusoe": "$1.375B Series E (Oct 2025)",
+            "lancium": "$500M from Blackstone",
+            "oklo": "Meta 1.2 GW deal (Jan 2026)",
+            "nuscale": "ENTRA1/TVA 6 GW program (Sep 2025)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Technology Readiness",
+      "rows": [
+        {
+          "feature": "Commercial Operations",
+          "values": {
+            "constellation": true,
+            "nextera": true,
+            "crusoe": true,
+            "lancium": true,
+            "oklo": false,
+            "nuscale": false
+          }
+        },
+        {
+          "feature": "NRC / Regulatory Approval",
+          "values": {
+            "constellation": "Fully licensed fleet",
+            "nextera": "Fully licensed fleet",
+            "crusoe": "N/A",
+            "lancium": "N/A",
+            "oklo": "Under review (resubmitted)",
+            "nuscale": "First NRC-certified SMR design"
+          }
+        },
+        {
+          "feature": "Expected AI Power Delivery",
+          "tooltip": "When the company can deliver significant power for AI workloads",
+          "values": {
+            "constellation": "Now (existing fleet)",
+            "nextera": "Now + 2026-2028 pipeline",
+            "crusoe": "Now (Abilene mid-2026 full scale)",
+            "lancium": "2025 (Phase 1 operational)",
+            "oklo": "Late 2020s (first reactor)",
+            "nuscale": "Late 2020s (first commercial plant)"
+          }
+        }
+      ]
+    }
+  ]
+}

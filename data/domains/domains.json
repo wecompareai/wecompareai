@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Pharmaceutical",
+    "slug": "pharmaceutical",
+    "description": "AI tools and platforms for pharmaceutical research, drug discovery, and clinical trials",
+    "icon": "brain",
+    "order": 1
+  },
+  {
+    "name": "Law",
+    "slug": "law",
+    "description": "AI solutions for legal research, contract analysis, and compliance across international and domestic law",
+    "icon": "shield",
+    "order": 2
+  },
+  {
+    "name": "Education",
+    "slug": "education",
+    "description": "AI platforms for learning, tutoring, curriculum development, and educational assessment",
+    "icon": "layers",
+    "order": 3
+  },
+  {
+    "name": "Defence",
+    "slug": "defence",
+    "description": "AI technologies for defence strategy, intelligence analysis, and military operations",
+    "icon": "lock",
+    "order": 4
+  },
+  {
+    "name": "Medical",
+    "slug": "medical",
+    "description": "AI tools for clinical diagnostics, patient care, medical imaging, and healthcare management",
+    "icon": "zap",
+    "order": 5
+  },
+  {
+    "name": "IT Development",
+    "slug": "it-development",
+    "description": "AI-powered tools for software development, code generation, and developer productivity",
+    "icon": "code",
+    "order": 6
+  },
+  {
+    "name": "IT Testing",
+    "slug": "it-testing",
+    "description": "AI tools for software testing, quality assurance, and test automation",
+    "icon": "cpu",
+    "order": 7
+  },
+  {
+    "name": "IT Management",
+    "slug": "it-management",
+    "description": "AI solutions for IT operations, infrastructure management, and service delivery",
+    "icon": "server",
+    "order": 8
+  },
+  {
+    "name": "Sports",
+    "slug": "sports",
+    "description": "AI applications for sports analytics, performance tracking, and fan engagement",
+    "icon": "globe",
+    "order": 9
+  }
+]

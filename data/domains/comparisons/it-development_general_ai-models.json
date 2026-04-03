@@ -1,0 +1,42 @@
+{
+  "title": "AI Models for IT Development",
+  "slug": "ai-models",
+  "description": "Compare AI models optimized for code generation, debugging, and software engineering tasks",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "gpt4", "name": "GPT-4o", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude Opus 4.6", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "deepseek", "name": "DeepSeek V3", "provider": "DeepSeek", "logo": "/logos/deepseek.svg", "url": "https://deepseek.com" },
+    { "id": "gemini", "name": "Gemini 2.5 Pro", "provider": "Google", "logo": "/logos/google.svg", "url": "https://deepmind.google/technologies/gemini" }
+  ],
+  "groups": [
+    {
+      "name": "Coding Benchmarks",
+      "rows": [
+        { "feature": "HumanEval pass rate", "values": { "gpt4": "92%", "claude": "94%", "deepseek": "90%", "gemini": "88%" } },
+        { "feature": "SWE-bench Verified", "values": { "gpt4": "38%", "claude": "72%", "deepseek": "42%", "gemini": "35%" } },
+        { "feature": "Polyglot benchmark", "values": { "gpt4": "High", "claude": "High", "deepseek": "High", "gemini": "High" } },
+        { "feature": "Agentic coding capability", "values": { "gpt4": "Good", "claude": "Excellent", "deepseek": "Good", "gemini": "Good" } }
+      ]
+    },
+    {
+      "name": "Development Features",
+      "rows": [
+        { "feature": "Multi-file editing", "values": { "gpt4": true, "claude": true, "deepseek": true, "gemini": true } },
+        { "feature": "Test generation", "values": { "gpt4": true, "claude": true, "deepseek": true, "gemini": true } },
+        { "feature": "Bug detection", "values": { "gpt4": true, "claude": true, "deepseek": true, "gemini": true } },
+        { "feature": "Documentation generation", "values": { "gpt4": true, "claude": true, "deepseek": true, "gemini": true } },
+        { "feature": "Code review quality", "values": { "gpt4": "Good", "claude": "Excellent", "deepseek": "Good", "gemini": "Good" } }
+      ]
+    },
+    {
+      "name": "Technical Specs",
+      "rows": [
+        { "feature": "Context window", "values": { "gpt4": "128K", "claude": "200K", "deepseek": "128K", "gemini": "1M" } },
+        { "feature": "Open source", "values": { "gpt4": false, "claude": false, "deepseek": true, "gemini": false } },
+        { "feature": "Pricing per 1M tokens (input)", "values": { "gpt4": "$2.50", "claude": "$15.00", "deepseek": "$0.27", "gemini": "$1.25" } },
+        { "feature": "Fine-tuning available", "values": { "gpt4": true, "claude": false, "deepseek": true, "gemini": true } }
+      ]
+    }
+  ]
+}

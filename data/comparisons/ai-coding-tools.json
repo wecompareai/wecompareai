@@ -1,0 +1,308 @@
+{
+  "id": "ai-coding-tools",
+  "title": "AI Coding Tools Comparison",
+  "description": "Compare AI-powered coding assistants - IDE support, AI models, features, and pricing plans.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot",
+      "provider": "GitHub / Microsoft",
+      "logo": "/logos/copilot.svg",
+      "url": "https://github.com/features/copilot"
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "provider": "Cursor Inc.",
+      "logo": "/logos/cursor.svg",
+      "url": "https://cursor.com"
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "provider": "Anthropic",
+      "logo": "/logos/anthropic.svg",
+      "url": "https://claude.ai/claude-code"
+    },
+    {
+      "id": "windsurf",
+      "name": "Windsurf",
+      "provider": "Codeium",
+      "logo": "/logos/windsurf.svg",
+      "url": "https://windsurf.com"
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "provider": "Sourcegraph",
+      "logo": "/logos/sourcegraph.svg",
+      "url": "https://sourcegraph.com/cody"
+    },
+    {
+      "id": "tabnine",
+      "name": "Tabnine",
+      "provider": "Tabnine",
+      "logo": "/logos/tabnine.svg",
+      "url": "https://www.tabnine.com"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Company",
+          "values": {
+            "copilot": "GitHub / Microsoft",
+            "cursor": "Cursor Inc.",
+            "claude-code": "Anthropic",
+            "windsurf": "Codeium",
+            "cody": "Sourcegraph",
+            "tabnine": "Tabnine"
+          }
+        },
+        {
+          "feature": "Type",
+          "values": {
+            "copilot": "IDE Extension + Chat",
+            "cursor": "Full IDE (VS Code fork)",
+            "claude-code": "CLI Agent",
+            "windsurf": "Full IDE (VS Code fork)",
+            "cody": "IDE Extension + Chat",
+            "tabnine": "IDE Extension"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing",
+      "rows": [
+        {
+          "feature": "Free Tier",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": false,
+            "windsurf": true,
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "Pro Price",
+          "values": {
+            "copilot": "$10/mo",
+            "cursor": "$20/mo",
+            "claude-code": "$20/mo (Max plan)",
+            "windsurf": "$15/mo",
+            "cody": "$9/mo",
+            "tabnine": "$12/mo"
+          }
+        },
+        {
+          "feature": "Enterprise Plan",
+          "values": {
+            "copilot": "$19/user/mo",
+            "cursor": "$40/user/mo",
+            "claude-code": "Custom",
+            "windsurf": "$30/user/mo",
+            "cody": "Custom",
+            "tabnine": "$39/user/mo"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Models",
+      "rows": [
+        {
+          "feature": "GPT-4o",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": false,
+            "windsurf": true,
+            "cody": true,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Claude Sonnet/Opus",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": true,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Gemini",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": false,
+            "windsurf": false,
+            "cody": true,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Custom / Open Source Models",
+          "values": {
+            "copilot": false,
+            "cursor": true,
+            "claude-code": false,
+            "windsurf": false,
+            "cody": true,
+            "tabnine": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Features",
+      "rows": [
+        {
+          "feature": "Code Autocomplete",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": false,
+            "windsurf": true,
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "Chat / Q&A",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "Multi-file Editing",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": false,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Codebase Context",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "Terminal / CLI Integration",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": false,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Agentic Mode (Autonomous)",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": false,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Git Integration",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": false,
+            "tabnine": false
+          }
+        },
+        {
+          "feature": "Web Search",
+          "values": {
+            "copilot": true,
+            "cursor": true,
+            "claude-code": true,
+            "windsurf": true,
+            "cody": false,
+            "tabnine": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "IDE Support",
+      "rows": [
+        {
+          "feature": "VS Code",
+          "values": {
+            "copilot": true,
+            "cursor": "Native (fork)",
+            "claude-code": true,
+            "windsurf": "Native (fork)",
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "JetBrains IDEs",
+          "values": {
+            "copilot": true,
+            "cursor": false,
+            "claude-code": true,
+            "windsurf": false,
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "Neovim",
+          "values": {
+            "copilot": true,
+            "cursor": false,
+            "claude-code": true,
+            "windsurf": false,
+            "cody": true,
+            "tabnine": true
+          }
+        },
+        {
+          "feature": "Xcode",
+          "values": {
+            "copilot": true,
+            "cursor": false,
+            "claude-code": false,
+            "windsurf": false,
+            "cody": false,
+            "tabnine": false
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for Education",
+  "slug": "ai-providers",
+  "description": "Compare leading AI providers offering solutions for educational institutions, e-learning, and academic research",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "google", "name": "Google for Education AI", "provider": "Google", "logo": "/logos/google.svg", "url": "https://edu.google.com" },
+    { "id": "azure", "name": "Azure AI for Education", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com" },
+    { "id": "anthropic", "name": "Anthropic", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" }
+  ],
+  "groups": [
+    {
+      "name": "Learning & Teaching",
+      "rows": [
+        { "feature": "Adaptive learning paths", "values": { "openai": true, "google": true, "azure": true, "anthropic": false } },
+        { "feature": "Automated tutoring", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "Curriculum design assistance", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "Real-time feedback", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "Multi-language content", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } }
+      ]
+    },
+    {
+      "name": "Assessment & Analytics",
+      "rows": [
+        { "feature": "Auto-grading essays", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "Plagiarism detection", "values": { "openai": false, "google": true, "azure": false, "anthropic": false } },
+        { "feature": "Learning analytics dashboard", "values": { "openai": false, "google": true, "azure": true, "anthropic": false } },
+        { "feature": "Student risk prediction", "values": { "openai": false, "google": true, "azure": true, "anthropic": false } }
+      ]
+    },
+    {
+      "name": "Compliance & Safety",
+      "rows": [
+        { "feature": "FERPA compliant", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "COPPA compliant", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "Content safety filters", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } },
+        { "feature": "Education-specific pricing", "values": { "openai": true, "google": true, "azure": true, "anthropic": true } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for International Law",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for international treaties, cross-border disputes, and global legal compliance",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "google", "name": "Google Cloud AI", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com/ai" },
+    { "id": "aws", "name": "AWS AI Services", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/ai" },
+    { "id": "azure", "name": "Azure AI", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com/en-us/solutions/ai" }
+  ],
+  "groups": [
+    {
+      "name": "Legal Research",
+      "rows": [
+        { "feature": "Treaty database access", "values": { "openai": false, "google": true, "aws": false, "azure": true } },
+        { "feature": "Multi-language legal analysis", "values": { "openai": true, "google": true, "aws": true, "azure": true } },
+        { "feature": "Case law cross-referencing", "values": { "openai": true, "google": true, "aws": false, "azure": true } },
+        { "feature": "International arbitration support", "values": { "openai": true, "google": false, "aws": false, "azure": true } },
+        { "feature": "Jurisdictional conflict analysis", "values": { "openai": true, "google": true, "aws": false, "azure": false } }
+      ]
+    },
+    {
+      "name": "Compliance & Sanctions",
+      "rows": [
+        { "feature": "Sanctions screening", "values": { "openai": false, "google": true, "aws": true, "azure": true } },
+        { "feature": "AML compliance tools", "values": { "openai": false, "google": true, "aws": true, "azure": true } },
+        { "feature": "GDPR analysis", "values": { "openai": true, "google": true, "aws": true, "azure": true } },
+        { "feature": "Trade compliance monitoring", "values": { "openai": false, "google": false, "aws": true, "azure": true } }
+      ]
+    },
+    {
+      "name": "Platform Features",
+      "rows": [
+        { "feature": "Supported languages", "values": { "openai": "95+", "google": "100+", "aws": "75+", "azure": "90+" } },
+        { "feature": "Data residency options", "values": { "openai": "Limited", "google": "30+ regions", "aws": "30+ regions", "azure": "60+ regions" } },
+        { "feature": "SOC 2 compliant", "values": { "openai": true, "google": true, "aws": true, "azure": true } },
+        { "feature": "API rate limits", "values": { "openai": "Tier-based", "google": "Generous", "aws": "Scalable", "azure": "Scalable" } }
+      ]
+    }
+  ]
+}

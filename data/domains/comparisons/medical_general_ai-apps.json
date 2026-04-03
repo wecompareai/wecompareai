@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for Medical",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered applications for clinical practice, diagnostics, and healthcare delivery",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "nuance", "name": "Nuance DAX", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://nuance.com/healthcare/ambient-clinical-intelligence.html" },
+    { "id": "viz", "name": "Viz.ai", "provider": "Viz.ai", "logo": "/logos/huggingface.svg", "url": "https://viz.ai" },
+    { "id": "aidoc", "name": "Aidoc", "provider": "Aidoc", "logo": "/logos/huggingface.svg", "url": "https://aidoc.com" },
+    { "id": "paige", "name": "Paige AI", "provider": "Paige", "logo": "/logos/huggingface.svg", "url": "https://paige.ai" }
+  ],
+  "groups": [
+    {
+      "name": "Clinical Features",
+      "rows": [
+        { "feature": "Clinical documentation", "values": { "nuance": true, "viz": false, "aidoc": false, "paige": false } },
+        { "feature": "Medical imaging triage", "values": { "nuance": false, "viz": true, "aidoc": true, "paige": true } },
+        { "feature": "Real-time alerts", "values": { "nuance": false, "viz": true, "aidoc": true, "paige": false } },
+        { "feature": "Pathology analysis", "values": { "nuance": false, "viz": false, "aidoc": false, "paige": true } },
+        { "feature": "Ambient listening", "values": { "nuance": true, "viz": false, "aidoc": false, "paige": false } }
+      ]
+    },
+    {
+      "name": "Specialties Covered",
+      "rows": [
+        { "feature": "Radiology", "values": { "nuance": true, "viz": true, "aidoc": true, "paige": false } },
+        { "feature": "Cardiology", "values": { "nuance": true, "viz": true, "aidoc": true, "paige": false } },
+        { "feature": "Neurology (stroke)", "values": { "nuance": false, "viz": true, "aidoc": true, "paige": false } },
+        { "feature": "Oncology/Pathology", "values": { "nuance": false, "viz": false, "aidoc": false, "paige": true } }
+      ]
+    },
+    {
+      "name": "Regulatory & Pricing",
+      "rows": [
+        { "feature": "FDA cleared", "values": { "nuance": true, "viz": true, "aidoc": true, "paige": true } },
+        { "feature": "CE marked (EU)", "values": { "nuance": true, "viz": true, "aidoc": true, "paige": true } },
+        { "feature": "EHR integration", "values": { "nuance": true, "viz": true, "aidoc": true, "paige": true } },
+        { "feature": "Pricing model", "values": { "nuance": "Per-provider", "viz": "Per-hospital", "aidoc": "Per-hospital", "paige": "Per-test" } }
+      ]
+    }
+  ]
+}

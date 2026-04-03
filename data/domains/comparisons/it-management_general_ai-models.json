@@ -1,0 +1,41 @@
+{
+  "title": "AI Models for IT Management",
+  "slug": "ai-models",
+  "description": "Compare AI models used for IT operations analytics, infrastructure management, and IT service optimization",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "gpt4", "name": "GPT-4o", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude 4.5 Sonnet", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "gemini", "name": "Gemini 2.5 Pro", "provider": "Google", "logo": "/logos/google.svg", "url": "https://deepmind.google/technologies/gemini" },
+    { "id": "llama", "name": "Llama 3.1 70B", "provider": "Meta", "logo": "/logos/meta.svg", "url": "https://ai.meta.com/llama" }
+  ],
+  "groups": [
+    {
+      "name": "Operational Intelligence",
+      "rows": [
+        { "feature": "Log pattern analysis", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "llama": "Good" } },
+        { "feature": "Root cause analysis", "values": { "gpt4": "Good", "claude": "Excellent", "gemini": "Good", "llama": "Fair" } },
+        { "feature": "Runbook generation", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "llama": "Good" } },
+        { "feature": "Alert correlation", "values": { "gpt4": "Good", "claude": "Good", "gemini": "Good", "llama": "Fair" } }
+      ]
+    },
+    {
+      "name": "IT Documentation",
+      "rows": [
+        { "feature": "Architecture documentation", "values": { "gpt4": true, "claude": true, "gemini": true, "llama": true } },
+        { "feature": "Change request drafting", "values": { "gpt4": true, "claude": true, "gemini": true, "llama": true } },
+        { "feature": "Incident report generation", "values": { "gpt4": true, "claude": true, "gemini": true, "llama": true } },
+        { "feature": "Policy document review", "values": { "gpt4": true, "claude": true, "gemini": true, "llama": false } }
+      ]
+    },
+    {
+      "name": "Technical Specs",
+      "rows": [
+        { "feature": "Context window", "values": { "gpt4": "128K", "claude": "200K", "gemini": "1M", "llama": "128K" } },
+        { "feature": "Structured output (JSON)", "values": { "gpt4": true, "claude": true, "gemini": true, "llama": true } },
+        { "feature": "Function calling", "values": { "gpt4": true, "claude": true, "gemini": true, "llama": true } },
+        { "feature": "Open source", "values": { "gpt4": false, "claude": false, "gemini": false, "llama": true } }
+      ]
+    }
+  ]
+}

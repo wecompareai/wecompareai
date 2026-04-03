@@ -1,0 +1,41 @@
+{
+  "title": "AI Models for International Law",
+  "slug": "ai-models",
+  "description": "Compare AI models suited for international legal research, treaty analysis, and cross-border legal work",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "gpt4", "name": "GPT-4o", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "claude", "name": "Claude 4.5 Sonnet", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "gemini", "name": "Gemini 2.5 Pro", "provider": "Google", "logo": "/logos/google.svg", "url": "https://deepmind.google/technologies/gemini" },
+    { "id": "mistral", "name": "Mistral Large", "provider": "Mistral AI", "logo": "/logos/mistral.svg", "url": "https://mistral.ai" }
+  ],
+  "groups": [
+    {
+      "name": "Legal Reasoning",
+      "rows": [
+        { "feature": "Treaty interpretation accuracy", "values": { "gpt4": "High", "claude": "High", "gemini": "High", "mistral": "Medium" } },
+        { "feature": "Multi-jurisdictional analysis", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": true } },
+        { "feature": "Legal citation accuracy", "values": { "gpt4": "Good", "claude": "Excellent", "gemini": "Good", "mistral": "Fair" } },
+        { "feature": "Conflict of laws reasoning", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": false } }
+      ]
+    },
+    {
+      "name": "Language & Translation",
+      "rows": [
+        { "feature": "Legal translation quality", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Excellent", "mistral": "Good" } },
+        { "feature": "UN official languages", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": true } },
+        { "feature": "Legal terminology precision", "values": { "gpt4": "High", "claude": "High", "gemini": "High", "mistral": "Medium" } },
+        { "feature": "Document summarization", "values": { "gpt4": "Excellent", "claude": "Excellent", "gemini": "Good", "mistral": "Good" } }
+      ]
+    },
+    {
+      "name": "Technical Specs",
+      "rows": [
+        { "feature": "Context window", "values": { "gpt4": "128K", "claude": "200K", "gemini": "1M", "mistral": "128K" } },
+        { "feature": "Fine-tuning available", "values": { "gpt4": true, "claude": false, "gemini": true, "mistral": true } },
+        { "feature": "Pricing per 1M tokens (input)", "values": { "gpt4": "$2.50", "claude": "$3.00", "gemini": "$1.25", "mistral": "$2.00" } },
+        { "feature": "EU data processing", "values": { "gpt4": true, "claude": true, "gemini": true, "mistral": true } }
+      ]
+    }
+  ]
+}

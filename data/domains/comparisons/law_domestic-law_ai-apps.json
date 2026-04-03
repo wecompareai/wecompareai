@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for Domestic Law",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered legal applications for domestic practice, case management, and local regulatory compliance",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "casetext", "name": "CoCounsel", "provider": "Thomson Reuters", "logo": "/logos/huggingface.svg", "url": "https://casetext.com" },
+    { "id": "lexisnexis", "name": "Lexis+ AI", "provider": "LexisNexis", "logo": "/logos/huggingface.svg", "url": "https://lexisnexis.com" },
+    { "id": "evo", "name": "EvenUp", "provider": "EvenUp", "logo": "/logos/huggingface.svg", "url": "https://evenuplaw.com" },
+    { "id": "spellbook", "name": "Spellbook", "provider": "Rally Legal", "logo": "/logos/huggingface.svg", "url": "https://spellbook.legal" }
+  ],
+  "groups": [
+    {
+      "name": "Core Capabilities",
+      "rows": [
+        { "feature": "Legal research assistant", "values": { "casetext": true, "lexisnexis": true, "evo": false, "spellbook": false } },
+        { "feature": "Document drafting", "values": { "casetext": true, "lexisnexis": true, "evo": true, "spellbook": true } },
+        { "feature": "Contract review", "values": { "casetext": true, "lexisnexis": true, "evo": false, "spellbook": true } },
+        { "feature": "Demand letter generation", "values": { "casetext": false, "lexisnexis": false, "evo": true, "spellbook": false } },
+        { "feature": "Case timeline creation", "values": { "casetext": true, "lexisnexis": false, "evo": true, "spellbook": false } }
+      ]
+    },
+    {
+      "name": "Practice Area Focus",
+      "rows": [
+        { "feature": "Personal injury", "values": { "casetext": true, "lexisnexis": true, "evo": true, "spellbook": false } },
+        { "feature": "Corporate/commercial", "values": { "casetext": true, "lexisnexis": true, "evo": false, "spellbook": true } },
+        { "feature": "Litigation support", "values": { "casetext": true, "lexisnexis": true, "evo": true, "spellbook": false } },
+        { "feature": "Real estate transactions", "values": { "casetext": false, "lexisnexis": true, "evo": false, "spellbook": true } }
+      ]
+    },
+    {
+      "name": "Integration & Pricing",
+      "rows": [
+        { "feature": "Microsoft Word plugin", "values": { "casetext": false, "lexisnexis": true, "evo": false, "spellbook": true } },
+        { "feature": "Case management integration", "values": { "casetext": true, "lexisnexis": true, "evo": true, "spellbook": false } },
+        { "feature": "Starting price/month", "values": { "casetext": "$250+", "lexisnexis": "$200+", "evo": "$199+", "spellbook": "$100+" } },
+        { "feature": "Free trial", "values": { "casetext": true, "lexisnexis": true, "evo": true, "spellbook": true } }
+      ]
+    }
+  ]
+}

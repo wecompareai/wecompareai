@@ -1,0 +1,42 @@
+{
+  "title": "AI Providers for Defence",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for defence strategy, intelligence analysis, and military operations",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "aws", "name": "AWS GovCloud", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/govcloud" },
+    { "id": "azure", "name": "Azure Government", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/government" },
+    { "id": "google", "name": "Google Public Sector", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com/public-sector" },
+    { "id": "openai", "name": "OpenAI for Government", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" }
+  ],
+  "groups": [
+    {
+      "name": "Intelligence & Surveillance",
+      "rows": [
+        { "feature": "Satellite imagery analysis", "values": { "aws": true, "azure": true, "google": true, "openai": false } },
+        { "feature": "Signal intelligence processing", "values": { "aws": true, "azure": true, "google": false, "openai": false } },
+        { "feature": "Open-source intelligence (OSINT)", "values": { "aws": true, "azure": true, "google": true, "openai": true } },
+        { "feature": "Predictive threat analysis", "values": { "aws": true, "azure": true, "google": true, "openai": true } },
+        { "feature": "Pattern-of-life analysis", "values": { "aws": true, "azure": true, "google": false, "openai": false } }
+      ]
+    },
+    {
+      "name": "Operations & Logistics",
+      "rows": [
+        { "feature": "Supply chain optimization", "values": { "aws": true, "azure": true, "google": true, "openai": false } },
+        { "feature": "Predictive maintenance", "values": { "aws": true, "azure": true, "google": true, "openai": false } },
+        { "feature": "Mission planning support", "values": { "aws": true, "azure": true, "google": false, "openai": true } },
+        { "feature": "Autonomous systems AI", "values": { "aws": true, "azure": true, "google": false, "openai": false } }
+      ]
+    },
+    {
+      "name": "Security & Compliance",
+      "rows": [
+        { "feature": "FedRAMP High", "values": { "aws": true, "azure": true, "google": true, "openai": false } },
+        { "feature": "IL5 certification", "values": { "aws": true, "azure": true, "google": true, "openai": false } },
+        { "feature": "Air-gapped deployment", "values": { "aws": true, "azure": true, "google": false, "openai": false } },
+        { "feature": "ITAR compliant", "values": { "aws": true, "azure": true, "google": true, "openai": false } }
+      ]
+    }
+  ]
+}

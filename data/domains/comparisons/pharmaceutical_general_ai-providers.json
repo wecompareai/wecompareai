@@ -1,0 +1,51 @@
+{
+  "title": "AI Providers for Pharmaceutical",
+  "slug": "ai-providers",
+  "description": "Compare leading AI providers offering solutions for pharmaceutical research and drug discovery",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "google", "name": "Google DeepMind", "provider": "Google", "logo": "/logos/google.svg", "url": "https://deepmind.google" },
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "aws", "name": "AWS HealthAI", "provider": "Amazon", "logo": "/logos/aws.svg", "url": "https://aws.amazon.com/health" },
+    { "id": "azure", "name": "Azure Health AI", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com/en-us/solutions/health" }
+  ],
+  "groups": [
+    {
+      "name": "Drug Discovery",
+      "rows": [
+        { "feature": "Molecule generation", "values": { "google": true, "openai": false, "aws": true, "azure": true } },
+        { "feature": "Protein folding prediction", "values": { "google": true, "openai": false, "aws": false, "azure": true } },
+        { "feature": "Drug-target interaction", "values": { "google": true, "openai": true, "aws": true, "azure": true } },
+        { "feature": "ADMET prediction", "values": { "google": true, "openai": false, "aws": true, "azure": true } },
+        { "feature": "De novo drug design", "values": { "google": true, "openai": false, "aws": false, "azure": false } }
+      ]
+    },
+    {
+      "name": "Clinical Trials",
+      "rows": [
+        { "feature": "Patient matching", "values": { "google": true, "openai": true, "aws": true, "azure": true } },
+        { "feature": "Adverse event detection", "values": { "google": true, "openai": true, "aws": true, "azure": true } },
+        { "feature": "Protocol optimization", "values": { "google": false, "openai": true, "aws": true, "azure": true } },
+        { "feature": "Real-world evidence analysis", "values": { "google": true, "openai": true, "aws": true, "azure": true } }
+      ]
+    },
+    {
+      "name": "Compliance & Regulatory",
+      "rows": [
+        { "feature": "FDA submission support", "values": { "google": false, "openai": true, "aws": true, "azure": true } },
+        { "feature": "GxP compliance tools", "values": { "google": false, "openai": false, "aws": true, "azure": true } },
+        { "feature": "Pharmacovigilance AI", "values": { "google": true, "openai": true, "aws": true, "azure": true } },
+        { "feature": "Labeling review automation", "values": { "google": false, "openai": true, "aws": false, "azure": true } }
+      ]
+    },
+    {
+      "name": "Pricing & Access",
+      "rows": [
+        { "feature": "Free tier available", "values": { "google": false, "openai": true, "aws": true, "azure": true } },
+        { "feature": "Enterprise pricing", "values": { "google": "Custom", "openai": "Custom", "aws": "Pay-as-you-go", "azure": "Pay-as-you-go" } },
+        { "feature": "HIPAA compliant", "values": { "google": true, "openai": true, "aws": true, "azure": true } },
+        { "feature": "On-premise deployment", "values": { "google": false, "openai": false, "aws": true, "azure": true } }
+      ]
+    }
+  ]
+}

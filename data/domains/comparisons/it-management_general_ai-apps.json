@@ -1,0 +1,42 @@
+{
+  "title": "AI Apps for IT Management",
+  "slug": "ai-apps",
+  "description": "Compare AI-powered IT management platforms, AIOps tools, and IT service management solutions",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "servicenow", "name": "ServiceNow Now Assist", "provider": "ServiceNow", "logo": "/logos/huggingface.svg", "url": "https://servicenow.com" },
+    { "id": "datadog", "name": "Datadog AI", "provider": "Datadog", "logo": "/logos/huggingface.svg", "url": "https://datadoghq.com" },
+    { "id": "dynatrace", "name": "Dynatrace Davis AI", "provider": "Dynatrace", "logo": "/logos/huggingface.svg", "url": "https://dynatrace.com" },
+    { "id": "splunk", "name": "Splunk AI", "provider": "Cisco/Splunk", "logo": "/logos/huggingface.svg", "url": "https://splunk.com" }
+  ],
+  "groups": [
+    {
+      "name": "AIOps Features",
+      "rows": [
+        { "feature": "Anomaly detection", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "Predictive alerting", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "Auto-remediation", "values": { "servicenow": true, "datadog": false, "dynatrace": true, "splunk": false } },
+        { "feature": "Noise reduction", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "Topology mapping", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": false } }
+      ]
+    },
+    {
+      "name": "Generative AI",
+      "rows": [
+        { "feature": "Natural language queries", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "Incident summary generation", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "Chatbot for IT support", "values": { "servicenow": true, "datadog": false, "dynatrace": false, "splunk": false } },
+        { "feature": "Knowledge article creation", "values": { "servicenow": true, "datadog": false, "dynatrace": false, "splunk": false } }
+      ]
+    },
+    {
+      "name": "Pricing & Scale",
+      "rows": [
+        { "feature": "Free tier", "values": { "servicenow": false, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "Enterprise pricing", "values": { "servicenow": "Custom", "datadog": "$23/host/mo+", "dynatrace": "$21/host/mo+", "splunk": "$15/GB/day+" } },
+        { "feature": "Cloud-native", "values": { "servicenow": true, "datadog": true, "dynatrace": true, "splunk": true } },
+        { "feature": "On-premise option", "values": { "servicenow": false, "datadog": false, "dynatrace": true, "splunk": true } }
+      ]
+    }
+  ]
+}

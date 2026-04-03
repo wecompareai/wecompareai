@@ -1,0 +1,675 @@
+{
+  "id": "ai-security-tools",
+  "title": "AI Cybersecurity Tools Comparison",
+  "description": "Compare AI-powered cybersecurity tools - threat detection, endpoint protection, AI/ML capabilities, autonomous response, and pricing.",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    {
+      "id": "crowdstrike",
+      "name": "CrowdStrike Falcon",
+      "provider": "CrowdStrike",
+      "logo": "/logos/crowdstrike.svg",
+      "url": "https://www.crowdstrike.com"
+    },
+    {
+      "id": "darktrace",
+      "name": "Darktrace ActiveAI",
+      "provider": "Darktrace",
+      "logo": "/logos/darktrace.svg",
+      "url": "https://www.darktrace.com"
+    },
+    {
+      "id": "sentinelone",
+      "name": "SentinelOne Singularity",
+      "provider": "SentinelOne",
+      "logo": "/logos/sentinelone.svg",
+      "url": "https://www.sentinelone.com"
+    },
+    {
+      "id": "paloalto",
+      "name": "Palo Alto Cortex",
+      "provider": "Palo Alto Networks",
+      "logo": "/logos/paloalto.svg",
+      "url": "https://www.paloaltonetworks.com"
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft Security Copilot",
+      "provider": "Microsoft",
+      "logo": "/logos/microsoft.svg",
+      "url": "https://www.microsoft.com/en-us/security"
+    },
+    {
+      "id": "vectra",
+      "name": "Vectra AI Platform",
+      "provider": "Vectra AI",
+      "logo": "/logos/vectra.svg",
+      "url": "https://www.vectra.ai"
+    }
+  ],
+  "groups": [
+    {
+      "name": "General",
+      "rows": [
+        {
+          "feature": "Headquarters",
+          "values": {
+            "crowdstrike": "Austin, TX",
+            "darktrace": "Cambridge, UK",
+            "sentinelone": "Mountain View, CA",
+            "paloalto": "Santa Clara, CA",
+            "microsoft": "Redmond, WA",
+            "vectra": "San Jose, CA"
+          }
+        },
+        {
+          "feature": "Founded",
+          "values": {
+            "crowdstrike": "2011",
+            "darktrace": "2013",
+            "sentinelone": "2013",
+            "paloalto": "2005",
+            "microsoft": "1975 (Security Copilot: 2023)",
+            "vectra": "2012"
+          }
+        },
+        {
+          "feature": "Company Type",
+          "values": {
+            "crowdstrike": "Public (NASDAQ: CRWD)",
+            "darktrace": "Private (acquired by Thoma Bravo, Oct 2024)",
+            "sentinelone": "Public (NYSE: S)",
+            "paloalto": "Public (NASDAQ: PANW)",
+            "microsoft": "Public (NASDAQ: MSFT)",
+            "vectra": "Private"
+          }
+        },
+        {
+          "feature": "Market Cap / Valuation",
+          "values": {
+            "crowdstrike": "~$85B+",
+            "darktrace": "~$5.3B (acquisition price)",
+            "sentinelone": "~$18B+",
+            "paloalto": "~$120B+",
+            "microsoft": "~$3T+ (overall company)",
+            "vectra": "~$1.2B (last private valuation)"
+          }
+        },
+        {
+          "feature": "Security Revenue (Annual)",
+          "values": {
+            "crowdstrike": "~$3.8B ARR (FY2025)",
+            "darktrace": "~$600M+ ARR",
+            "sentinelone": "~$700M+ ARR (FY2025)",
+            "paloalto": "~$4.2B NGS ARR (FY2025)",
+            "microsoft": "~$20B+ (security business overall)",
+            "vectra": "~$200M+ ARR (estimated)"
+          }
+        },
+        {
+          "feature": "Number of Customers",
+          "values": {
+            "crowdstrike": "29,000+",
+            "darktrace": "9,000+",
+            "sentinelone": "12,000+",
+            "paloalto": "80,000+",
+            "microsoft": "1,000,000+ (security products)",
+            "vectra": "1,500+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI & ML Capabilities",
+      "rows": [
+        {
+          "feature": "Core AI/ML Engine",
+          "values": {
+            "crowdstrike": "Charlotte AI + Threat Graph",
+            "darktrace": "Self-Learning AI (Bayesian probabilistic)",
+            "sentinelone": "Purple AI + Static & Behavioral AI",
+            "paloalto": "Precision AI (Cortex)",
+            "microsoft": "Security Copilot (GPT-4 based)",
+            "vectra": "Attack Signal Intelligence"
+          }
+        },
+        {
+          "feature": "Generative AI Assistant",
+          "values": {
+            "crowdstrike": "Charlotte AI (natural language queries)",
+            "darktrace": "Darktrace Cyber AI Analyst",
+            "sentinelone": "Purple AI (natural language threat hunting)",
+            "paloalto": "Copilot in Cortex XSIAM",
+            "microsoft": "Security Copilot (full GPT-4 integration)",
+            "vectra": "AI-driven prioritization (no standalone GenAI assistant)"
+          }
+        },
+        {
+          "feature": "Autonomous Response",
+          "tooltip": "Ability to automatically respond to and contain threats without human intervention",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": "Partial (via Defender automation)",
+            "vectra": "Partial (via integrations)"
+          }
+        },
+        {
+          "feature": "AI-Powered Threat Hunting",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Behavioral Analysis",
+          "tooltip": "Uses AI to detect anomalous behavior patterns rather than relying solely on signatures",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Natural Language Query",
+          "tooltip": "Ability to ask security questions in plain English and get AI-generated answers",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": false
+          }
+        },
+        {
+          "feature": "AI Model Type",
+          "values": {
+            "crowdstrike": "Proprietary ML + LLM (Charlotte AI)",
+            "darktrace": "Unsupervised ML (Bayesian)",
+            "sentinelone": "Proprietary Static + Behavioral AI + LLM",
+            "paloalto": "Proprietary ML + GenAI",
+            "microsoft": "OpenAI GPT-4 + Microsoft Security models",
+            "vectra": "Proprietary supervised + unsupervised ML"
+          }
+        },
+        {
+          "feature": "Threat Intelligence Integration",
+          "values": {
+            "crowdstrike": "CrowdStrike Intelligence (proprietary + 200B+ events/day)",
+            "darktrace": "Self-learning (no external signatures required)",
+            "sentinelone": "Integrated threat intel + WatchTower",
+            "paloalto": "Unit 42 + AutoFocus + WildFire",
+            "microsoft": "Microsoft Threat Intelligence (65T+ signals/day)",
+            "vectra": "Vectra-curated detections + STIX/TAXII"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products & Coverage",
+      "rows": [
+        {
+          "feature": "Primary Platform",
+          "values": {
+            "crowdstrike": "CrowdStrike Falcon",
+            "darktrace": "Darktrace ActiveAI Security Platform",
+            "sentinelone": "Singularity Platform",
+            "paloalto": "Cortex (XSIAM / XDR / XSOAR)",
+            "microsoft": "Microsoft Defender + Security Copilot",
+            "vectra": "Vectra AI Platform"
+          }
+        },
+        {
+          "feature": "Endpoint Protection (EPP)",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": "Partial (via Darktrace/Endpoint)",
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": false
+          }
+        },
+        {
+          "feature": "Network Security / NDR",
+          "tooltip": "Network Detection and Response capabilities",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": "Partial (via Singularity Network)",
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Cloud Security (CNAPP/CSPM)",
+          "tooltip": "Cloud-Native Application Protection Platform / Cloud Security Posture Management",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Email Security",
+          "values": {
+            "crowdstrike": "Partial (via Falcon for Email, acquired)",
+            "darktrace": true,
+            "sentinelone": false,
+            "paloalto": false,
+            "microsoft": true,
+            "vectra": false
+          }
+        },
+        {
+          "feature": "Identity Protection",
+          "tooltip": "Identity-based threat detection and protection",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "IoT/OT Security",
+          "tooltip": "Internet of Things / Operational Technology security",
+          "values": {
+            "crowdstrike": "Partial",
+            "darktrace": true,
+            "sentinelone": "Partial (Ranger)",
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": "Partial"
+          }
+        },
+        {
+          "feature": "Data Protection / DLP",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": "Partial",
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Detection & Response",
+      "rows": [
+        {
+          "feature": "EDR (Endpoint Detection & Response)",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": "Partial",
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": false
+          }
+        },
+        {
+          "feature": "XDR (Extended Detection & Response)",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "MDR (Managed Detection & Response)",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "SIEM / Log Management",
+          "tooltip": "Security Information and Event Management - native or integrated",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": "Integration only",
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": "Integration only"
+          }
+        },
+        {
+          "feature": "SOAR Capabilities",
+          "tooltip": "Security Orchestration, Automation, and Response",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": "Partial (Antigena automated response)",
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": "Via integrations (Splunk SOAR, etc.)"
+          }
+        },
+        {
+          "feature": "Mean Time to Detect (MTTD)",
+          "tooltip": "Average time to detect a threat",
+          "values": {
+            "crowdstrike": "< 1 minute (claimed)",
+            "darktrace": "Seconds (real-time)",
+            "sentinelone": "< 1 minute (claimed)",
+            "paloalto": "Seconds with XSIAM (claimed)",
+            "microsoft": "Minutes (varies by product)",
+            "vectra": "< 1 hour (claimed)"
+          }
+        },
+        {
+          "feature": "Automated Remediation",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": "Partial (via integrations)"
+          }
+        },
+        {
+          "feature": "Incident Storyline / Attack Chain",
+          "tooltip": "Visualizes the full attack chain with correlated events",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deployment & Architecture",
+      "rows": [
+        {
+          "feature": "Cloud-Native SaaS",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "On-Premise Option",
+          "values": {
+            "crowdstrike": false,
+            "darktrace": true,
+            "sentinelone": "Partial (hybrid)",
+            "paloalto": true,
+            "microsoft": "Partial (hybrid via Arc)",
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Hybrid Deployment",
+          "values": {
+            "crowdstrike": "Partial (sensor on-prem, console cloud)",
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Agent-Based",
+          "tooltip": "Requires a software agent installed on endpoints",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": "Optional",
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": "Optional"
+          }
+        },
+        {
+          "feature": "Agentless Option",
+          "values": {
+            "crowdstrike": "Partial (cloud workloads)",
+            "darktrace": true,
+            "sentinelone": "Partial (cloud & network)",
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Multi-Cloud Support",
+          "tooltip": "Supports AWS, Azure, and GCP",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": "Best with Azure; supports AWS, GCP",
+            "vectra": true
+          }
+        },
+        {
+          "feature": "FedRAMP Authorized",
+          "tooltip": "Federal Risk and Authorization Management Program compliance",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": false,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pricing & Licensing",
+      "rows": [
+        {
+          "feature": "Pricing Model",
+          "values": {
+            "crowdstrike": "Per endpoint / per module subscription",
+            "darktrace": "Per device (sensor-based) subscription",
+            "sentinelone": "Per endpoint / per workload subscription",
+            "paloalto": "Per endpoint / per module / consumption-based",
+            "microsoft": "Per user/month (bundled with M365 E5) + SCU for Copilot",
+            "vectra": "Per IP / per subscription tier"
+          }
+        },
+        {
+          "feature": "Entry-Level Price",
+          "tooltip": "Approximate starting price for small deployments",
+          "values": {
+            "crowdstrike": "~$8.99/endpoint/month (Falcon Go)",
+            "darktrace": "Custom pricing (typically $30K+/year)",
+            "sentinelone": "~$7/endpoint/month (Singularity Core)",
+            "paloalto": "Custom pricing (contact sales)",
+            "microsoft": "~$4/user/month (Copilot SCU-based billing)",
+            "vectra": "Custom pricing (contact sales)"
+          }
+        },
+        {
+          "feature": "Enterprise Pricing",
+          "values": {
+            "crowdstrike": "Custom (Falcon Enterprise / Elite bundles)",
+            "darktrace": "Custom (based on number of devices & modules)",
+            "sentinelone": "Custom (Singularity Complete / Commercial)",
+            "paloalto": "Custom (XSIAM, platform licensing)",
+            "microsoft": "Included in M365 E5 ($57/user/month) + Copilot add-on",
+            "vectra": "Custom (platform + modules)"
+          }
+        },
+        {
+          "feature": "Free Trial",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": "Partial (demo available)",
+            "microsoft": true,
+            "vectra": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Integrations & Ecosystem",
+      "rows": [
+        {
+          "feature": "SIEM Integrations",
+          "values": {
+            "crowdstrike": "Splunk, Microsoft Sentinel, QRadar, ArcSight, etc.",
+            "darktrace": "Splunk, Microsoft Sentinel, QRadar, LogRhythm, etc.",
+            "sentinelone": "Splunk, Microsoft Sentinel, QRadar, Sumo Logic, etc.",
+            "paloalto": "Native XSIAM + third-party SIEMs",
+            "microsoft": "Native Microsoft Sentinel",
+            "vectra": "Splunk, Microsoft Sentinel, QRadar, Sumo Logic, etc."
+          }
+        },
+        {
+          "feature": "SOAR Integrations",
+          "values": {
+            "crowdstrike": "Falcon Fusion (native) + Splunk SOAR, Palo Alto XSOAR",
+            "darktrace": "Splunk SOAR, Palo Alto XSOAR, ServiceNow",
+            "sentinelone": "Singularity Marketplace + Splunk SOAR, XSOAR",
+            "paloalto": "Native XSOAR (industry-leading)",
+            "microsoft": "Native Logic Apps / Sentinel Playbooks",
+            "vectra": "Splunk SOAR, XSOAR, ServiceNow"
+          }
+        },
+        {
+          "feature": "API Availability",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        },
+        {
+          "feature": "Marketplace / App Store",
+          "values": {
+            "crowdstrike": "CrowdStrike Store (300+ integrations)",
+            "darktrace": "Technology partnerships",
+            "sentinelone": "Singularity Marketplace (200+ integrations)",
+            "paloalto": "Cortex Marketplace",
+            "microsoft": "Microsoft AppSource + Sentinel Content Hub",
+            "vectra": "Technology alliances"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Industry Recognition",
+      "rows": [
+        {
+          "feature": "Gartner Magic Quadrant (EPP)",
+          "tooltip": "Gartner Magic Quadrant for Endpoint Protection Platforms",
+          "values": {
+            "crowdstrike": "Leader",
+            "darktrace": "Not ranked (EPP)",
+            "sentinelone": "Leader",
+            "paloalto": "Leader",
+            "microsoft": "Leader",
+            "vectra": "Not ranked (EPP)"
+          }
+        },
+        {
+          "feature": "MITRE ATT&CK Evaluation",
+          "tooltip": "Performance in MITRE ATT&CK Evaluations",
+          "values": {
+            "crowdstrike": "Top performer",
+            "darktrace": "Not typically evaluated",
+            "sentinelone": "Top performer (highest analytic detections)",
+            "paloalto": "Top performer",
+            "microsoft": "Top performer",
+            "vectra": "Not typically evaluated"
+          }
+        },
+        {
+          "feature": "Forrester Wave Leader",
+          "values": {
+            "crowdstrike": true,
+            "darktrace": true,
+            "sentinelone": true,
+            "paloalto": true,
+            "microsoft": true,
+            "vectra": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Key Differentiators",
+      "rows": [
+        {
+          "feature": "Primary Strength",
+          "values": {
+            "crowdstrike": "Industry-leading cloud-native endpoint security with massive threat intelligence",
+            "darktrace": "Self-learning AI that detects novel threats without signatures or rules",
+            "sentinelone": "Fully autonomous AI-driven endpoint protection with best MITRE ATT&CK results",
+            "paloalto": "Comprehensive platformization with XSIAM unifying SOC operations",
+            "microsoft": "Deepest integration with Microsoft ecosystem; GPT-4 powered security copilot",
+            "vectra": "Best-in-class network detection with AI-driven attack signal intelligence"
+          }
+        },
+        {
+          "feature": "AI Innovation",
+          "values": {
+            "crowdstrike": "Charlotte AI for GenAI-assisted investigations; Threat Graph correlates trillions of events",
+            "darktrace": "Unsupervised ML learns 'normal' for every device; no training data needed",
+            "sentinelone": "Purple AI enables natural language threat hunting across all security data",
+            "paloalto": "Precision AI combines ML, deep learning, and GenAI across the platform",
+            "microsoft": "Security Copilot uses GPT-4 for incident summaries, script analysis, and KQL generation",
+            "vectra": "Attack Signal Intelligence reduces alert noise by 80%+ with AI-driven prioritization"
+          }
+        },
+        {
+          "feature": "Best For",
+          "values": {
+            "crowdstrike": "Enterprises needing best-in-class endpoint protection and threat intelligence",
+            "darktrace": "Organizations wanting autonomous, self-learning network defense",
+            "sentinelone": "Companies seeking autonomous endpoint protection with strong automation",
+            "paloalto": "Large enterprises consolidating security into a single platform",
+            "microsoft": "Organizations already invested in the Microsoft 365 / Azure ecosystem",
+            "vectra": "Security teams focused on network-level threat detection and SOC efficiency"
+          }
+        }
+      ]
+    }
+  ]
+}

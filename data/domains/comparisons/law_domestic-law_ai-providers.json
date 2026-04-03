@@ -1,0 +1,43 @@
+{
+  "title": "AI Providers for Domestic Law",
+  "slug": "ai-providers",
+  "description": "Compare AI providers offering solutions for country-specific legislation, local courts, and national regulations",
+  "lastUpdated": "2026-03-30",
+  "columns": [
+    { "id": "openai", "name": "OpenAI", "provider": "OpenAI", "logo": "/logos/openai.svg", "url": "https://openai.com" },
+    { "id": "google", "name": "Google Cloud AI", "provider": "Google", "logo": "/logos/google.svg", "url": "https://cloud.google.com/ai" },
+    { "id": "anthropic", "name": "Anthropic", "provider": "Anthropic", "logo": "/logos/anthropic.svg", "url": "https://anthropic.com" },
+    { "id": "azure", "name": "Azure AI", "provider": "Microsoft", "logo": "/logos/azure.svg", "url": "https://azure.microsoft.com/en-us/solutions/ai" }
+  ],
+  "groups": [
+    {
+      "name": "Domestic Legal Capabilities",
+      "rows": [
+        { "feature": "State/provincial law coverage", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Local court procedures", "values": { "openai": true, "google": false, "anthropic": true, "azure": false } },
+        { "feature": "Statutory interpretation", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Legislative history analysis", "values": { "openai": true, "google": true, "anthropic": true, "azure": false } },
+        { "feature": "Regulatory change tracking", "values": { "openai": false, "google": true, "anthropic": false, "azure": true } }
+      ]
+    },
+    {
+      "name": "Practice Area Support",
+      "rows": [
+        { "feature": "Criminal law", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Family law", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Real estate law", "values": { "openai": true, "google": false, "anthropic": true, "azure": true } },
+        { "feature": "Tax law", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Immigration law", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } }
+      ]
+    },
+    {
+      "name": "Security & Compliance",
+      "rows": [
+        { "feature": "Attorney-client privilege safeguards", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Data encryption at rest", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Audit logging", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } },
+        { "feature": "Data deletion on request", "values": { "openai": true, "google": true, "anthropic": true, "azure": true } }
+      ]
+    }
+  ]
+}
