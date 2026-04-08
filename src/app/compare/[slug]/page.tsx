@@ -83,7 +83,7 @@ function ComparisonJsonLd({
     title: string;
     description: string;
     lastUpdated: string;
-    columns: { name: string; url: string }[];
+    columns: { name: string; url: string; logo?: string }[];
   };
   slug: string;
 }) {
@@ -97,15 +97,32 @@ function ComparisonJsonLd({
     dateModified: data.lastUpdated,
     datePublished: data.lastUpdated,
     url: pageUrl,
-    publisher: { "@type": "Organization", name: "AI Compare", url: SITE_URL },
+    publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
       { "@type": "Person", name: "Jigar Acharya" },
       { "@type": "Person", name: "Saurabh Gera" },
     ],
-    about: data.columns.map((col) => ({
-      "@type": "SoftwareApplication",
-      name: col.name,
-      url: col.url,
+  };
+
+  // SoftwareApplication schema for each compared tool — enables rich snippets
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: data.title,
+    description: data.description,
+    url: pageUrl,
+    numberOfItems: data.columns.length,
+    itemListElement: data.columns.map((col, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      item: {
+        "@type": "SoftwareApplication",
+        name: col.name,
+        url: col.url,
+        applicationCategory: "AIApplication",
+        operatingSystem: "Web",
+        image: col.logo ?? "/og-image.png",
+      },
     })),
   };
 
@@ -114,13 +131,15 @@ function ComparisonJsonLd({
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-      { "@type": "ListItem", position: 2, name: data.title, item: pageUrl },
+      { "@type": "ListItem", position: 2, name: "Compare", item: `${SITE_URL}/compare` },
+      { "@type": "ListItem", position: 3, name: data.title, item: pageUrl },
     ],
   };
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
     </>
   );
