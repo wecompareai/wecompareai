@@ -207,6 +207,18 @@ export default async function ComparePage({
           )}
         </div>
 
+        {/* TL;DR Executive Summary */}
+        {data.columns.length > 0 && (
+          <div className="mb-8 rounded-xl border-l-4 border-primary bg-primary/5 px-5 py-4 space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">TL;DR</p>
+            <p className="text-sm text-foreground leading-relaxed">
+              This page compares <strong>{data.columns.map((c) => c.name).join(", ")}</strong> across{" "}
+              {data.groups.reduce((n, g) => n + g.rows.length, 0)} features in {data.groups.length} categories.
+              Use the filters above to focus on what matters most to you.
+            </p>
+          </div>
+        )}
+
         {/* Score Cards */}
         {(() => {
           const scored = data.columns.map((col) => getScoreByName(col.name)).filter(Boolean);

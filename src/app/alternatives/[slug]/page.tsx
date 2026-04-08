@@ -46,22 +46,45 @@ export default async function AlternativePage({ params }: { params: Promise<{ sl
 
   const related = alternativePages.filter((p) => page.relatedSlugs.includes(p.slug));
 
+  const pageUrl = `${SITE_URL}/alternatives/${slug}`;
+  const topAlt = page.alternatives?.[0];
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: page.title,
+    description: page.description,
+    dateModified: page.lastUpdated,
+    url: pageUrl,
+    publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
+    author: [{ "@type": "Person", name: "Jigar Acharya" }, { "@type": "Person", name: "Saurabh Gera" }],
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "AI Alternatives", item: `${SITE_URL}/alternatives` },
+      { "@type": "ListItem", position: 3, name: `${page.tool} Alternatives`, item: pageUrl },
+    ],
+  };
+
+  const faqJsonLd = page.faqs?.length ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: page.faqs.map((faq: { q: string; a: string }) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  } : null;
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
-      {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: page.title,
-            description: page.description,
-            dateModified: page.lastUpdated,
-            publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
-          }),
-        }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -71,6 +94,16 @@ export default async function AlternativePage({ params }: { params: Promise<{ sl
         <span>/</span>
         <span className="text-foreground">{page.tool}</span>
       </nav>
+
+      {/* TL;DR Executive Summary */}
+      {topAlt && (
+        <div className="rounded-xl border-l-4 border-primary bg-primary/5 px-5 py-4 space-y-1">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">TL;DR</p>
+          <p className="text-sm text-foreground leading-relaxed">
+            The best {page.tool} alternative in 2026 is <strong>{topAlt.name}</strong> — {topAlt.tagline.toLowerCase()}.{page.alternatives?.[1] ? ` ${page.alternatives[1].name} is the best runner-up.` : ""}
+          </p>
+        </div>
+      )}
 
       {/* Header */}
       <div className="space-y-4">

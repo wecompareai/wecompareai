@@ -275,6 +275,7 @@ export default function ComparisonTable({ data, enableColumnFilter = false }: Pr
         className="comparison-table-wrapper rounded-b-xl border border-border"
       >
         <table className="w-full border-collapse min-w-[600px] sm:min-w-[800px]">
+          <caption className="sr-only">{data.title} — side-by-side feature comparison</caption>
           <thead>
             <tr className="bg-muted">
               <th className="sticky-col text-left p-2 sm:p-4 font-semibold text-sm text-muted-foreground min-w-[130px] sm:min-w-[200px] bg-muted">

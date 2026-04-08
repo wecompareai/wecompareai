@@ -4,10 +4,27 @@ import { auth } from "@/lib/auth";
 import path from "path";
 import fs from "fs";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
+
 export const metadata: Metadata = {
-  title: "AI Models by Country",
+  title: "AI Models by Country — USA, China, UK, EU & More",
   description:
-    "Explore top AI model providers from countries around the world — USA, China, France, Canada, UK, UAE, and more.",
+    "Explore top AI model providers from countries around the world — USA, China, France, Canada, UK, UAE, and more. Compare AI by region, compliance, and availability.",
+  alternates: { canonical: `${SITE_URL}/countries` },
+  openGraph: {
+    title: "AI Models by Country | We Compare AI",
+    description:
+      "Top AI providers by country — USA, China, France, UK, UAE & more. Compare regional AI models, compliance, and availability.",
+    url: `${SITE_URL}/countries`,
+    siteName: "We Compare AI",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Models by Country | We Compare AI",
+    description: "Top AI providers from every country compared — compliance, availability & more.",
+  },
 };
 
 interface Provider {

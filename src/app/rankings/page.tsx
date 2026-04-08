@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ALL_SCORES, CATEGORIES, SCORE_DIMENSIONS, type ToolScore } from "@/lib/scores";
 import { ScoreCard } from "@/components/ScoreCard";
@@ -38,7 +39,8 @@ function scoreBg(score: number) {
 }
 
 export default function RankingsPage() {
-  const [category, setCategory] = useState<string>("All");
+  const searchParams = useSearchParams();
+  const [category, setCategory] = useState<string>(searchParams.get("category") ?? "All");
   const [sortBy, setSortBy]     = useState<SortKey>("overall");
   const [selected, setSelected] = useState<ToolScore | null>(null);
 
