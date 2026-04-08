@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import type { ComparisonData } from "@/types";
 
@@ -306,8 +306,8 @@ export default function ComparisonTable({ data, enableColumnFilter = false }: Pr
           </thead>
           <tbody>
             {filteredGroups.map((group) => (
-              <>
-                <tr key={`group-${group.name}`} className="group-header">
+              <React.Fragment key={`group-${group.name}`}>
+                <tr className="group-header">
                   <td
                     colSpan={visibleColumns.length + 1}
                     className="sticky-col px-2 sm:px-4 py-2 sm:py-3 font-semibold text-xs sm:text-sm text-primary bg-muted/70 border-t border-border"
@@ -347,7 +347,7 @@ export default function ComparisonTable({ data, enableColumnFilter = false }: Pr
                     ))}
                   </tr>
                 ))}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
