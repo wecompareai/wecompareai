@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import { bestForPages, getBestForPage, RANK_MEDALS, RANK_LABELS } from "@/lib/best-for";
+import { getScoreByName } from "@/lib/scores";
+import { MiniScoreChart } from "@/components/charts/ScoreBarChart";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -54,8 +56,16 @@ export default async function BestForPage({
   if (!page) notFound();
 
   const relatedPages = bestForPages.filter((p) => page.relatedSlugs.includes(p.slug));
-
   const pageUrl = `${SITE_URL}/best/${slug}`;
+  const topPick = page.tools?.[0];
+
+  // Look up scores for chart
+  const chartTools = page.tools
+    .map((t) => {
+      const score = getScoreByName(t.name.split(" ")[0]); // e.g. "Claude (Anthropic)" → "Claude"
+      return score ?? null;
+    })
+    .filter(Boolean) as NonNullable<ReturnType<typeof getScoreByName>>[];
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -89,73 +99,97 @@ export default async function BestForPage({
     })),
   } : null;
 
-  const topPick = page.tools?.[0];
-
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+      <nav className="flex items-center gap-2 text-xs text-muted-foreground">
         <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
         <span>/</span>
         <Link href="/best" className="hover:text-foreground transition-colors">Best AI For…</Link>
         <span>/</span>
         <span className="text-foreground">{page.headline}</span>
-      </div>
-
-      {/* TL;DR Executive Summary */}
-      {topPick && (
-        <div className="rounded-xl border-l-4 border-primary bg-primary/5 px-5 py-4 space-y-1">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">TL;DR</p>
-          <p className="text-sm text-foreground leading-relaxed">
-            <strong>{topPick.name}</strong> is the best {page.headline.toLowerCase()} in 2026 — {topPick.tagline.toLowerCase()}. {page.tools?.[1] ? `${page.tools[1].name} is the best runner-up.` : ""}
-          </p>
-        </div>
-      )}
+      </nav>
 
       {/* Hero */}
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold text-foreground">{page.title}</h1>
-        <p className="text-lg text-muted-foreground leading-relaxed">{page.intro}</p>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-medium">
+      <div className="space-y-2">
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground">{page.title}</h1>
+        <p className="text-muted-foreground leading-relaxed">{page.description}</p>
+        <div className="flex flex-wrap items-center gap-3 pt-1">
+          <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Data verified: {page.lastUpdated}
+            Updated: {page.lastUpdated}
           </span>
           <Link href="/methodology" className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2">
-            How we pick these →
+            How we pick →
           </Link>
         </div>
       </div>
 
-      {/* Criteria */}
-      <section className="rounded-xl border border-border bg-muted/30 px-5 py-5 space-y-3">
-        <h2 className="text-sm font-semibold text-foreground">How We Evaluated These Tools</h2>
-        <ul className="space-y-1.5">
-          {page.criteria.map((c) => (
-            <li key={c} className="flex items-start gap-2 text-sm text-muted-foreground">
-              <span className="text-primary mt-0.5 shrink-0">✓</span>
-              {c}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* TL;DR */}
+      {topPick && (
+        <div className="rounded-xl border-l-4 border-primary bg-primary/5 px-5 py-3 space-y-1">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">TL;DR</p>
+          <p className="text-sm text-foreground leading-relaxed">
+            <strong>{topPick.name}</strong> is the best {page.headline.toLowerCase()} in 2026 — {topPick.tagline.toLowerCase()}.
+            {page.tools?.[1] ? ` ${page.tools[1].name} is the best runner-up.` : ""}
+          </p>
+        </div>
+      )}
 
-      {/* Top 3 Tools */}
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-foreground">Top 3 Picks</h2>
+      {/* ── Score comparison chart ── */}
+      {chartTools.length >= 2 && (
+        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Score Comparison</p>
+            <Link href="/rankings" className="text-xs text-primary hover:underline underline-offset-2">Full rankings →</Link>
+          </div>
+          <MiniScoreChart tools={chartTools} />
+          <p className="text-[10px] text-muted-foreground text-center">Scores: Performance · Value · Reliability · Ease of Use</p>
+        </div>
+      )}
+
+      {/* Quick winner summary table */}
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-muted text-left">
+              <th className="px-4 py-2 text-xs font-semibold text-muted-foreground">Tool</th>
+              <th className="px-4 py-2 text-xs font-semibold text-muted-foreground">Best For</th>
+              <th className="px-4 py-2 text-xs font-semibold text-muted-foreground hidden sm:table-cell">Pricing</th>
+            </tr>
+          </thead>
+          <tbody>
+            {page.tools.map((tool) => (
+              <tr key={tool.name} className="border-t border-border hover:bg-muted/30 transition-colors">
+                <td className="px-4 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base">{RANK_MEDALS[tool.rank]}</span>
+                    <span className="font-medium text-foreground">{tool.name}</span>
+                  </div>
+                </td>
+                <td className="px-4 py-2.5 text-xs text-muted-foreground">{tool.bestFor}</td>
+                <td className="px-4 py-2.5 text-xs text-muted-foreground hidden sm:table-cell">{tool.pricing}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Top 3 detailed cards */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold text-foreground">Top 3 in Detail</h2>
         {page.tools.map((tool) => {
           const colors = RANK_COLORS[tool.rank];
           return (
-            <div key={tool.name} className={`rounded-xl border-2 ${colors.border} ${colors.bg} p-6 space-y-5`}>
-              {/* Tool Header */}
-              <div className="flex items-start justify-between gap-4 flex-wrap">
-                <div className="space-y-1.5">
+            <div key={tool.name} className={`rounded-xl border-2 ${colors.border} ${colors.bg} p-5 space-y-4`}>
+              <div className="flex items-start justify-between gap-3 flex-wrap">
+                <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-2xl">{RANK_MEDALS[tool.rank]}</span>
+                    <span className="text-xl">{RANK_MEDALS[tool.rank]}</span>
                     <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${colors.badge}`}>
                       {RANK_LABELS[tool.rank]}
                     </span>
@@ -165,97 +199,83 @@ export default async function BestForPage({
                       </span>
                     )}
                   </div>
-                  <h3 className="text-xl font-bold text-foreground">{tool.name}</h3>
+                  <h3 className="text-lg font-bold text-foreground">{tool.name}</h3>
                   <p className="text-sm text-muted-foreground">{tool.tagline}</p>
                 </div>
-                <div className="text-right shrink-0">
-                  <div className="text-xs text-muted-foreground">Pricing</div>
-                  <div className="text-sm font-medium text-foreground mt-0.5 max-w-[200px] text-right">{tool.pricing}</div>
+                <div className="text-right shrink-0 text-xs text-muted-foreground">
+                  <div className="font-medium text-foreground">{tool.pricing}</div>
                 </div>
               </div>
 
-              {/* Why */}
-              <div className="space-y-1">
-                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Why it's #{tool.rank}</div>
-                <p className="text-sm text-foreground leading-relaxed">{tool.why}</p>
-              </div>
+              {/* Why — single sentence, no fluff */}
+              <p className="text-sm text-foreground leading-relaxed">{tool.why}</p>
 
               {/* Pros / Cons */}
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">Pros</div>
-                  <ul className="space-y-1.5">
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-1.5">✓ Pros</div>
+                  <ul className="space-y-1">
                     {tool.pros.map((p) => (
-                      <li key={p} className="flex items-start gap-2 text-sm text-foreground">
-                        <span className="text-emerald-500 mt-0.5 shrink-0">+</span>
-                        {p}
+                      <li key={p} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                        <span className="text-emerald-500 shrink-0">+</span>{p}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="space-y-2">
-                  <div className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wide">Cons</div>
-                  <ul className="space-y-1.5">
+                <div>
+                  <div className="text-xs font-semibold text-rose-600 dark:text-rose-400 mb-1.5">✗ Cons</div>
+                  <ul className="space-y-1">
                     {tool.cons.map((c) => (
-                      <li key={c} className="flex items-start gap-2 text-sm text-foreground">
-                        <span className="text-rose-500 mt-0.5 shrink-0">−</span>
-                        {c}
+                      <li key={c} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                        <span className="text-rose-500 shrink-0">−</span>{c}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
 
-              {/* Best For + Links */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-border/50">
-                <div className="text-sm text-muted-foreground">
-                  <span className="font-medium text-foreground">Best for: </span>
-                  {tool.bestFor}
-                </div>
-                <div className="flex items-center gap-2">
-                  {tool.compareHref && (
-                    <Link href={tool.compareHref} className="text-xs px-3 py-1.5 rounded-lg border border-border hover:border-primary/50 text-muted-foreground hover:text-foreground transition-colors">
-                      Full comparison →
-                    </Link>
-                  )}
-                  {tool.href && (
-                    <a href={tool.href} target="_blank" rel="noopener noreferrer sponsored" className="text-xs px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity font-medium">
-                      Try it →
-                    </a>
-                  )}
-                </div>
+              {/* Links */}
+              <div className="flex items-center gap-2 pt-1 border-t border-border/50">
+                {tool.compareHref && (
+                  <Link href={tool.compareHref} className="text-xs px-3 py-1.5 rounded-lg border border-border hover:border-primary/50 text-muted-foreground hover:text-foreground transition-colors">
+                    Full comparison →
+                  </Link>
+                )}
+                {tool.href && (
+                  <a href={tool.href} target="_blank" rel="noopener noreferrer sponsored" className="text-xs px-3 py-1.5 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity font-medium">
+                    Try it →
+                  </a>
+                )}
               </div>
             </div>
           );
         })}
       </section>
 
-      {/* FAQ */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {page.faqs.map((faq) => (
-            <div key={faq.q} className="rounded-xl border border-border bg-card p-5 space-y-2">
-              <h3 className="font-semibold text-foreground text-sm">{faq.q}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
-            </div>
-          ))}
-        </div>
+      {/* FAQ — trimmed */}
+      <section className="space-y-3">
+        <h2 className="text-xl font-bold text-foreground">FAQ</h2>
+        {page.faqs.map((faq) => (
+          <div key={faq.q} className="rounded-xl border border-border bg-card p-4 space-y-1.5">
+            <h3 className="font-semibold text-sm text-foreground">{faq.q}</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">{faq.a}</p>
+          </div>
+        ))}
       </section>
 
-      {/* Related */}
+      {/* Related guides */}
       {relatedPages.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Related Guides</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="space-y-3">
+          <h2 className="text-base font-semibold text-foreground">Related Guides</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {relatedPages.map((related) => (
               <Link
                 key={related.slug}
                 href={`/best/${related.slug}`}
-                className="group block rounded-xl border border-border bg-card p-4 hover:border-primary/50 transition-all"
+                className="group block rounded-xl border border-border bg-card p-3 hover:border-primary/50 transition-all"
               >
                 <div className="font-medium text-sm text-foreground group-hover:text-primary transition-colors">{related.headline}</div>
-                <div className="text-xs text-muted-foreground mt-1 line-clamp-1">{related.description}</div>
+                <div className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{related.description}</div>
               </Link>
             ))}
           </div>
@@ -263,12 +283,12 @@ export default async function BestForPage({
       )}
 
       {/* Bottom CTA */}
-      <div className="rounded-xl border border-primary/20 bg-primary/5 px-6 py-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div className="rounded-xl border border-primary/20 bg-primary/5 px-5 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex-1">
-          <h3 className="font-semibold text-foreground">Want a personalized recommendation?</h3>
-          <p className="text-sm text-muted-foreground mt-1">Answer 6 questions and get your perfect AI stack — tailored to your budget, skill level, and use case.</p>
+          <h3 className="font-semibold text-sm text-foreground">Get a personalized recommendation</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">6 questions → your perfect AI stack, tailored to budget and use case.</p>
         </div>
-        <Link href="/research/finder" className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
+        <Link href="/research/finder" className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity">
           Try AI Tool Finder →
         </Link>
       </div>
