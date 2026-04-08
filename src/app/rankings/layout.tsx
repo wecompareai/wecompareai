@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
 export const metadata: Metadata = {
