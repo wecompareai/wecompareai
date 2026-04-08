@@ -27,22 +27,26 @@ export default function Header() {
   const { data: session } = useSession();
   const isAdminOrContributor = session?.user?.role === "admin" || session?.user?.role === "contributor";
 
-  const compare    = useDropdown();
-  const bestFor    = useDropdown();
-  const live       = useDropdown();
-  const business   = useDropdown();
-  const market     = useDropdown();
-  const tech       = useDropdown();
-  const company    = useDropdown();
+  const compare      = useDropdown();
+  const bestFor      = useDropdown();
+  const rankings     = useDropdown();
+  const alternatives = useDropdown();
+  const live         = useDropdown();
+  const business     = useDropdown();
+  const market       = useDropdown();
+  const tech         = useDropdown();
+  const company      = useDropdown();
 
-  const [mobileOpen,         setMobileOpen]         = useState(false);
-  const [mobileCompareOpen,  setMobileCompareOpen]  = useState(false);
-  const [mobileBestForOpen,  setMobileBestForOpen]  = useState(false);
-  const [mobileLiveOpen,     setMobileLiveOpen]     = useState(false);
-  const [mobileBusinessOpen, setMobileBusinessOpen] = useState(false);
-  const [mobileMarketOpen,   setMobileMarketOpen]   = useState(false);
-  const [mobileTechOpen,     setMobileTechOpen]     = useState(false);
-  const [mobileCompanyOpen,  setMobileCompanyOpen]  = useState(false);
+  const [mobileOpen,              setMobileOpen]              = useState(false);
+  const [mobileCompareOpen,       setMobileCompareOpen]       = useState(false);
+  const [mobileBestForOpen,       setMobileBestForOpen]       = useState(false);
+  const [mobileRankingsOpen,      setMobileRankingsOpen]      = useState(false);
+  const [mobileAlternativesOpen,  setMobileAlternativesOpen]  = useState(false);
+  const [mobileLiveOpen,          setMobileLiveOpen]          = useState(false);
+  const [mobileBusinessOpen,      setMobileBusinessOpen]      = useState(false);
+  const [mobileMarketOpen,        setMobileMarketOpen]        = useState(false);
+  const [mobileTechOpen,          setMobileTechOpen]          = useState(false);
+  const [mobileCompanyOpen,       setMobileCompanyOpen]       = useState(false);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -55,6 +59,8 @@ export default function Header() {
     setMobileOpen(false);
     setMobileCompareOpen(false);
     setMobileBestForOpen(false);
+    setMobileRankingsOpen(false);
+    setMobileAlternativesOpen(false);
     setMobileLiveOpen(false);
     setMobileBusinessOpen(false);
     setMobileMarketOpen(false);
@@ -186,13 +192,85 @@ export default function Header() {
               )}
             </div>
 
-            <Link href="/rankings" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-              Rankings
-            </Link>
+            {/* ── Rankings ── */}
+            <div className="relative" onMouseEnter={rankings.onEnter} onMouseLeave={rankings.onLeave}>
+              {navBtn("Rankings", rankings.open)}
+              {rankings.open && (
+                <div className={dropdownClass}>
+                  {sectionLabel("By Category")}
+                  <Link href="/rankings" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🏆 Overall Rankings <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">All tools scored across 4 dimensions</div>
+                  </Link>
+                  <Link href="/rankings?category=LLM" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🤖 Best LLMs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">ChatGPT, Claude, Gemini & more ranked</div>
+                  </Link>
+                  <Link href="/rankings?category=Coding" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">💻 Best Coding Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Cursor, Copilot, Claude Code ranked</div>
+                  </Link>
+                  <Link href="/rankings?category=Image" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🎨 Best Image Generators <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Midjourney, DALL-E 3, Stable Diffusion</div>
+                  </Link>
+                  <Link href="/rankings?category=Audio" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🎙️ Best Audio Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">ElevenLabs, Suno & voice AI ranked</div>
+                  </Link>
+                  <Link href="/rankings?category=Cloud" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">☁️ Best Cloud AI <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">AWS, Azure & GCP AI services ranked</div>
+                  </Link>
+                </div>
+              )}
+            </div>
 
-            <Link href="/alternatives" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-              Alternatives
-            </Link>
+            {/* ── Alternatives ── */}
+            <div className="relative" onMouseEnter={alternatives.onEnter} onMouseLeave={alternatives.onLeave}>
+              {navBtn("Alternatives", alternatives.open)}
+              {alternatives.open && (
+                <div className={dropdownClass}>
+                  {sectionLabel("By Tool")}
+                  <Link href="/alternatives/chatgpt-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🤖 ChatGPT Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Claude, Gemini, Perplexity & more</div>
+                  </Link>
+                  <Link href="/alternatives/claude-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🧠 Claude Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Best alternatives to Claude AI</div>
+                  </Link>
+                  <Link href="/alternatives/gemini-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">✨ Gemini Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Best alternatives to Google Gemini</div>
+                  </Link>
+                  <Link href="/alternatives/github-copilot-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">💻 GitHub Copilot Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Cursor, Windsurf, Claude Code & more</div>
+                  </Link>
+                  <Link href="/alternatives/cursor-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">⌨️ Cursor Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Best AI coding tools vs Cursor</div>
+                  </Link>
+                  <Link href="/alternatives/midjourney-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🎨 Midjourney Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">DALL-E 3, Stable Diffusion & more</div>
+                  </Link>
+                  <Link href="/alternatives/elevenlabs-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🎙️ ElevenLabs Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Murf, Play.ht, OpenAI TTS & more</div>
+                  </Link>
+                  <Link href="/alternatives/perplexity-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🔬 Perplexity Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Best AI search engines vs Perplexity</div>
+                  </Link>
+                  {divider}
+                  <Link href="/alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-primary">See all alternatives →</div>
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* ── Live Tools ── */}
             <div className="relative" onMouseEnter={live.onEnter} onMouseLeave={live.onLeave}>
@@ -367,13 +445,28 @@ export default function Header() {
             <MobileLink href="/research/model-tracker" onClick={closeMobile}>📡 Model Update Tracker</MobileLink>
           </MobileAccordion>
 
-          <Link href="/rankings" onClick={closeMobile} className="block px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-            Rankings
-          </Link>
+          {/* Rankings */}
+          <MobileAccordion label="Rankings" open={mobileRankingsOpen} onToggle={() => setMobileRankingsOpen(v => !v)}>
+            <MobileLink href="/rankings"                  onClick={closeMobile}>🏆 Overall Rankings</MobileLink>
+            <MobileLink href="/rankings?category=LLM"    onClick={closeMobile}>🤖 Best LLMs</MobileLink>
+            <MobileLink href="/rankings?category=Coding"  onClick={closeMobile}>💻 Best Coding Tools</MobileLink>
+            <MobileLink href="/rankings?category=Image"   onClick={closeMobile}>🎨 Best Image Generators</MobileLink>
+            <MobileLink href="/rankings?category=Audio"   onClick={closeMobile}>🎙️ Best Audio Tools</MobileLink>
+            <MobileLink href="/rankings?category=Cloud"   onClick={closeMobile}>☁️ Best Cloud AI</MobileLink>
+          </MobileAccordion>
 
-          <Link href="/alternatives" onClick={closeMobile} className="block px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-            Alternatives
-          </Link>
+          {/* Alternatives */}
+          <MobileAccordion label="Alternatives" open={mobileAlternativesOpen} onToggle={() => setMobileAlternativesOpen(v => !v)}>
+            <MobileLink href="/alternatives/chatgpt-alternatives"       onClick={closeMobile}>🤖 ChatGPT Alternatives</MobileLink>
+            <MobileLink href="/alternatives/claude-alternatives"        onClick={closeMobile}>🧠 Claude Alternatives</MobileLink>
+            <MobileLink href="/alternatives/gemini-alternatives"        onClick={closeMobile}>✨ Gemini Alternatives</MobileLink>
+            <MobileLink href="/alternatives/github-copilot-alternatives" onClick={closeMobile}>💻 GitHub Copilot Alternatives</MobileLink>
+            <MobileLink href="/alternatives/cursor-alternatives"        onClick={closeMobile}>⌨️ Cursor Alternatives</MobileLink>
+            <MobileLink href="/alternatives/midjourney-alternatives"    onClick={closeMobile}>🎨 Midjourney Alternatives</MobileLink>
+            <MobileLink href="/alternatives/elevenlabs-alternatives"    onClick={closeMobile}>🎙️ ElevenLabs Alternatives</MobileLink>
+            <MobileLink href="/alternatives/perplexity-alternatives"    onClick={closeMobile}>🔬 Perplexity Alternatives</MobileLink>
+            <MobileLink href="/alternatives"                            onClick={closeMobile}>See all alternatives →</MobileLink>
+          </MobileAccordion>
 
           {/* Best For */}
           <MobileAccordion label="Best For" open={mobileBestForOpen} onToggle={() => setMobileBestForOpen(v => !v)}>
