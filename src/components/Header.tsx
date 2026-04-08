@@ -322,6 +322,10 @@ export default function Header() {
                     <div className="font-medium text-foreground flex items-center gap-1.5">🔄 Migration Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Switch models — cost diff, effort, code snippets</div>
                   </Link>
+                  <Link href="/research/data-governance" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center gap-1.5">🔒 Data Governance Simulator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Toggle region, PII & compliance — see who passes</div>
+                  </Link>
                 </div>
               )}
             </div>
@@ -363,10 +367,6 @@ export default function Header() {
                   <Link href="/research/reasoning-tests" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center gap-1.5">🧪 Reasoning Stress Tests <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Multi-step, code, long-context & tool-use scores</div>
-                  </Link>
-                  <Link href="/research/data-governance" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🔒 Data Governance Simulator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Toggle region, PII & compliance — see who passes</div>
                   </Link>
                   {divider}
                   <Link href="/blog" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
@@ -496,6 +496,7 @@ export default function Header() {
             <MobileLink href="/research/procurement"      onClick={closeMobile}>📋 Procurement Assistant</MobileLink>
             <MobileLink href="/research/ai-stack"         onClick={closeMobile}>🧩 Your AI Stack</MobileLink>
             <MobileLink href="/research/migration"        onClick={closeMobile}>🔄 Migration Assistant</MobileLink>
+            <MobileLink href="/research/data-governance"  onClick={closeMobile}>🔒 Data Governance Simulator</MobileLink>
           </MobileAccordion>
 
           <MobileAccordion label="Market Intelligence" open={mobileMarketOpen} onToggle={() => setMobileMarketOpen(v => !v)}>
@@ -508,7 +509,6 @@ export default function Header() {
           <MobileAccordion label="Technical" open={mobileTechOpen} onToggle={() => setMobileTechOpen(v => !v)}>
             <MobileLink href="/research/latency-heatmap"  onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
             <MobileLink href="/research/reasoning-tests"  onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
-            <MobileLink href="/research/data-governance"  onClick={closeMobile}>🔒 Data Governance Simulator</MobileLink>
             <MobileLink href="/blog"                      onClick={closeMobile}>✍️ Blog</MobileLink>
             <MobileLink href="/directory"                 onClick={closeMobile}>📁 Directory</MobileLink>
             <MobileLink href="/glossary"                  onClick={closeMobile}>📖 Glossary</MobileLink>
