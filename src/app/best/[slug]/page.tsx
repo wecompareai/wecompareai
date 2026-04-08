@@ -55,21 +55,47 @@ export default async function BestForPage({
 
   const relatedPages = bestForPages.filter((p) => page.relatedSlugs.includes(p.slug));
 
-  const jsonLd = {
+  const pageUrl = `${SITE_URL}/best/${slug}`;
+
+  const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: page.title,
     description: page.description,
     dateModified: page.lastUpdated,
     datePublished: page.lastUpdated,
-    url: `${SITE_URL}/best/${slug}`,
+    url: pageUrl,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [{ "@type": "Person", name: "Jigar Acharya" }, { "@type": "Person", name: "Saurabh Gera" }],
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Best AI For…", item: `${SITE_URL}/best` },
+      { "@type": "ListItem", position: 3, name: page.headline, item: pageUrl },
+    ],
+  };
+
+  const faqJsonLd = page.faqs?.length ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: page.faqs.map((faq: { q: string; a: string }) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  } : null;
+
+  const topPick = page.tools?.[0];
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -79,6 +105,16 @@ export default async function BestForPage({
         <span>/</span>
         <span className="text-foreground">{page.headline}</span>
       </div>
+
+      {/* TL;DR Executive Summary */}
+      {topPick && (
+        <div className="rounded-xl border-l-4 border-primary bg-primary/5 px-5 py-4 space-y-1">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">TL;DR</p>
+          <p className="text-sm text-foreground leading-relaxed">
+            <strong>{topPick.name}</strong> is the best {page.headline.toLowerCase()} in 2026 — {topPick.tagline.toLowerCase()}. {page.tools?.[1] ? `${page.tools[1].name} is the best runner-up.` : ""}
+          </p>
+        </div>
+      )}
 
       {/* Hero */}
       <div className="space-y-4">
