@@ -6,7 +6,7 @@ This agent runs outside the app and publishes blog articles directly into the ex
 
 - Reads your existing `.env`
 - Pulls a live AI-related trend signal from Google and Bing
-- Uses Anthropic to draft an article around that trending topic
+- Uses OpenRouter to draft an article around that trending topic
 - Falls back to one comparison dataset from `data/comparisons` if trend lookup fails
 - Prevents back-to-back auto-posts inside a short cooldown window
 - Uses a random publisher pen name unless you explicitly provide an author email
@@ -24,7 +24,7 @@ This agent runs outside the app and publishes blog articles directly into the ex
 - Node.js installed
 - `node_modules` already present
 - A valid `DATABASE_URL`
-- A valid `ANTHROPIC_API_KEY`
+- A valid `OPENROUTER_API_KEY`
 - Outbound network access for Google Trends and Bing RSS lookups
 - At least one admin user in the database
 
@@ -32,6 +32,8 @@ Optional:
 
 - `DAILY_BLOG_AUTHOR_EMAIL=you@example.com`
 - `NEXT_PUBLIC_SITE_URL=https://your-site.example`
+- `OPENROUTER_MODEL=openai/gpt-4o-mini`
+- `OPENROUTER_SITE_TITLE=AI Compare Daily Blog Agent`
 
 ## Manual test
 
@@ -83,3 +85,4 @@ The runner appends output to:
 - Duplicate prevention now uses a short cooldown window and compares against the last 100 published posts before inserting a new one.
 - The preferred path is now: Google trend signal + Bing AI news signal -> keyword selection -> article generation -> publish.
 - If Google/Bing trend lookup fails, the agent falls back to your local comparison data so scheduled publishing still works.
+- OpenRouter is the API gateway; the actual model is controlled by `OPENROUTER_MODEL`.

@@ -5,6 +5,7 @@ import { getAllDomainComparisonSlugs } from "@/lib/domains";
 import { bestForPages } from "@/lib/best-for";
 import { alternativePages } from "@/lib/alternatives";
 import { glossaryTerms } from "@/lib/glossary";
+import { getVsSlugs } from "@/lib/vs";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -26,6 +27,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly" as const,
     priority: 0.85,
   }));
+
+  const vsSlugs = getVsSlugs();
+  const vsSitemapEntries = [
+    {
+      url: `${SITE_URL}/vs`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    ...vsSlugs.map((slug) => ({
+      url: `${SITE_URL}/vs/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    })),
+  ];
 
   const glossarySitemapEntries = glossaryTerms.map((t) => ({
     url: `${SITE_URL}/glossary/${t.slug}`,
@@ -216,6 +233,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
+      url: `${SITE_URL}/terms`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
       url: `${SITE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
@@ -235,5 +258,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...bestForSitemapEntries,
     ...alternativesSitemapEntries,
     ...glossarySitemapEntries,
+    ...vsSitemapEntries,
   ];
 }
