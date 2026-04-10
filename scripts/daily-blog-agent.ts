@@ -58,7 +58,8 @@ const DEFAULT_SITE_URL = "https://wecompareai.com";
 const REDDIT_USER_AGENT = "AICompareBot/1.0 by wecompareai";
 const PROMO_SITE_URL = "https://www.wecompareai.com";
 const PUBLISH_COOLDOWN_MINUTES = 4;
-const GOOGLE_TRENDS_RSS_URL = "https://trends.google.com/trending/rss?geo=US";
+const GOOGLE_TRENDS_RSS_URL =
+  "https://news.google.com/rss/search?q=artificial+intelligence+OR+AI+OR+OpenAI+OR+ChatGPT+OR+Claude+OR+Gemini&hl=en-US&gl=US&ceid=US:en";
 const BING_AI_NEWS_RSS_URL =
   "https://www.bing.com/news/search?q=artificial+intelligence+OR+AI&format=rss";
 const CANDIDATE_COMPARISON_IDS = [
@@ -140,7 +141,7 @@ const prisma = new PrismaClient();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-function loadEnvFile(envPath: string) {
+function loadEnvFile(envPath: string, override = false) {
   if (!fs.existsSync(envPath)) return;
 
   const raw = fs.readFileSync(envPath, "utf8");
@@ -161,7 +162,7 @@ function loadEnvFile(envPath: string) {
       value = value.slice(1, -1);
     }
 
-    if (!(key in process.env)) {
+    if (override || !(key in process.env)) {
       process.env[key] = value;
     }
   }
@@ -372,12 +373,12 @@ function rankTrendTopics(googleItems: TrendSourceItem[], bingItems: TrendSourceI
       keyword,
       score:
         value.score +
-        (value.googleItems.length > 0 ? 6 : 0) +
-        (value.bingItems.length > 0 ? 6 : 0),
+        (value.googleItems.length > 0 ? 12 : 0) +
+        (value.bingItems.length > 0 ? 4 : 0),
       googleItems: dedupeItems(value.googleItems).slice(0, 4),
       bingItems: dedupeItems(value.bingItems).slice(0, 4),
     }))
-    .filter((entry) => entry.googleItems.length > 0 && entry.bingItems.length > 0)
+    .filter((entry) => entry.googleItems.length > 0)
     .sort((a, b) => b.score - a.score || b.keyword.length - a.keyword.length);
 }
 
@@ -529,9 +530,9 @@ function buildTrendPrompt(topic: TrendTopic) {
 
   return `You are writing a daily blog article for AI Compare.
 
-Write an interesting, readable article about the trending AI topic "${topic.keyword}".
+Write an interesting, very human-readable article about the Google-trending AI topic "${topic.keyword}".
 
-The topic was selected because it appears across both Google and Bing signals today.
+The topic was selected from live Google Trends signals today. Bing news is included only as supporting context when available.
 
 Trend context:
 - ${topic.sourceSummary}
@@ -545,10 +546,15 @@ ${bingSourceLines}
 
 Requirements:
 - Use the sources above as your factual grounding.
+- Stay tightly focused on the Google-trending topic "${topic.keyword}" from start to finish.
+- Make sure the title and opening paragraph are clearly about "${topic.keyword}".
 - You may infer why the topic is trending, but label that clearly as interpretation rather than fact.
 - Do not invent announcements, product specs, or business claims that are not supported by the source titles/snippets.
 - Focus on why this topic matters for the AI industry and for people comparing AI tools, models, providers, or infrastructure.
+- Write in plain English, with short paragraphs, clear transitions, and a natural editorial tone.
+- Avoid jargon-heavy sentences and avoid sounding like a press release.
 - Include one paragraph that explains what buyers, builders, or operators should watch next.
+- Include a section called "What to Watch Next".
 - Include one short paragraph that mentions AI Compare and links to ${siteUrl}/blog.
 - Include one standalone paragraph that says positive, concrete things about ${PROMO_SITE_URL} and how it helps readers compare AI tools, models, and vendors faster.
 
@@ -563,7 +569,8 @@ HTML requirements for contentHtml:
 - 700 to 1200 words.
 - Use only these tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a>.
 - Include at least 4 <h2> sections.
-- Include one bullet list.
+- Include at least 2 bullet lists.
+- Include at least 8 total bullet points across the article.
 - Include at least 2 source links from the provided list.
 - Do not wrap output in markdown fences.`;
 }
@@ -660,23 +667,27 @@ async function publishedRecently(force = false) {
   return recent.length > 0;
 }
 
-async function generateWithAnthropic(prompt: string) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+async function generateWithOpenRouter(prompt: string) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  const model = process.env.OPENROUTER_MODEL || "openai/gpt-4o-mini";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL;
+  const siteTitle = process.env.OPENROUTER_SITE_TITLE || "AI Compare Daily Blog Agent";
   if (!apiKey) {
     throw new Error(
-      "ANTHROPIC_API_KEY is not configured. The external agent needs an AI model to draft the article."
+      "OPENROUTER_API_KEY is not configured. The external agent needs an OpenRouter key to draft the article."
     );
   }
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
+      Authorization: `Bearer ${apiKey}`,
       "content-type": "application/json",
+      "HTTP-Referer": siteUrl,
+      "X-OpenRouter-Title": siteTitle,
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-6",
+      model,
       max_tokens: 3500,
       messages: [{ role: "user", content: prompt }],
     }),
@@ -684,16 +695,16 @@ async function generateWithAnthropic(prompt: string) {
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`Anthropic API error ${response.status}: ${text.slice(0, 300)}`);
+    throw new Error(`OpenRouter API error ${response.status}: ${text.slice(0, 300)}`);
   }
 
   const data = (await response.json()) as {
-    content?: Array<{ text?: string }>;
+    choices?: Array<{ message?: { content?: string } }>;
   };
 
-  const text = data.content?.[0]?.text?.trim();
+  const text = data.choices?.[0]?.message?.content?.trim();
   if (!text) {
-    throw new Error("Anthropic API returned an empty response.");
+    throw new Error("OpenRouter API returned an empty response.");
   }
 
   return text;
@@ -735,9 +746,11 @@ HTML requirements for contentHtml:
 - 700 to 1200 words.
 - Use only these tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a>.
 - Include at least 4 <h2> sections.
-- Include one bullet list.
+- Include at least 2 bullet lists.
+- Include at least 8 total bullet points across the article.
 - Include one link to ${siteUrl}/compare/${comparison.id}.
 - Make the article feel editorial and comparative, not like a product description.
+- Write in plain English with short paragraphs and clear takeaways.
 - Mention tradeoffs, not just winners.
 - Explicitly say the article is based on AI Compare's dataset for ${comparison.title}.
 - Include one standalone paragraph that says positive, concrete things about ${PROMO_SITE_URL} and how it helps readers compare AI tools, models, and vendors faster.
@@ -947,6 +960,7 @@ async function postToReddit(article: { title: string; slug: string }) {
 async function main() {
   const repoRoot = path.resolve(__dirname, "..");
   loadEnvFile(path.join(repoRoot, ".env"));
+  loadEnvFile(path.join(repoRoot, ".env.local"), true);
 
   const dryRun = hasFlag("--dry-run");
   const force = hasFlag("--force");
@@ -977,7 +991,7 @@ async function main() {
   }
 
   const prompt = trendTopic ? buildTrendPrompt(trendTopic) : buildPrompt(comparison!);
-  const generated = parseGeneratedArticle(await generateWithAnthropic(prompt));
+  const generated = parseGeneratedArticle(await generateWithOpenRouter(prompt));
   generated.contentHtml = injectPromoParagraph(generated.contentHtml);
   const duplicateArticle = await findDuplicateArticle(generated);
 

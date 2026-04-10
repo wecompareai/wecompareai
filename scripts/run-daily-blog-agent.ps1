@@ -6,6 +6,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$PSNativeCommandUseErrorActionPreference = $false
 
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $NodeCandidates = @()
@@ -63,8 +64,18 @@ if ($AuthorEmail) {
 
 $Timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 "[$Timestamp] Starting daily blog agent" | Tee-Object -FilePath $LogFile -Append
-& $NodeExe @Args 2>&1 | Tee-Object -FilePath $LogFile -Append
-$ExitCode = $LASTEXITCODE
-$Timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-"[$Timestamp] Finished with exit code $ExitCode" | Tee-Object -FilePath $LogFile -Append
+
+try {
+  & $NodeExe @Args 2>&1 | Tee-Object -FilePath $LogFile -Append
+  $ExitCode = $LASTEXITCODE
+}
+catch {
+  $_ | Out-String | Tee-Object -FilePath $LogFile -Append | Out-Null
+  $ExitCode = if ($LASTEXITCODE) { $LASTEXITCODE } else { 1 }
+}
+finally {
+  $Timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+  "[$Timestamp] Finished with exit code $ExitCode" | Tee-Object -FilePath $LogFile -Append
+}
+
 exit $ExitCode
