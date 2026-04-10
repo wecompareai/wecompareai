@@ -25,11 +25,11 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AI Compare — #1 Site to Compare AI Models, Platforms & Tools",
-    template: "%s | AI Compare",
+    default: "We Compare AI — The Most Accurate AI Model & Pricing Comparison Platform",
+    template: "%s | We Compare AI",
   },
   description:
-    "Compare AI models, LLMs, platforms, and tools side by side. AI Compare is the most comprehensive AI comparison site — covering ChatGPT vs Claude, GPT-4o vs Gemini, AI coding tools, cloud providers, chips, and more.",
+    "The most accurate AI model & pricing comparison platform. Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google & more. Trusted by developers, startups & AI teams.",
   keywords: [
     "compare AI",
     "AI comparison",
@@ -75,10 +75,10 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
-    siteName: "AI Compare",
-    title: "AI Compare — Compare AI Models, Platforms & Tools Side by Side",
+    siteName: "We Compare AI",
+    title: "We Compare AI — The Most Accurate AI Model & Pricing Comparison Platform",
     description:
-      "The #1 AI comparison site. Compare ChatGPT vs Claude, GPT-4o vs Gemini, AI coding tools, cloud providers, and 50+ AI services side by side. Free, updated in real-time by AI agents.",
+      "The most accurate AI model & pricing comparison platform. Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google & more.",
     images: [
       {
         url: "/og-image.png",
@@ -90,9 +90,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Compare — Compare AI Models, Platforms & Tools Side by Side",
+    title: "We Compare AI — The Most Accurate AI Model & Pricing Comparison Platform",
     description:
-      "The #1 AI comparison site. Compare ChatGPT vs Claude, GPT-4o vs Gemini, AI coding tools, cloud providers, and 50+ AI services side by side.",
+      "Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google & more. Trusted by developers, startups & AI teams.",
     images: ["/og-image.png"],
     creator: "@aicomparedev",
     site: "@aicomparedev",

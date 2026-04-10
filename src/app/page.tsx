@@ -98,14 +98,14 @@ function HomeJsonLd() {
   const websiteJsonLd = {
     "@context": "https://schema.org", "@type": "WebSite",
     name: "We Compare AI", url: SITE_URL,
-    description: "The #1 AI comparison site. Compare AI models, LLMs, platforms, tools, and cloud providers side by side — free, comprehensive, updated in real-time by AI agents.",
+    description: "The most accurate AI model & pricing comparison platform. Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google & more.",
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     potentialAction: { "@type": "SearchAction", target: { "@type": "EntryPoint", urlTemplate: `${SITE_URL}/categories?q={search_term_string}` }, "query-input": "required name=search_term_string" },
   };
   const orgJsonLd = {
     "@context": "https://schema.org", "@type": "Organization",
     name: "We Compare AI", url: SITE_URL,
-    description: "Your single destination for comparing all AI technologies.",
+    description: "The most accurate AI model & pricing comparison platform. Trusted by developers, startups & AI teams.",
     founder: [
       { "@type": "Person", name: "Jigar Acharya" },
       { "@type": "Person", name: "Saurabh Gera" },
@@ -188,17 +188,32 @@ export default async function HomePage() {
             <div className="space-y-5 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Updated this week · 100+ AI tools tracked
+                Real-time data · 100+ AI tools tracked
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.1]">
-                Which AI actually{" "}
-                <span className="text-primary italic">wins</span>{" "}
-                for you?
+                Compare AI Models,{" "}
+                <span className="text-primary">Pricing</span>{" "}
+                &amp; Performance —{" "}
+                <span className="italic">Instantly</span>
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                We test AI models so you don&apos;t lose your sanity — or your budget.
-                Real comparisons, zero marketing hype, updated every second by AI agents.
+                Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google &amp; more.
               </p>
+              <p className="text-sm text-muted-foreground">
+                Trusted by developers, startups &amp; AI teams to make smarter decisions.
+              </p>
+              {/* 3 Core Pillars */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+                {[
+                  { icon: "⚡", label: "Real-time pricing" },
+                  { icon: "🧪", label: "Verified benchmarks" },
+                  { icon: "🔍", label: "Unbiased comparisons" },
+                ].map((p) => (
+                  <span key={p.label} className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full border border-border bg-muted text-foreground">
+                    {p.icon} {p.label}
+                  </span>
+                ))}
+              </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <Link href="/categories" className="group px-7 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/25 flex items-center gap-2">
                   Start Comparing Free
