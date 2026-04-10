@@ -282,37 +282,37 @@ export default function Header() {
                 <div className={dropdownClass}>
                   {sectionLabel("🤖 AI Models")}
                   <Link href="/vs/chatgpt-vs-claude" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">ChatGPT vs Claude</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">ChatGPT vs Claude <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Claude Opus 4</div>
                   </Link>
                   <Link href="/vs/chatgpt-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">ChatGPT vs Gemini</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">ChatGPT vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Gemini 2.5 Pro</div>
                   </Link>
                   <Link href="/vs/claude-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">Claude vs Gemini</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">Claude vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   <Link href="/vs/deepseek-vs-chatgpt" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">DeepSeek vs ChatGPT</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">DeepSeek vs ChatGPT <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   {divider}
                   {sectionLabel("💻 Coding Tools")}
                   <Link href="/vs/copilot-vs-cursor" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">Copilot vs Cursor</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">Copilot vs Cursor <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   <Link href="/vs/cursor-vs-windsurf" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">Cursor vs Windsurf</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">Cursor vs Windsurf <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   <Link href="/vs/claude-code-vs-copilot" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">Claude Code vs Copilot</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">Claude Code vs Copilot <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   {divider}
                   {sectionLabel("🎨 Image & 🎬 Video")}
                   <Link href="/vs/midjourney-vs-dalle" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">Midjourney vs DALL-E 3</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">Midjourney vs DALL-E 3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   <Link href="/vs/sora-vs-runway" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">Sora vs Runway Gen-3</div>
+                    <div className="font-medium text-foreground flex items-center gap-1.5">Sora vs Runway Gen-3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
                   </Link>
                   {divider}
                   <Link href="/vs" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
