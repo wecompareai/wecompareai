@@ -31,6 +31,7 @@ export default function Header() {
   const bestFor      = useDropdown();
   const rankings     = useDropdown();
   const alternatives = useDropdown();
+  const vs           = useDropdown();
   const live         = useDropdown();
   const business     = useDropdown();
   const market       = useDropdown();
@@ -42,6 +43,7 @@ export default function Header() {
   const [mobileBestForOpen,       setMobileBestForOpen]       = useState(false);
   const [mobileRankingsOpen,      setMobileRankingsOpen]      = useState(false);
   const [mobileAlternativesOpen,  setMobileAlternativesOpen]  = useState(false);
+  const [mobileVsOpen,            setMobileVsOpen]            = useState(false);
   const [mobileLiveOpen,          setMobileLiveOpen]          = useState(false);
   const [mobileBusinessOpen,      setMobileBusinessOpen]      = useState(false);
   const [mobileMarketOpen,        setMobileMarketOpen]        = useState(false);
@@ -61,6 +63,7 @@ export default function Header() {
     setMobileBestForOpen(false);
     setMobileRankingsOpen(false);
     setMobileAlternativesOpen(false);
+    setMobileVsOpen(false);
     setMobileLiveOpen(false);
     setMobileBusinessOpen(false);
     setMobileMarketOpen(false);
@@ -272,6 +275,53 @@ export default function Header() {
               )}
             </div>
 
+            {/* ── VS ── */}
+            <div className="relative" onMouseEnter={vs.onEnter} onMouseLeave={vs.onLeave}>
+              {navBtn("VS", vs.open)}
+              {vs.open && (
+                <div className={dropdownClass}>
+                  {sectionLabel("🤖 AI Models")}
+                  <Link href="/vs/chatgpt-vs-claude" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">ChatGPT vs Claude</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Claude Opus 4</div>
+                  </Link>
+                  <Link href="/vs/chatgpt-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">ChatGPT vs Gemini</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Gemini 2.5 Pro</div>
+                  </Link>
+                  <Link href="/vs/claude-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">Claude vs Gemini</div>
+                  </Link>
+                  <Link href="/vs/deepseek-vs-chatgpt" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">DeepSeek vs ChatGPT</div>
+                  </Link>
+                  {divider}
+                  {sectionLabel("💻 Coding Tools")}
+                  <Link href="/vs/copilot-vs-cursor" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">Copilot vs Cursor</div>
+                  </Link>
+                  <Link href="/vs/cursor-vs-windsurf" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">Cursor vs Windsurf</div>
+                  </Link>
+                  <Link href="/vs/claude-code-vs-copilot" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">Claude Code vs Copilot</div>
+                  </Link>
+                  {divider}
+                  {sectionLabel("🎨 Image & 🎬 Video")}
+                  <Link href="/vs/midjourney-vs-dalle" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">Midjourney vs DALL-E 3</div>
+                  </Link>
+                  <Link href="/vs/sora-vs-runway" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">Sora vs Runway Gen-3</div>
+                  </Link>
+                  {divider}
+                  <Link href="/vs" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-primary">See all 28 comparisons →</div>
+                  </Link>
+                </div>
+              )}
+            </div>
+
             {/* ── Live Tools ── */}
             <div className="relative" onMouseEnter={live.onEnter} onMouseLeave={live.onLeave}>
               {navBtn("Live Tools", live.open)}
@@ -466,6 +516,23 @@ export default function Header() {
             <MobileLink href="/alternatives/elevenlabs-alternatives"    onClick={closeMobile}>🎙️ ElevenLabs Alternatives</MobileLink>
             <MobileLink href="/alternatives/perplexity-alternatives"    onClick={closeMobile}>🔬 Perplexity Alternatives</MobileLink>
             <MobileLink href="/alternatives"                            onClick={closeMobile}>See all alternatives →</MobileLink>
+          </MobileAccordion>
+
+          {/* VS */}
+          <MobileAccordion label="VS Comparisons" open={mobileVsOpen} onToggle={() => setMobileVsOpen(v => !v)}>
+            <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">AI Models</p>
+            <MobileLink href="/vs/chatgpt-vs-claude"       onClick={closeMobile}>ChatGPT vs Claude</MobileLink>
+            <MobileLink href="/vs/chatgpt-vs-gemini"       onClick={closeMobile}>ChatGPT vs Gemini</MobileLink>
+            <MobileLink href="/vs/claude-vs-gemini"        onClick={closeMobile}>Claude vs Gemini</MobileLink>
+            <MobileLink href="/vs/deepseek-vs-chatgpt"     onClick={closeMobile}>DeepSeek vs ChatGPT</MobileLink>
+            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Coding Tools</p>
+            <MobileLink href="/vs/copilot-vs-cursor"       onClick={closeMobile}>Copilot vs Cursor</MobileLink>
+            <MobileLink href="/vs/cursor-vs-windsurf"      onClick={closeMobile}>Cursor vs Windsurf</MobileLink>
+            <MobileLink href="/vs/claude-code-vs-copilot"  onClick={closeMobile}>Claude Code vs Copilot</MobileLink>
+            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Image & Video</p>
+            <MobileLink href="/vs/midjourney-vs-dalle"     onClick={closeMobile}>Midjourney vs DALL-E 3</MobileLink>
+            <MobileLink href="/vs/sora-vs-runway"          onClick={closeMobile}>Sora vs Runway Gen-3</MobileLink>
+            <MobileLink href="/vs"                         onClick={closeMobile}>See all 28 comparisons →</MobileLink>
           </MobileAccordion>
 
           {/* Best For */}
