@@ -205,6 +205,10 @@ export default function Header() {
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">🏆 Overall Rankings <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">All tools scored across 4 dimensions</div>
                   </Link>
+                  <Link href="/research/llm-leaderboard" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📊 LLM Leaderboard <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Live benchmark scores across all models</div>
+                  </Link>
                   <Link href="/rankings?category=LLM" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">🤖 Best LLMs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">ChatGPT, Claude, Gemini & more ranked</div>
@@ -417,6 +421,14 @@ export default function Header() {
                   <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">Contact Us <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
+                  <Link href="/press" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📰 Press & Media Kit <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Logos, stats & media contact</div>
+                  </Link>
+                  <Link href="/submit" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">➕ Submit Your AI Tool <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Get listed on We Compare AI</div>
+                  </Link>
                   {divider}
                   {sectionLabel("Technical")}
                   <Link href="/research/latency-heatmap" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
@@ -432,6 +444,14 @@ export default function Header() {
                   <Link href="/blog" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">✍️ Blog <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AI news, guides & deep dives</div>
+                  </Link>
+                  <Link href="/research/ai-news" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📡 AI News Digest <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Weekly pricing & model release updates</div>
+                  </Link>
+                  <Link href="/newsletter" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📬 Newsletter <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Weekly digest every Thursday</div>
                   </Link>
                   <Link href="/directory" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">📁 Directory <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
@@ -496,8 +516,9 @@ export default function Header() {
 
           {/* Rankings */}
           <MobileAccordion label="Rankings" open={mobileRankingsOpen} onToggle={() => setMobileRankingsOpen(v => !v)}>
-            <MobileLink href="/rankings"                  onClick={closeMobile}>🏆 Overall Rankings</MobileLink>
-            <MobileLink href="/rankings?category=LLM"    onClick={closeMobile}>🤖 Best LLMs</MobileLink>
+            <MobileLink href="/rankings"                       onClick={closeMobile}>🏆 Overall Rankings</MobileLink>
+            <MobileLink href="/research/llm-leaderboard"       onClick={closeMobile}>📊 LLM Leaderboard</MobileLink>
+            <MobileLink href="/rankings?category=LLM"          onClick={closeMobile}>🤖 Best LLMs</MobileLink>
             <MobileLink href="/rankings?category=Coding"  onClick={closeMobile}>💻 Best Coding Tools</MobileLink>
             <MobileLink href="/rankings?category=Image"   onClick={closeMobile}>🎨 Best Image Generators</MobileLink>
             <MobileLink href="/rankings?category=Audio"   onClick={closeMobile}>🎙️ Best Audio Tools</MobileLink>
@@ -576,11 +597,15 @@ export default function Header() {
           <MobileAccordion label="Company" open={mobileCompanyOpen} onToggle={() => setMobileCompanyOpen(v => !v)}>
             <MobileLink href="/about"   onClick={closeMobile}>About Us</MobileLink>
             <MobileLink href="/contact" onClick={closeMobile}>Contact Us</MobileLink>
+            <MobileLink href="/press"   onClick={closeMobile}>📰 Press & Media Kit</MobileLink>
+            <MobileLink href="/submit"  onClick={closeMobile}>➕ Submit Your AI Tool</MobileLink>
             <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Technical</p>
             <MobileLink href="/research/latency-heatmap"  onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
             <MobileLink href="/research/reasoning-tests"  onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
             <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Content</p>
             <MobileLink href="/blog"                      onClick={closeMobile}>✍️ Blog</MobileLink>
+            <MobileLink href="/research/ai-news"          onClick={closeMobile}>📡 AI News Digest</MobileLink>
+            <MobileLink href="/newsletter"                onClick={closeMobile}>📬 Newsletter</MobileLink>
             <MobileLink href="/directory"                 onClick={closeMobile}>📁 Directory</MobileLink>
             <MobileLink href="/glossary"                  onClick={closeMobile}>📖 Glossary</MobileLink>
           </MobileAccordion>

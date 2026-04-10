@@ -6,6 +6,7 @@ import { bestForPages } from "@/lib/best-for";
 import { alternativePages } from "@/lib/alternatives";
 import { glossaryTerms } from "@/lib/glossary";
 import { getVsSlugs } from "@/lib/vs";
+import { getPricingSlugs } from "@/lib/pricing";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -27,6 +28,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly" as const,
     priority: 0.85,
   }));
+
+  const pricingSlugs = getPricingSlugs();
+  const pricingSitemapEntries = [
+    {
+      url: `${SITE_URL}/pricing`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.9,
+    },
+    ...pricingSlugs.map((slug) => ({
+      url: `${SITE_URL}/pricing/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.85,
+    })),
+  ];
 
   const vsSlugs = getVsSlugs();
   const vsSitemapEntries = [
@@ -250,6 +267,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.4,
     },
+    {
+      url: `${SITE_URL}/research/llm-leaderboard`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/research/ai-news`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/press`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    },
+    {
+      url: `${SITE_URL}/submit`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/newsletter`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.65,
+    },
     ...comparisonPages,
     ...blogPages,
     ...domainPages,
@@ -259,5 +306,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...alternativesSitemapEntries,
     ...glossarySitemapEntries,
     ...vsSitemapEntries,
+    ...pricingSitemapEntries,
   ];
 }

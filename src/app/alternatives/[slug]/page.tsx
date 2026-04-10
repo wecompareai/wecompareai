@@ -63,9 +63,17 @@ export default async function AlternativePage({ params }: { params: Promise<{ sl
     headline: page.title,
     description: page.description,
     dateModified: page.lastUpdated,
+    datePublished: page.lastUpdated,
     url: pageUrl,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
-    author: [{ "@type": "Person", name: "Jigar Acharya" }, { "@type": "Person", name: "Saurabh Gera" }],
+    author: [
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
+    ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".alternatives-verdict", ".top-pick-card"],
+    },
   };
 
   const breadcrumbJsonLd = {

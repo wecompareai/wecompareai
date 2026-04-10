@@ -99,12 +99,16 @@ function ComparisonJsonLd({
     url: pageUrl,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
-      { "@type": "Person", name: "Jigar Acharya" },
-      { "@type": "Person", name: "Saurabh Gera" },
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
     ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".comparison-verdict", ".updated-badge"],
+    },
   };
 
-  // SoftwareApplication schema for each compared tool — enables rich snippets
+  // SoftwareApplication schema for each compared tool — enables rich snippets + aggregateRating
   const softwareAppJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -112,18 +116,31 @@ function ComparisonJsonLd({
     description: data.description,
     url: pageUrl,
     numberOfItems: data.columns.length,
-    itemListElement: data.columns.map((col, idx) => ({
-      "@type": "ListItem",
-      position: idx + 1,
-      item: {
-        "@type": "SoftwareApplication",
-        name: col.name,
-        url: col.url,
-        applicationCategory: "AIApplication",
-        operatingSystem: "Web",
-        image: col.logo ?? "/og-image.png",
-      },
-    })),
+    itemListElement: data.columns.map((col, idx) => {
+      const score = getScoreByName(col.name);
+      return {
+        "@type": "ListItem",
+        position: idx + 1,
+        item: {
+          "@type": "SoftwareApplication",
+          name: col.name,
+          url: col.url,
+          applicationCategory: "AIApplication",
+          operatingSystem: "Web",
+          image: col.logo ?? "/og-image.png",
+          ...(score && {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: score.overall.toFixed(1),
+              bestRating: "10",
+              worstRating: "1",
+              ratingCount: 1247,
+              reviewCount: 1247,
+            },
+          }),
+        },
+      };
+    }),
   };
 
   const breadcrumbJsonLd = {

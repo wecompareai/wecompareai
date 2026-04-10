@@ -316,8 +316,44 @@ function keywordCandidatesFromTitle(title: string) {
   return Array.from(phrases).filter(
     (phrase) =>
       phrase.length >= 3 &&
-      (AI_KEYWORD_PATTERN.test(title) || AI_KEYWORD_PATTERN.test(phrase))
+      AI_KEYWORD_PATTERN.test(phrase)
   );
+}
+
+function isBroadGenericTrend(keyword: string) {
+  const normalized = normalizeKeyword(keyword);
+  if (normalized.length < 4) return true;
+
+  const genericWords = new Set([
+    "ai",
+    "artificial intelligence",
+    "technology",
+    "tools",
+    "platform",
+    "platforms",
+    "model",
+    "models",
+    "news",
+    "update",
+    "updates",
+    "industry",
+    "trends",
+    "trend",
+    "analysis",
+    "learning",
+    "education",
+    "university",
+    "universities",
+    "school",
+    "schools",
+    "student",
+    "students",
+    "campus",
+    "campuses",
+  ]);
+
+  const tokens = normalized.split(" ");
+  return tokens.every((token) => genericWords.has(token));
 }
 
 function titleContainsKeyword(title: string, keyword: string) {
@@ -378,7 +414,7 @@ function rankTrendTopics(googleItems: TrendSourceItem[], bingItems: TrendSourceI
       googleItems: dedupeItems(value.googleItems).slice(0, 4),
       bingItems: dedupeItems(value.bingItems).slice(0, 4),
     }))
-    .filter((entry) => entry.googleItems.length > 0)
+    .filter((entry) => entry.googleItems.length > 0 && !isBroadGenericTrend(entry.keyword))
     .sort((a, b) => b.score - a.score || b.keyword.length - a.keyword.length);
 }
 
