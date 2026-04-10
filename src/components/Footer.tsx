@@ -15,6 +15,8 @@ export default function Footer() {
             <span>|</span>
             <Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
             <span>|</span>
+            <Link href="/terms" className="hover:text-foreground transition-colors">Terms of Use</Link>
+            <span>|</span>
             <Link href="/research/compliance" className="hover:text-foreground transition-colors">Compliance</Link>
             <span>|</span>
             <span>Built by Jigar Acharya &amp; Saurabh Gera</span>
