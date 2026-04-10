@@ -106,43 +106,43 @@ export default function Header() {
                 <div className={dropdownClass}>
                   {sectionLabel("Discover")}
                   <Link href="/categories" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">By Category <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Category <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Browse all AI comparison categories</div>
                   </Link>
                   <Link href="/domains" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">By Domain <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Domain <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Healthcare, finance, legal, education & more</div>
                   </Link>
                   <Link href="/countries" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">By Country <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Country <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AI availability & compliance by region</div>
                   </Link>
                   <Link href="/features" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">By Feature <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Feature <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Find AI tools by specific capability</div>
                   </Link>
                   {divider}
                   {sectionLabel("Analyze")}
                   <Link href="/research/integrations" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Integration Graphs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Integration Graphs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Which AI tools plug into your workflow</div>
                   </Link>
                   <Link href="/research/compliance" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Security &amp; Compliance <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Security &amp; Compliance <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">SOC 2, HIPAA, GDPR, on-prem comparison</div>
                   </Link>
                   <Link href="/research/cost-per-task" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">💸 Cost-Per-Task Benchmarks <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💸 Cost-Per-Task Benchmarks <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Real cost to write a blog post, debug code & more</div>
                   </Link>
                   {divider}
                   {sectionLabel("Guides")}
                   <Link href="/research/playbooks" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📖 Use-Case Playbooks <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📖 Use-Case Playbooks <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Best AI for Students, Coding, Marketing & more</div>
                   </Link>
                   <Link href="/research/model-tracker" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📡 Model Update Tracker <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📡 Model Update Tracker <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Every release, price change & deprecation</div>
                   </Link>
                 </div>
@@ -156,35 +156,35 @@ export default function Header() {
                 <div className={dropdownClass}>
                   {sectionLabel("Top Picks by Use Case")}
                   <Link href="/best/coding" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">💻 Best for Coding <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💻 Best for Coding <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Claude vs Copilot vs Cursor — top 3 picks</div>
                   </Link>
                   <Link href="/best/writing" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">✍️ Best for Writing <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">✍️ Best for Writing <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Top AI writing & content creation tools</div>
                   </Link>
                   <Link href="/best/marketing" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📣 Best for Marketing <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📣 Best for Marketing <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Best AI for campaigns, copy & social media</div>
                   </Link>
                   <Link href="/best/video-generation" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎬 Best for Video Generation <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎬 Best for Video Generation <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Sora vs Runway vs Pika compared</div>
                   </Link>
                   <Link href="/best/startups" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🚀 Best for Startups <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🚀 Best for Startups <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Cost-efficient AI stack for small teams</div>
                   </Link>
                   <Link href="/best/business" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🏢 Best for Business <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🏢 Best for Business <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Microsoft Copilot vs ChatGPT Team vs Make</div>
                   </Link>
                   <Link href="/best/image-generation" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎨 Best for Image Generation <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎨 Best for Image Generation <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Midjourney vs DALL-E 3 vs Stable Diffusion</div>
                   </Link>
                   <Link href="/best/voice-cloning" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎙️ Best for Voice Cloning <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎙️ Best for Voice Cloning <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">ElevenLabs vs Murf vs Play.ht</div>
                   </Link>
                   {divider}
@@ -202,27 +202,27 @@ export default function Header() {
                 <div className={dropdownClass}>
                   {sectionLabel("By Category")}
                   <Link href="/rankings" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🏆 Overall Rankings <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🏆 Overall Rankings <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">All tools scored across 4 dimensions</div>
                   </Link>
                   <Link href="/rankings?category=LLM" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🤖 Best LLMs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🤖 Best LLMs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">ChatGPT, Claude, Gemini & more ranked</div>
                   </Link>
                   <Link href="/rankings?category=Coding" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">💻 Best Coding Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💻 Best Coding Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Cursor, Copilot, Claude Code ranked</div>
                   </Link>
                   <Link href="/rankings?category=Image" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎨 Best Image Generators <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎨 Best Image Generators <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Midjourney, DALL-E 3, Stable Diffusion</div>
                   </Link>
                   <Link href="/rankings?category=Audio" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎙️ Best Audio Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎙️ Best Audio Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">ElevenLabs, Suno & voice AI ranked</div>
                   </Link>
                   <Link href="/rankings?category=Cloud" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">☁️ Best Cloud AI <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">☁️ Best Cloud AI <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AWS, Azure & GCP AI services ranked</div>
                   </Link>
                 </div>
@@ -236,35 +236,35 @@ export default function Header() {
                 <div className={dropdownClass}>
                   {sectionLabel("By Tool")}
                   <Link href="/alternatives/chatgpt-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🤖 ChatGPT Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🤖 ChatGPT Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Claude, Gemini, Perplexity & more</div>
                   </Link>
                   <Link href="/alternatives/claude-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🧠 Claude Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🧠 Claude Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Best alternatives to Claude AI</div>
                   </Link>
                   <Link href="/alternatives/gemini-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">✨ Gemini Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">✨ Gemini Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Best alternatives to Google Gemini</div>
                   </Link>
                   <Link href="/alternatives/github-copilot-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">💻 GitHub Copilot Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💻 GitHub Copilot Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Cursor, Windsurf, Claude Code & more</div>
                   </Link>
                   <Link href="/alternatives/cursor-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">⌨️ Cursor Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">⌨️ Cursor Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Best AI coding tools vs Cursor</div>
                   </Link>
                   <Link href="/alternatives/midjourney-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎨 Midjourney Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎨 Midjourney Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">DALL-E 3, Stable Diffusion & more</div>
                   </Link>
                   <Link href="/alternatives/elevenlabs-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🎙️ ElevenLabs Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎙️ ElevenLabs Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Murf, Play.ht, OpenAI TTS & more</div>
                   </Link>
                   <Link href="/alternatives/perplexity-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🔬 Perplexity Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔬 Perplexity Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Best AI search engines vs Perplexity</div>
                   </Link>
                   {divider}
@@ -282,37 +282,37 @@ export default function Header() {
                 <div className={dropdownClass}>
                   {sectionLabel("🤖 AI Models")}
                   <Link href="/vs/chatgpt-vs-claude" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">ChatGPT vs Claude <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">ChatGPT vs Claude <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Claude Opus 4</div>
                   </Link>
                   <Link href="/vs/chatgpt-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">ChatGPT vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">ChatGPT vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Gemini 2.5 Pro</div>
                   </Link>
                   <Link href="/vs/claude-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Claude vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Claude vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   <Link href="/vs/deepseek-vs-chatgpt" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">DeepSeek vs ChatGPT <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">DeepSeek vs ChatGPT <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   {divider}
                   {sectionLabel("💻 Coding Tools")}
                   <Link href="/vs/copilot-vs-cursor" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Copilot vs Cursor <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Copilot vs Cursor <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   <Link href="/vs/cursor-vs-windsurf" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Cursor vs Windsurf <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Cursor vs Windsurf <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   <Link href="/vs/claude-code-vs-copilot" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Claude Code vs Copilot <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Claude Code vs Copilot <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   {divider}
                   {sectionLabel("🎨 Image & 🎬 Video")}
                   <Link href="/vs/midjourney-vs-dalle" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Midjourney vs DALL-E 3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Midjourney vs DALL-E 3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   <Link href="/vs/sora-vs-runway" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Sora vs Runway Gen-3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Sora vs Runway Gen-3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                   </Link>
                   {divider}
                   <Link href="/vs" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
@@ -328,19 +328,19 @@ export default function Header() {
               {live.open && (
                 <div className={dropdownClass}>
                   <Link href="/research/compare" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Compare AI Models Live <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Compare AI Models Live <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Run a prompt across ChatGPT, Claude & Gemini</div>
                   </Link>
                   <Link href="/research/benchmark" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">Real-Time Benchmarking <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Real-Time Benchmarking <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Speed, cost, tokens & performance charts</div>
                   </Link>
                   <Link href="/research/finder" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">AI Tool Finder <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">AI Tool Finder <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Answer 6 questions, get your perfect AI stack</div>
                   </Link>
                   <Link href="/research/prompt-battle" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">⚔️ Prompt Battle <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">⚔️ Prompt Battle <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">6 models, one prompt, instant comparison</div>
                   </Link>
                 </div>
@@ -353,27 +353,27 @@ export default function Header() {
               {business.open && (
                 <div className={dropdownClass}>
                   <Link href="/research/roi-calculator" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">💰 AI ROI Calculator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💰 AI ROI Calculator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Time saved, cost saved, payback period</div>
                   </Link>
                   <Link href="/research/workflow-builder" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🔧 AI Workflow Builder <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔧 AI Workflow Builder <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Build AI pipelines with drag & drop</div>
                   </Link>
                   <Link href="/research/procurement" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📋 Procurement Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📋 Procurement Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Generate RFPs, compare vendors, export checklists</div>
                   </Link>
                   <Link href="/research/ai-stack" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🧩 Your AI Stack <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🧩 Your AI Stack <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Personalized tool stack by role & budget</div>
                   </Link>
                   <Link href="/research/migration" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🔄 Migration Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔄 Migration Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Switch models — cost diff, effort, code snippets</div>
                   </Link>
                   <Link href="/research/data-governance" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🔒 Data Governance Simulator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20">Premium</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔒 Data Governance Simulator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Toggle region, PII & compliance — see who passes</div>
                   </Link>
                 </div>
@@ -386,19 +386,19 @@ export default function Header() {
               {market.open && (
                 <div className={dropdownClass}>
                   <Link href="/research/market-share" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📊 Market Share Dashboard <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📊 Market Share Dashboard <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Consumer, enterprise & developer usage trends</div>
                   </Link>
                   <Link href="/research/pricing-index" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">💲 AI Pricing Index <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💲 AI Pricing Index <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Token prices, subscriptions & recent changes</div>
                   </Link>
                   <Link href="/research/vendor-risk" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🛡️ Vendor Risk Score <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🛡️ Vendor Risk Score <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Funding, compliance & outage risk per vendor</div>
                   </Link>
                   <Link href="/research/dependency-graph" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🕸️ Dependency Graph <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🕸️ Dependency Graph <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Which apps rely on which models & infra</div>
                   </Link>
                 </div>
@@ -411,24 +411,24 @@ export default function Header() {
               {tech.open && (
                 <div className={dropdownClass}>
                   <Link href="/research/latency-heatmap" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🌍 Latency Heatmap <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🌍 Latency Heatmap <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Model speed by US, EU & Asia region</div>
                   </Link>
                   <Link href="/research/reasoning-tests" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">🧪 Reasoning Stress Tests <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🧪 Reasoning Stress Tests <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Multi-step, code, long-context & tool-use scores</div>
                   </Link>
                   {divider}
                   <Link href="/blog" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">✍️ Blog <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">✍️ Blog <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AI news, guides & deep dives</div>
                   </Link>
                   <Link href="/directory" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📁 Directory <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📁 Directory <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Browse all AI tools in one place</div>
                   </Link>
                   <Link href="/glossary" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center gap-1.5">📖 Glossary <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Free</span></div>
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📖 Glossary <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AI terms, concepts & definitions explained</div>
                   </Link>
                 </div>
