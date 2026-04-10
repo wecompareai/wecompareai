@@ -6,6 +6,7 @@ import { bestForPages } from "@/lib/best-for";
 import { alternativePages } from "@/lib/alternatives";
 import { glossaryTerms } from "@/lib/glossary";
 import { getVsSlugs } from "@/lib/vs";
+import { getPricingSlugs } from "@/lib/pricing";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -27,6 +28,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly" as const,
     priority: 0.85,
   }));
+
+  const pricingSlugs = getPricingSlugs();
+  const pricingSitemapEntries = [
+    {
+      url: `${SITE_URL}/pricing`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.9,
+    },
+    ...pricingSlugs.map((slug) => ({
+      url: `${SITE_URL}/pricing/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.85,
+    })),
+  ];
 
   const vsSlugs = getVsSlugs();
   const vsSitemapEntries = [
@@ -259,5 +276,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...alternativesSitemapEntries,
     ...glossarySitemapEntries,
     ...vsSitemapEntries,
+    ...pricingSitemapEntries,
   ];
 }
