@@ -405,11 +405,20 @@ export default function Header() {
               )}
             </div>
 
-            {/* ── Technical ── */}
-            <div className="relative" onMouseEnter={tech.onEnter} onMouseLeave={tech.onLeave}>
-              {navBtn("Technical", tech.open)}
-              {tech.open && (
+            {/* ── Company ── */}
+            <div className="relative" onMouseEnter={company.onEnter} onMouseLeave={company.onLeave}>
+              {navBtn("Company", company.open)}
+              {company.open && (
                 <div className={dropdownClass}>
+                  {sectionLabel("Company")}
+                  <Link href="/about"   className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">About Us <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                  </Link>
+                  <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Contact Us <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                  </Link>
+                  {divider}
+                  {sectionLabel("Technical")}
                   <Link href="/research/latency-heatmap" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">🌍 Latency Heatmap <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Model speed by US, EU & Asia region</div>
@@ -419,6 +428,7 @@ export default function Header() {
                     <div className="text-xs text-muted-foreground mt-0.5">Multi-step, code, long-context & tool-use scores</div>
                   </Link>
                   {divider}
+                  {sectionLabel("Content")}
                   <Link href="/blog" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">✍️ Blog <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AI news, guides & deep dives</div>
@@ -431,17 +441,6 @@ export default function Header() {
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">📖 Glossary <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">AI terms, concepts & definitions explained</div>
                   </Link>
-                </div>
-              )}
-            </div>
-
-            {/* ── Company ── */}
-            <div className="relative" onMouseEnter={company.onEnter} onMouseLeave={company.onLeave}>
-              {navBtn("Company", company.open)}
-              {company.open && (
-                <div className="absolute top-full left-0 mt-2 w-36 rounded-lg border border-border bg-background shadow-lg py-1 z-50">
-                  <Link href="/about"   className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">About Us</Link>
-                  <Link href="/contact" className="block px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">Contact Us</Link>
                 </div>
               )}
             </div>
@@ -573,18 +572,17 @@ export default function Header() {
             <MobileLink href="/research/dependency-graph" onClick={closeMobile}>🕸️ Dependency Graph</MobileLink>
           </MobileAccordion>
 
-          <MobileAccordion label="Technical" open={mobileTechOpen} onToggle={() => setMobileTechOpen(v => !v)}>
-            <MobileLink href="/research/latency-heatmap"  onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
-            <MobileLink href="/research/reasoning-tests"  onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
-            <MobileLink href="/blog"                      onClick={closeMobile}>✍️ Blog</MobileLink>
-            <MobileLink href="/directory"                 onClick={closeMobile}>📁 Directory</MobileLink>
-            <MobileLink href="/glossary"                  onClick={closeMobile}>📖 Glossary</MobileLink>
-          </MobileAccordion>
-
           {/* Company */}
           <MobileAccordion label="Company" open={mobileCompanyOpen} onToggle={() => setMobileCompanyOpen(v => !v)}>
             <MobileLink href="/about"   onClick={closeMobile}>About Us</MobileLink>
             <MobileLink href="/contact" onClick={closeMobile}>Contact Us</MobileLink>
+            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Technical</p>
+            <MobileLink href="/research/latency-heatmap"  onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
+            <MobileLink href="/research/reasoning-tests"  onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
+            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Content</p>
+            <MobileLink href="/blog"                      onClick={closeMobile}>✍️ Blog</MobileLink>
+            <MobileLink href="/directory"                 onClick={closeMobile}>📁 Directory</MobileLink>
+            <MobileLink href="/glossary"                  onClick={closeMobile}>📖 Glossary</MobileLink>
           </MobileAccordion>
         </div>
       )}
