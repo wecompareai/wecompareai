@@ -56,14 +56,25 @@ export default async function BlogArticlePage({
     datePublished: article.createdAt.toISOString(),
     dateModified: article.updatedAt.toISOString(),
     url: `${SITE_URL}/blog/${slug}`,
-    author: { "@type": "Person", name: article.author.name },
+    author: {
+      "@type": "Person",
+      name: article.author.name,
+      url: `${SITE_URL}/about`,
+      worksFor: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
+    },
     publisher: {
       "@type": "Organization",
-      name: "AI Compare",
+      name: "We Compare AI",
       url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/og-image.png` },
     },
     ...(article.coverImage && { image: article.coverImage }),
     commentCount: article._count.comments,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${slug}` },
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".article-excerpt"],
+    },
   };
 
   function getYouTubeId(url: string): string | null {

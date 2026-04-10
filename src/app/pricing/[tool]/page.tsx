@@ -50,7 +50,14 @@ function PricingJsonLd({ tool, page }: { tool: string; page: NonNullable<ReturnT
     dateModified: page.lastUpdated,
     datePublished: page.lastUpdated,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
-    author: [{ "@type": "Person", name: "Jigar Acharya" }, { "@type": "Person", name: "Saurabh Gera" }],
+    author: [
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
+    ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".pricing-verdict", ".pricing-summary"],
+    },
   };
 
   const breadcrumbLd = {
@@ -84,6 +91,9 @@ function PricingJsonLd({ tool, page }: { tool: string; page: NonNullable<ReturnT
       name: t.name,
       price: t.price === "Free" ? "0" : t.price.replace(/[^0-9.]/g, ""),
       priceCurrency: "USD",
+      priceValidUntil: "2027-01-01",
+      availability: "https://schema.org/InStock",
+      url,
       description: t.features.join(", "),
     })),
   };

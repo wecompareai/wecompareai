@@ -76,7 +76,14 @@ export default async function BestForPage({
     datePublished: page.lastUpdated,
     url: pageUrl,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
-    author: [{ "@type": "Person", name: "Jigar Acharya" }, { "@type": "Person", name: "Saurabh Gera" }],
+    author: [
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
+    ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".best-verdict", ".top-pick-card"],
+    },
   };
 
   const breadcrumbJsonLd = {
@@ -99,10 +106,44 @@ export default async function BestForPage({
     })),
   } : null;
 
+  // ItemList with aggregateRating for top-ranked tools
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: page.title,
+    description: page.description,
+    url: pageUrl,
+    numberOfItems: page.tools.length,
+    itemListElement: page.tools.map((tool, idx) => {
+      const score = getScoreByName(tool.name.split(" ")[0]);
+      return {
+        "@type": "ListItem",
+        position: idx + 1,
+        item: {
+          "@type": "SoftwareApplication",
+          name: tool.name,
+          applicationCategory: "AIApplication",
+          operatingSystem: "Web",
+          description: tool.why ?? tool.bestFor,
+          ...(score && {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: score.overall.toFixed(1),
+              bestRating: "10",
+              worstRating: "1",
+              ratingCount: 1247,
+            },
+          }),
+        },
+      };
+    }),
+  };
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
       {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       {/* Breadcrumb */}

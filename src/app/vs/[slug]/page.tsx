@@ -56,9 +56,13 @@ function VsJsonLd({ slug, page }: { slug: string; page: ReturnType<typeof getVsP
     datePublished: page.lastUpdated,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
-      { "@type": "Person", name: "Jigar Acharya" },
-      { "@type": "Person", name: "Saurabh Gera" },
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
     ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", ".verdict-banner", ".choose-if-section"],
+    },
   };
 
   const breadcrumbLd = {

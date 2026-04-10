@@ -89,9 +89,73 @@ const WHAT_WE_DO_NOT_DO = [
   "Make claims about tools we have not independently reviewed",
 ];
 
+function MethodologyJsonLd() {
+  const SITE_URL_CONST = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
+  const url = `${SITE_URL_CONST}/methodology`;
+
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How We Compare AI Tools — We Compare AI Methodology",
+    description: "The step-by-step process We Compare AI uses to collect, score, verify, and update data on 100+ AI tools.",
+    url,
+    author: [
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect" },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect" },
+    ],
+    step: UPDATE_PROCESS.map((s) => ({
+      "@type": "HowToStep",
+      position: s.step,
+      name: s.title,
+      text: s.desc,
+    })),
+    tool: DATA_SOURCES.map((src) => ({
+      "@type": "HowToTool",
+      name: src.label,
+    })),
+  };
+
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Our Methodology — How We Compare AI Tools",
+    description: "Transparent methodology for comparing 100+ AI tools across pricing, benchmarks, compliance, integrations and more.",
+    url,
+    dateModified: "2026-04-09",
+    datePublished: "2025-01-01",
+    publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL_CONST },
+    author: [
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL_CONST}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL_CONST}/about` },
+    ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "h2"],
+    },
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL_CONST },
+      { "@type": "ListItem", position: 2, name: "Methodology", item: url },
+    ],
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+    </>
+  );
+}
+
 export default function MethodologyPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+      <MethodologyJsonLd />
 
       {/* Hero */}
       <div className="space-y-4">

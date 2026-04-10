@@ -114,12 +114,79 @@ const IMPACT_COLOR = {
   Low: "text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20",
 };
 
+function AiNewsJsonLd() {
+  const SITE_URL_CONST = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
+  const url = `${SITE_URL_CONST}/research/ai-news`;
+
+  const newsArticleLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: "AI News & Pricing Updates — Weekly Digest",
+    description: "Weekly AI news digest: model releases, pricing changes, benchmark results, and compliance updates across OpenAI, Anthropic, Google, Meta & more.",
+    url,
+    datePublished: "2026-03-15",
+    dateModified: "2026-04-09",
+    publisher: {
+      "@type": "Organization",
+      name: "We Compare AI",
+      url: SITE_URL_CONST,
+      logo: { "@type": "ImageObject", url: `${SITE_URL_CONST}/og-image.png` },
+    },
+    author: [
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL_CONST}/about` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL_CONST}/about` },
+    ],
+    articleSection: "AI Industry News",
+    about: [
+      { "@type": "Thing", name: "Artificial Intelligence" },
+      { "@type": "Thing", name: "AI Pricing" },
+      { "@type": "Thing", name: "Large Language Models" },
+    ],
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: ["h1", "article h2"],
+    },
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL_CONST },
+      { "@type": "ListItem", position: 2, name: "AI News", item: url },
+    ],
+  };
+
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Latest AI News & Pricing Updates",
+    url,
+    numberOfItems: NEWS_ITEMS.length,
+    itemListElement: NEWS_ITEMS.slice(0, 5).map((item, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      name: item.headline,
+      description: item.body,
+    })),
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(newsArticleLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
+    </>
+  );
+}
+
 export default function AiNewsPage() {
   const weeks = [...new Set(NEWS_ITEMS.map((n) => n.week))];
 
   return (
     <div className="py-8 sm:py-10 px-4">
       <div className="max-w-4xl mx-auto">
+        <AiNewsJsonLd />
 
         {/* Breadcrumb */}
         <nav className="mb-5 flex items-center gap-2 text-xs text-muted-foreground">
