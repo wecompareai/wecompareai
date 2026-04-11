@@ -1,156 +1,157 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { decrypt } from "@/lib/encryption";
 
-export const maxDuration = 120; // Allow up to 2 minutes for all API calls
+export const maxDuration = 120;
 
-interface AIResult {
+export interface AIResult {
   content: string;
   model: string;
+  inputTokens?: number;
+  outputTokens?: number;
+  costUsd?: number;
   error?: string;
 }
 
-interface ResearchResponse {
-  prompt: string;
-  responses: {
-    chatgpt: AIResult;
-    anthropic: AIResult;
-    gemini: AIResult;
-  };
-  comparisons: {
-    chatgpt: AIResult;
-    anthropic: AIResult;
-    gemini: AIResult;
-  };
+export interface SlotResult {
+  slotId: string;
+  providerName: string;
+  modelName: string;
+  modelSlug: string;
+  colorClass: string;
+  borderClass: string;
+  gradientClass: string;
+  initial: string;
+  response: AIResult;
+  comparison: AIResult;
 }
 
-async function callChatGPT(prompt: string): Promise<AIResult> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey || apiKey.startsWith("sk-your-")) {
-    return { content: "", model: "gpt-4o-mini", error: "OpenAI API key not configured" };
+function resolveApiKey(provider: { apiKeyEnv: string | null; encryptedApiKey: string | null }): string | undefined {
+  if (provider.apiKeyEnv) {
+    const envKey = process.env[provider.apiKeyEnv];
+    if (envKey) return envKey;
   }
-  try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        max_tokens: 2048,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-    if (!res.ok) {
-      const err = await res.text();
-      return { content: "", model: "gpt-4o-mini", error: `OpenAI error: ${res.status} - ${err.slice(0, 200)}` };
-    }
-    const data = await res.json();
-    return {
-      content: data.choices?.[0]?.message?.content ?? "",
-      model: data.model ?? "gpt-4o-mini",
-    };
-  } catch (e) {
-    return { content: "", model: "gpt-4o-mini", error: String(e) };
+  if (provider.encryptedApiKey) {
+    try { return decrypt(provider.encryptedApiKey); } catch { return undefined; }
   }
+  return undefined;
 }
 
-async function callAnthropic(prompt: string): Promise<AIResult> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return { content: "", model: "claude-sonnet-4-6", error: "Anthropic API key not configured" };
-  }
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 2048,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-    if (!res.ok) {
-      const err = await res.text();
-      return { content: "", model: "claude-sonnet-4-6", error: `Anthropic error: ${res.status} - ${err.slice(0, 200)}` };
-    }
-    const data = await res.json();
-    return {
-      content: data.content?.[0]?.text ?? "",
-      model: data.model ?? "claude-sonnet-4-6",
-    };
-  } catch (e) {
-    return { content: "", model: "claude-sonnet-4-6", error: String(e) };
-  }
+function estimateCost(inputTokens: number, outputTokens: number, inputPricePer1M: number, outputPricePer1M: number): number {
+  return (inputTokens / 1_000_000) * inputPricePer1M + (outputTokens / 1_000_000) * outputPricePer1M;
 }
 
-async function callGemini(prompt: string): Promise<AIResult> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === "your-gemini-api-key-here") {
-    return { content: "", model: "gemini-1.5-flash", error: "Gemini API key not configured" };
-  }
+async function callModel(
+  model: { modelId: string; inputPricePer1M: number; outputPricePer1M: number; provider: { name: string; apiKeyEnv: string | null; encryptedApiKey: string | null; apiFormat: string; apiBaseUrl: string | null } },
+  prompt: string,
+  maxTokens = 2048
+): Promise<AIResult> {
+  const apiKey = resolveApiKey(model.provider);
+  if (!apiKey) return { content: "", model: model.modelId, error: `No API key configured for ${model.provider.name}` };
+
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 2048 },
-        }),
+    switch (model.provider.apiFormat) {
+      case "openai": {
+        const baseUrl = model.provider.apiBaseUrl || "https://api.openai.com/v1";
+        const res = await fetch(`${baseUrl}/chat/completions`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: model.modelId, max_tokens: maxTokens, messages: [{ role: "user", content: prompt }] }),
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          return { content: "", model: model.modelId, error: `${model.provider.name} ${res.status}: ${err.slice(0, 200)}` };
+        }
+        const data = await res.json();
+        const inputTokens = data.usage?.prompt_tokens ?? 0;
+        const outputTokens = data.usage?.completion_tokens ?? 0;
+        return {
+          content: data.choices?.[0]?.message?.content ?? "",
+          model: data.model ?? model.modelId,
+          inputTokens,
+          outputTokens,
+          costUsd: estimateCost(inputTokens, outputTokens, model.inputPricePer1M, model.outputPricePer1M),
+        };
       }
-    );
-    if (!res.ok) {
-      const err = await res.text();
-      return { content: "", model: "gemini-1.5-flash", error: `Gemini error: ${res.status} - ${err.slice(0, 200)}` };
+
+      case "anthropic": {
+        const res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+          body: JSON.stringify({ model: model.modelId, max_tokens: maxTokens, messages: [{ role: "user", content: prompt }] }),
+        });
+        if (!res.ok) {
+          const err = await res.text();
+          return { content: "", model: model.modelId, error: `Anthropic ${res.status}: ${err.slice(0, 200)}` };
+        }
+        const data = await res.json();
+        const inputTokens = data.usage?.input_tokens ?? 0;
+        const outputTokens = data.usage?.output_tokens ?? 0;
+        return {
+          content: data.content?.[0]?.text ?? "",
+          model: data.model ?? model.modelId,
+          inputTokens,
+          outputTokens,
+          costUsd: estimateCost(inputTokens, outputTokens, model.inputPricePer1M, model.outputPricePer1M),
+        };
+      }
+
+      case "gemini": {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model.modelId}:generateContent?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: maxTokens } }),
+          }
+        );
+        if (!res.ok) {
+          const err = await res.text();
+          return { content: "", model: model.modelId, error: `Gemini ${res.status}: ${err.slice(0, 200)}` };
+        }
+        const data = await res.json();
+        const inputTokens = data.usageMetadata?.promptTokenCount ?? 0;
+        const outputTokens = data.usageMetadata?.candidatesTokenCount ?? 0;
+        return {
+          content: data.candidates?.[0]?.content?.parts?.[0]?.text ?? "",
+          model: model.modelId,
+          inputTokens,
+          outputTokens,
+          costUsd: estimateCost(inputTokens, outputTokens, model.inputPricePer1M, model.outputPricePer1M),
+        };
+      }
+
+      default:
+        return { content: "", model: model.modelId, error: `Unsupported API format: ${model.provider.apiFormat}` };
     }
-    const data = await res.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-    return { content: text, model: "gemini-1.5-flash" };
   } catch (e) {
-    return { content: "", model: "gemini-1.5-flash", error: String(e) };
+    return { content: "", model: model.modelId, error: String(e) };
   }
 }
 
-function buildComparisonPrompt(
-  originalPrompt: string,
-  chatgptResponse: string,
-  anthropicResponse: string,
-  geminiResponse: string
-): string {
-  return `You are an expert AI analyst. A user asked the following question and received responses from three different AI systems.
-Please provide a thorough comparison of all three responses.
+function buildComparisonPrompt(originalPrompt: string, responses: { name: string; content: string }[]): string {
+  const responseBlocks = responses
+    .map((r, i) => `--- RESPONSE ${i + 1} (${r.name}):\n${r.content || "(No response / error)"}`)
+    .join("\n\n");
+
+  return `You are an expert AI analyst. A user asked a question and received responses from ${responses.length} different AI models.
 
 ORIGINAL QUESTION:
 ${originalPrompt}
 
----
-CHATGPT RESPONSE:
-${chatgptResponse || "(No response / error)"}
-
----
-CLAUDE (ANTHROPIC) RESPONSE:
-${anthropicResponse || "(No response / error)"}
-
----
-GEMINI (GOOGLE) RESPONSE:
-${geminiResponse || "(No response / error)"}
+${responseBlocks}
 
 ---
 YOUR TASK:
-Compare these three responses across the following dimensions:
-1. **Accuracy & Completeness** - Which response is most accurate and complete?
-2. **Clarity & Structure** - Which is easiest to understand and best organized?
-3. **Depth of Insight** - Which goes deepest or provides the most valuable perspective?
-4. **Unique Points** - What does each response mention that the others miss?
-5. **Overall Recommendation** - Which response would you recommend and why?
+Compare these ${responses.length} responses across:
+1. **Accuracy & Completeness** — Which is most accurate and complete?
+2. **Clarity & Structure** — Which is easiest to understand?
+3. **Depth of Insight** — Which provides the most valuable perspective?
+4. **Unique Points** — What does each response mention that others miss?
+5. **Overall Recommendation** — Which would you recommend and why?
 
-Be objective and specific in your comparison.`;
+Be objective and specific.`;
 }
 
 export async function POST(request: NextRequest) {
@@ -167,42 +168,103 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Please provide a prompt of at least 5 characters." }, { status: 400 });
   }
 
+  // selections: [{ slotId: string, modelSlug: string }]
+  const selections: { slotId: string; modelSlug: string }[] = body.selections ?? [];
+  if (!Array.isArray(selections) || selections.length === 0 || selections.length > 5) {
+    return NextResponse.json({ error: "Select between 1 and 5 model slots." }, { status: 400 });
+  }
+
   const prompt = body.prompt.trim();
+  const includeComparison: boolean = body.includeComparison !== false;
 
-  // Phase 1: Call all 3 AIs in parallel with the user's prompt
-  const [chatgptRes, anthropicRes, geminiRes] = await Promise.all([
-    callChatGPT(prompt),
-    callAnthropic(prompt),
-    callGemini(prompt),
-  ]);
+  // Load all selected models from DB
+  const slugs = selections.map((s) => s.modelSlug);
+  const dbModels = await prisma.aIModel.findMany({
+    where: { slug: { in: slugs }, isActive: true },
+    include: {
+      provider: {
+        select: { name: true, apiKeyEnv: true, encryptedApiKey: true, apiFormat: true, apiBaseUrl: true },
+      },
+    },
+  });
 
-  // Phase 2: Build comparison prompt and send to all 3 AIs in parallel
-  const comparisonPrompt = buildComparisonPrompt(
-    prompt,
-    chatgptRes.content,
-    anthropicRes.content,
-    geminiRes.content
+  const modelMap = new Map(dbModels.map((m) => [m.slug, m]));
+
+  // Phase 1 — call all models in parallel
+  const phase1 = await Promise.all(
+    selections.map(async (sel) => {
+      const m = modelMap.get(sel.modelSlug);
+      if (!m) return { slotId: sel.slotId, result: { content: "", model: sel.modelSlug, error: "Model not found" } };
+      return { slotId: sel.slotId, result: await callModel(m, prompt) };
+    })
   );
 
-  const [chatgptComp, anthropicComp, geminiComp] = await Promise.all([
-    callChatGPT(comparisonPrompt),
-    callAnthropic(comparisonPrompt),
-    callGemini(comparisonPrompt),
-  ]);
+  // Phase 2 — only if requested
+  let phase2: { slotId: string; result: AIResult }[] = [];
+  if (includeComparison) {
+    const responseBlocks = phase1.map((p) => {
+      const m = modelMap.get(selections.find((s) => s.slotId === p.slotId)!.modelSlug);
+      return { name: m ? `${m.provider.name} / ${m.name}` : p.slotId, content: p.result.content };
+    });
+    const compPrompt = buildComparisonPrompt(prompt, responseBlocks);
+    phase2 = await Promise.all(
+      selections.map(async (sel) => {
+        const m = modelMap.get(sel.modelSlug);
+        if (!m) return { slotId: sel.slotId, result: { content: "", model: sel.modelSlug, error: "Model not found" } };
+        return { slotId: sel.slotId, result: await callModel(m, compPrompt, 2048) };
+      })
+    );
+  }
 
-  const result: ResearchResponse = {
-    prompt,
-    responses: {
-      chatgpt: chatgptRes,
-      anthropic: anthropicRes,
-      gemini: geminiRes,
-    },
-    comparisons: {
-      chatgpt: chatgptComp,
-      anthropic: anthropicComp,
-      gemini: geminiComp,
-    },
-  };
+  // Build final results
+  const slots: SlotResult[] = selections.map((sel) => {
+    const m = modelMap.get(sel.modelSlug);
+    const p1 = phase1.find((x) => x.slotId === sel.slotId)!;
+    const p2 = phase2.find((x) => x.slotId === sel.slotId);
+    return {
+      slotId: sel.slotId,
+      providerName: m?.provider.name ?? "Unknown",
+      modelName: m?.name ?? sel.modelSlug,
+      modelSlug: sel.modelSlug,
+      colorClass: m?.colorClass ?? "bg-zinc-500/10 text-zinc-700 dark:text-zinc-400",
+      borderClass: m?.borderClass ?? "border-zinc-500/20",
+      gradientClass: m?.gradientClass ?? "from-zinc-500/10 to-zinc-500/5",
+      initial: m?.initial ?? "?",
+      response: p1.result,
+      comparison: p2?.result ?? { content: "", model: sel.modelSlug },
+    };
+  });
 
-  return NextResponse.json(result);
+  const totalCost = slots.reduce((sum, s) => sum + (s.response.costUsd ?? 0) + (s.comparison.costUsd ?? 0), 0);
+
+  // Fire-and-forget logging — never block the response
+  const promptTruncated = prompt.slice(0, 3000);
+  void Promise.allSettled(
+    slots.map((slot) => {
+      const m = modelMap.get(slot.modelSlug);
+      const inputTokens = (slot.response.inputTokens ?? 0) + (slot.comparison.inputTokens ?? 0);
+      const outputTokens = (slot.response.outputTokens ?? 0) + (slot.comparison.outputTokens ?? 0);
+      const costUsd = (slot.response.costUsd ?? 0) + (slot.comparison.costUsd ?? 0);
+      const hasError = !!(slot.response.error || slot.comparison.error);
+      return prisma.apiRequestLog.create({
+        data: {
+          userId: session.user.id,
+          feature: "compare",
+          promptTruncated,
+          promptTokens: inputTokens,
+          completionTokens: outputTokens,
+          totalTokens: inputTokens + outputTokens,
+          costUsd,
+          providerName: slot.providerName,
+          modelName: slot.modelName,
+          modelSlug: slot.modelSlug,
+          modelDbId: m?.id ?? null,
+          status: hasError ? "error" : "ok",
+          errorMessage: slot.response.error ?? slot.comparison.error ?? null,
+        },
+      });
+    })
+  );
+
+  return NextResponse.json({ prompt, slots, totalCostUsd: totalCost });
 }
