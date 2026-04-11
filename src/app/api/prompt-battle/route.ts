@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { decrypt } from "@/lib/encryption";
 
 export const maxDuration = 60;
 
@@ -7,24 +9,56 @@ type ModelResult =
   | { status: "error"; error: string }
   | { status: "no_key" };
 
-async function callModel(modelId: string, prompt: string): Promise<ModelResult> {
+type ModelWithProvider = {
+  id: string;
+  slug: string;
+  modelId: string;
+  provider: {
+    name: string;
+    apiKeyEnv: string | null;
+    encryptedApiKey: string | null;
+    apiFormat: string;
+    apiBaseUrl: string | null;
+  };
+};
+
+function resolveApiKey(provider: ModelWithProvider["provider"]): string | undefined {
+  // 1. Env var takes priority
+  if (provider.apiKeyEnv) {
+    const envKey = process.env[provider.apiKeyEnv];
+    if (envKey) return envKey;
+  }
+  // 2. Fall back to encrypted key stored in DB
+  if (provider.encryptedApiKey) {
+    try {
+      return decrypt(provider.encryptedApiKey);
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
+}
+
+async function callModel(model: ModelWithProvider, prompt: string): Promise<ModelResult> {
   const start = Date.now();
+  const apiKey = resolveApiKey(model.provider);
+  if (!apiKey) return { status: "no_key" };
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 30_000);
 
   try {
-    switch (modelId) {
-      case "gpt-4o": {
-        const apiKey = process.env.OPENAI_API_KEY;
-        if (!apiKey) return { status: "no_key" };
-        const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    switch (model.provider.apiFormat) {
+      case "openai": {
+        const baseUrl = model.provider.apiBaseUrl || "https://api.openai.com/v1";
+        const res = await fetch(`${baseUrl}/chat/completions`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "gpt-4o",
+            model: model.modelId,
             max_tokens: 1024,
             messages: [{ role: "user", content: prompt }],
           }),
@@ -32,20 +66,18 @@ async function callModel(modelId: string, prompt: string): Promise<ModelResult> 
         });
         if (!res.ok) {
           const err = await res.text();
-          return { status: "error", error: `OpenAI ${res.status}: ${err.slice(0, 200)}` };
+          return { status: "error", error: `${model.provider.name} ${res.status}: ${err.slice(0, 200)}` };
         }
         const data = await res.json();
         return {
           status: "ok",
           text: data.choices?.[0]?.message?.content ?? "",
-          model: data.model ?? "gpt-4o",
+          model: data.model ?? model.modelId,
           latencyMs: Date.now() - start,
         };
       }
 
-      case "claude-3-7-sonnet": {
-        const apiKey = process.env.ANTHROPIC_API_KEY;
-        if (!apiKey) return { status: "no_key" };
+      case "anthropic": {
         const res = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
           headers: {
@@ -54,7 +86,7 @@ async function callModel(modelId: string, prompt: string): Promise<ModelResult> 
             "content-type": "application/json",
           },
           body: JSON.stringify({
-            model: "claude-3-7-sonnet-20250219",
+            model: model.modelId,
             max_tokens: 1024,
             messages: [{ role: "user", content: prompt }],
           }),
@@ -68,16 +100,14 @@ async function callModel(modelId: string, prompt: string): Promise<ModelResult> 
         return {
           status: "ok",
           text: data.content?.[0]?.text ?? "",
-          model: data.model ?? "claude-3-7-sonnet",
+          model: data.model ?? model.modelId,
           latencyMs: Date.now() - start,
         };
       }
 
-      case "gemini-2.0-flash": {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) return { status: "no_key" };
+      case "gemini": {
         const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/${model.modelId}:generateContent?key=${apiKey}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -93,104 +123,16 @@ async function callModel(modelId: string, prompt: string): Promise<ModelResult> 
           return { status: "error", error: `Gemini ${res.status}: ${err.slice(0, 200)}` };
         }
         const data = await res.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
         return {
           status: "ok",
-          text,
-          model: "gemini-2.0-flash",
-          latencyMs: Date.now() - start,
-        };
-      }
-
-      case "llama-3.3-70b": {
-        const apiKey = process.env.TOGETHER_API_KEY;
-        if (!apiKey) return { status: "no_key" };
-        const res = await fetch("https://api.together.xyz/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-            max_tokens: 1024,
-            messages: [{ role: "user", content: prompt }],
-          }),
-          signal: controller.signal,
-        });
-        if (!res.ok) {
-          const err = await res.text();
-          return { status: "error", error: `Together AI ${res.status}: ${err.slice(0, 200)}` };
-        }
-        const data = await res.json();
-        return {
-          status: "ok",
-          text: data.choices?.[0]?.message?.content ?? "",
-          model: data.model ?? "llama-3.3-70b",
-          latencyMs: Date.now() - start,
-        };
-      }
-
-      case "mistral-large": {
-        const apiKey = process.env.MISTRAL_API_KEY;
-        if (!apiKey) return { status: "no_key" };
-        const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "mistral-large-latest",
-            max_tokens: 1024,
-            messages: [{ role: "user", content: prompt }],
-          }),
-          signal: controller.signal,
-        });
-        if (!res.ok) {
-          const err = await res.text();
-          return { status: "error", error: `Mistral ${res.status}: ${err.slice(0, 200)}` };
-        }
-        const data = await res.json();
-        return {
-          status: "ok",
-          text: data.choices?.[0]?.message?.content ?? "",
-          model: data.model ?? "mistral-large",
-          latencyMs: Date.now() - start,
-        };
-      }
-
-      case "grok-2": {
-        const apiKey = process.env.XAI_API_KEY;
-        if (!apiKey) return { status: "no_key" };
-        const res = await fetch("https://api.x.ai/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "grok-2-latest",
-            max_tokens: 1024,
-            messages: [{ role: "user", content: prompt }],
-          }),
-          signal: controller.signal,
-        });
-        if (!res.ok) {
-          const err = await res.text();
-          return { status: "error", error: `xAI ${res.status}: ${err.slice(0, 200)}` };
-        }
-        const data = await res.json();
-        return {
-          status: "ok",
-          text: data.choices?.[0]?.message?.content ?? "",
-          model: data.model ?? "grok-2-latest",
+          text: data.candidates?.[0]?.content?.parts?.[0]?.text ?? "",
+          model: model.modelId,
           latencyMs: Date.now() - start,
         };
       }
 
       default:
-        return { status: "error", error: `Unknown model: ${modelId}` };
+        return { status: "error", error: `Unsupported API format: ${model.provider.apiFormat}` };
     }
   } catch (e: unknown) {
     if (e instanceof Error && e.name === "AbortError") {
@@ -213,19 +155,60 @@ export async function POST(request: NextRequest) {
   }
 
   const prompt = body.prompt.trim();
-  const models: string[] = body.models;
+  const modelSlugs: string[] = body.models;
+
+  const models = await prisma.aIModel.findMany({
+    where: { slug: { in: modelSlugs }, isActive: true },
+    include: {
+      provider: {
+        select: { name: true, apiKeyEnv: true, encryptedApiKey: true, apiFormat: true, apiBaseUrl: true },
+      },
+    },
+  });
+
+  if (models.length === 0) {
+    return NextResponse.json({ error: "No active models found for the given selection." }, { status: 400 });
+  }
 
   const settled = await Promise.allSettled(models.map((m) => callModel(m, prompt)));
 
   const results: Record<string, ModelResult> = {};
   settled.forEach((outcome, i) => {
-    const modelId = models[i];
-    if (outcome.status === "fulfilled") {
-      results[modelId] = outcome.value;
-    } else {
-      results[modelId] = { status: "error", error: String(outcome.reason) };
-    }
+    const slug = models[i].slug;
+    results[slug] = outcome.status === "fulfilled"
+      ? outcome.value
+      : { status: "error", error: String(outcome.reason) };
   });
+
+  // Fire-and-forget logging — never block the response
+  const promptTruncated = prompt.slice(0, 3000);
+  void Promise.allSettled(
+    models.map((m, i) => {
+      const outcome = settled[i];
+      const result = outcome.status === "fulfilled" ? outcome.value : null;
+      const latencyMs = result && "latencyMs" in result ? result.latencyMs : undefined;
+      const status = result?.status ?? "error";
+      const errorMessage = result && "error" in result ? result.error : outcome.status === "rejected" ? String(outcome.reason) : null;
+      return prisma.apiRequestLog.create({
+        data: {
+          userId: null,
+          feature: "prompt-battle",
+          promptTruncated,
+          promptTokens: 0,
+          completionTokens: 0,
+          totalTokens: 0,
+          costUsd: 0,
+          providerName: m.provider.name,
+          modelName: m.name,
+          modelSlug: m.slug,
+          modelDbId: m.id,
+          latencyMs: latencyMs ?? null,
+          status,
+          errorMessage: errorMessage ?? null,
+        },
+      });
+    })
+  );
 
   return NextResponse.json({ results });
 }

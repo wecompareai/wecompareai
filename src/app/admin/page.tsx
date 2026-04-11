@@ -161,6 +161,30 @@ export default function AdminPage() {
               </p>
             </div>
           </Link>
+          <Link
+            href="/admin/ai-providers"
+            className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-background hover:border-primary/30 transition-colors"
+          >
+            <span className="text-lg">&#129302;</span>
+            <div>
+              <h3 className="font-medium text-foreground">AI Providers &amp; Models</h3>
+              <p className="text-sm text-muted-foreground">
+                Manage providers, tiers, and models for Prompt Battle
+              </p>
+            </div>
+          </Link>
+          <Link
+            href="/admin/request-logs"
+            className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-background hover:border-primary/30 transition-colors"
+          >
+            <span className="text-lg">&#128202;</span>
+            <div>
+              <h3 className="font-medium text-foreground">API Request Logs</h3>
+              <p className="text-sm text-muted-foreground">
+                Filter by user, provider, model, status &amp; date — view cost &amp; token totals
+              </p>
+            </div>
+          </Link>
         </div>
 
         {loading ? (

@@ -202,3 +202,73 @@ model DomainComparison {
   @@unique([subdomainId, slug])
   @@index([subdomainId])
 }
+
+model AIProvider {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  tier        Int       @default(1)
+  description String?
+  website     String?
+  logoUrl     String?
+  apiKeyEnv      String?
+  encryptedApiKey String?
+  apiFormat   String    @default("openai")
+  apiBaseUrl  String?
+  isActive    Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  models      AIModel[]
+
+  @@index([tier, isActive, order])
+}
+
+model AIModel {
+  id            String     @id @default(cuid())
+  providerId    String
+  name          String
+  slug          String     @unique
+  modelId       String
+  description   String?
+  initial       String     @default("?")
+  colorClass    String     @default("bg-zinc-500/10 text-zinc-700 dark:text-zinc-400")
+  borderClass   String     @default("border-zinc-500/20")
+  gradientClass String     @default("from-zinc-500/10 to-zinc-500/5")
+  inputPricePer1M  Float   @default(0)
+  outputPricePer1M Float   @default(0)
+  isActive      Boolean    @default(true)
+  order         Int        @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  provider      AIProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId, isActive, order])
+  logs ApiRequestLog[]
+}
+
+model ApiRequestLog {
+  id               String    @id @default(cuid())
+  userId           String?
+  feature          String    // "compare" | "prompt-battle"
+  promptTruncated  String    // up to 3000 chars
+  promptTokens     Int       @default(0)
+  completionTokens Int       @default(0)
+  totalTokens      Int       @default(0)
+  costUsd          Float     @default(0)
+  providerName     String    // denormalized — survives model/provider edits
+  modelName        String
+  modelSlug        String
+  modelDbId        String?
+  latencyMs        Int?
+  status           String    // "ok" | "error" | "timeout" | "no_key"
+  errorMessage     String?
+  createdAt        DateTime  @default(now())
+
+  model            AIModel?  @relation(fields: [modelDbId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([feature, createdAt])
+  @@index([modelSlug, createdAt])
+  @@index([createdAt])
+}
