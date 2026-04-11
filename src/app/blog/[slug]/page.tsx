@@ -6,6 +6,19 @@ import { getCommentsByArticle } from "@/lib/comments";
 import ArticleContent from "@/components/blog/ArticleContent";
 import CommentSection from "@/components/blog/CommentSection";
 
+const AUTHOR_BIOS: Record<string, { title: string; bio: string; twitter?: string }> = {
+  "Jigar Acharya": {
+    title: "Co-founder & Solution Architect",
+    bio: "Jigar has 12+ years of experience designing AI and cloud solutions for enterprises across finance, retail, and SaaS. At We Compare AI, he leads independent tool evaluations, benchmark methodology, and enterprise AI advisory.",
+    twitter: "https://x.com/wecompareai",
+  },
+  "Saurabh Gera": {
+    title: "Co-founder & Infrastructure Architect",
+    bio: "Saurabh has a decade of experience in cloud infrastructure, DevOps, and AI platform engineering. At We Compare AI, he oversees reliability scoring, pricing data integrity, and the technical architecture of the comparison platform.",
+    twitter: "https://x.com/wecompareai",
+  },
+};
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
 export async function generateMetadata({
@@ -171,6 +184,48 @@ export default async function BlogArticlePage({
         <ArticleContent content={article.content} />
 
         <hr className="my-12 border-border" />
+
+        {/* About the Author */}
+        <section className="mb-12">
+          <h2 className="text-base font-semibold text-foreground mb-4">About the Author</h2>
+          {(() => {
+            const known = AUTHOR_BIOS[article.author.name];
+            return (
+              <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-5">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <span className="text-primary font-semibold text-lg">
+                    {article.author.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div className="space-y-1.5">
+                  <div>
+                    <p className="font-semibold text-sm text-foreground">{article.author.name}</p>
+                    {known && (
+                      <p className="text-xs text-muted-foreground">{known.title} · <Link href="/about" className="hover:text-primary transition-colors underline underline-offset-2">We Compare AI</Link></p>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {known?.bio ?? `${article.author.name} is a contributor to We Compare AI, an independent platform that researches and compares AI tools across performance, value, reliability, and ease of use.`}
+                  </p>
+                  {known?.twitter && (
+                    <a href={known.twitter} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:underline underline-offset-2">
+                      Follow on X →
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Editorial note */}
+          <div className="mt-4 rounded-lg border border-border bg-muted/30 px-4 py-3 flex items-start gap-3">
+            <span className="text-muted-foreground shrink-0 mt-0.5 text-xs">🛡️</span>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Editorial independence:</strong> We Compare AI maintains strict editorial independence. Our writers are not paid by AI vendors and do not receive affiliate commissions that influence scores or recommendations.{" "}
+              <Link href="/methodology" className="hover:text-primary underline underline-offset-2 transition-colors">Read our methodology →</Link>
+            </p>
+          </div>
+        </section>
 
         <CommentSection
           articleSlug={slug}

@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { vsPages, VS_CATEGORIES } from "@/lib/vs";
+import { vsPages, getVsSlugs, VS_CATEGORIES } from "@/lib/vs";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
 export const metadata: Metadata = {
-  title: "AI VS Comparisons — Head-to-Head Tool Battles | We Compare AI",
+  title: "AI VS Comparisons — 500+ Head-to-Head Tool Battles | We Compare AI",
   description:
-    "28 head-to-head AI comparisons: ChatGPT vs Claude, Midjourney vs DALL-E, Cursor vs Copilot, Sora vs Runway & more. Pick your winner.",
+    "500+ head-to-head AI comparisons: ChatGPT vs Claude, Midjourney vs DALL-E, Cursor vs Copilot, Sora vs Runway & more — every tool pair scored on Performance, Value, Reliability, and Ease of Use.",
   alternates: { canonical: `${SITE_URL}/vs` },
   openGraph: {
-    title: "AI VS Comparisons — Head-to-Head | We Compare AI",
-    description: "28 head-to-head AI comparisons grouped by category.",
+    title: "AI VS Comparisons — 500+ Head-to-Head | We Compare AI",
+    description: "500+ head-to-head AI comparisons grouped by category.",
     url: `${SITE_URL}/vs`,
     siteName: "We Compare AI",
     type: "website",
@@ -24,7 +24,7 @@ export default function VsIndexPage() {
     pages: vsPages.filter((p) => p.category === cat.label),
   }));
 
-  const totalCount = vsPages.length;
+  const totalCount = getVsSlugs().length;
 
   return (
     <div className="py-8 sm:py-10 px-4">
@@ -110,7 +110,7 @@ export default function VsIndexPage() {
         <div className="mt-14 rounded-xl border border-border bg-muted/30 p-6 text-center">
           <p className="text-sm font-semibold text-foreground mb-1">Want a comparison we haven't covered?</p>
           <p className="text-xs text-muted-foreground mb-3">
-            Use our full comparison table to browse 100+ tools side-by-side.
+            Use our full comparison table to browse 100+ tools side-by-side, or search a specific VS page above.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link href="/categories" className="text-sm px-4 py-1.5 rounded-full border border-border bg-background hover:bg-muted transition-colors text-foreground">

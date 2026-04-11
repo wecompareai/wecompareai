@@ -1236,14 +1236,6 @@ export const vsPages: VsPage[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-export function getVsPage(slug: string): VsPage | undefined {
-  return vsPages.find((p) => p.slug === slug);
-}
-
-export function getVsSlugs(): string[] {
-  return vsPages.map((p) => p.slug);
-}
-
 export const VS_CATEGORIES = [
   { label: "AI Models",         emoji: "🤖" },
   { label: "Coding Tools",      emoji: "💻" },
@@ -1254,3 +1246,193 @@ export const VS_CATEGORIES = [
   { label: "Cloud AI Platforms",emoji: "☁️" },
   { label: "AI Search",         emoji: "🔍" },
 ] as const;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Programmatic VS page generator — turns two ToolScore entries into a VsPage
+// ─────────────────────────────────────────────────────────────────────────────
+import { ALL_SCORES, type ToolScore } from "./scores";
+import { getVsMeta } from "./vs-meta";
+
+const SCORE_CAT_TO_VS_LABEL: Record<string, string> = {
+  LLM:    "AI Models",
+  Coding: "Coding Tools",
+  Image:  "Image Generators",
+  Video:  "Video Generators",
+  Audio:  "Voice & Audio",
+  Music:  "Music Generation",
+  Cloud:  "Cloud AI Platforms",
+  Search: "AI Search",
+};
+
+const VS_LABEL_TO_EMOJI: Record<string, string> = {
+  "AI Models":          "🤖",
+  "Coding Tools":       "💻",
+  "Image Generators":   "🎨",
+  "Video Generators":   "🎬",
+  "Voice & Audio":      "🔊",
+  "Music Generation":   "🎵",
+  "Cloud AI Platforms": "☁️",
+  "AI Search":          "🔍",
+};
+
+const DIM_LABEL: Record<string, string> = {
+  performance: "Performance",
+  value:       "Value",
+  reliability: "Reliability",
+  easeOfUse:   "Ease of Use",
+};
+
+type Dim = "performance" | "value" | "reliability" | "easeOfUse";
+const DIMS: Dim[] = ["performance", "value", "reliability", "easeOfUse"];
+
+function scoreToVsTool(s: ToolScore): VsTool {
+  const meta = getVsMeta(s.id, { verdict: s.verdict, name: s.name, provider: s.provider });
+  return {
+    id: s.id,
+    name: s.name,
+    provider: s.provider,
+    tagline: meta.tagline,
+    performance: s.performance,
+    value: s.value,
+    reliability: s.reliability,
+    easeOfUse: s.easeOfUse,
+    overall: s.overall,
+    pricing: meta.pricing,
+    pros: meta.pros,
+    cons: meta.cons,
+    bestFor: meta.bestFor,
+    href: meta.href,
+  };
+}
+
+function generateVsPage(a: ToolScore, b: ToolScore): VsPage {
+  // Canonical slug: alphabetically sort IDs
+  const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
+  const slug = `${first.id}-vs-${second.id}`;
+
+  const toolA = scoreToVsTool(first);
+  const toolB = scoreToVsTool(second);
+  const winner = first.overall >= second.overall ? first : second;
+  const loser  = first.overall >= second.overall ? second : first;
+  const winnerTool = first.overall >= second.overall ? toolA : toolB;
+  const loserTool  = first.overall >= second.overall ? toolB : toolA;
+
+  const firstWinsDims = DIMS.filter((d) => first[d] > second[d]);
+  const secondWinsDims = DIMS.filter((d) => second[d] > first[d]);
+  const winnerDims = (winner === first ? firstWinsDims : secondWinsDims).map((d) => DIM_LABEL[d]);
+  const loserDims  = (winner === first ? secondWinsDims : firstWinsDims).map((d) => DIM_LABEL[d]);
+
+  const catLabel = first.category === second.category
+    ? (SCORE_CAT_TO_VS_LABEL[first.category] ?? first.category)
+    : "AI Tools";
+  const catEmoji = first.category === second.category
+    ? (VS_LABEL_TO_EMOJI[SCORE_CAT_TO_VS_LABEL[first.category] ?? ""] ?? "🤖")
+    : "🤖";
+
+  const verdictDimStr = winnerDims.length > 0 ? `, winning on ${winnerDims.slice(0, 2).join(" and ")}` : "";
+  const verdict = `${winner.name} scores higher overall (${winner.overall.toFixed(1)}/10 vs ${loser.overall.toFixed(1)}/10)${verdictDimStr}. ${winner.verdict}`;
+
+  const chooseA: string[] = [
+    firstWinsDims.length > 0
+      ? `${DIM_LABEL[firstWinsDims[0]]} is your top priority — ${first.name} leads by ${(first[firstWinsDims[0]] - second[firstWinsDims[0]]).toFixed(1)} points`
+      : `${first.name} better fits your existing ${first.provider} ecosystem`,
+    toolA.bestFor.split(",")[0],
+    firstWinsDims.length > 1
+      ? `You also value ${DIM_LABEL[firstWinsDims[1]]} — ${first.name} wins that dimension too`
+      : `${first.provider} support, documentation, and community suit your team`,
+  ];
+
+  const chooseB: string[] = [
+    secondWinsDims.length > 0
+      ? `${DIM_LABEL[secondWinsDims[0]]} is your top priority — ${second.name} leads by ${(second[secondWinsDims[0]] - first[secondWinsDims[0]]).toFixed(1)} points`
+      : `${second.name} better fits your existing ${second.provider} ecosystem`,
+    toolB.bestFor.split(",")[0],
+    secondWinsDims.length > 1
+      ? `You also value ${DIM_LABEL[secondWinsDims[1]]} — ${second.name} wins that dimension too`
+      : `${second.provider} support, documentation, and community suit your team`,
+  ];
+
+  const faqs = [
+    {
+      q: `Is ${first.name} better than ${second.name}?`,
+      a: `${winner.name} scores ${winner.overall.toFixed(1)}/10 overall vs ${loser.overall.toFixed(1)}/10 for ${loser.name}${winnerDims.length ? `, with an edge on ${winnerDims.join(" and ")}` : ""}. That said, "${loser.name}" may be the better pick if ${loserDims.length ? loserDims[0].toLowerCase() : "specific workflow fit"} is your priority. The right choice depends on your use case.`,
+    },
+    {
+      q: `What is the pricing difference between ${first.name} and ${second.name}?`,
+      a: `${first.name}: ${toolA.pricing}. ${second.name}: ${toolB.pricing}. Compare usage volumes and features needed to determine total cost of ownership for your team.`,
+    },
+    {
+      q: `Which is better for ${winnerTool.bestFor.split(",")[0].toLowerCase()}?`,
+      a: `${winner.name} is generally stronger here, scoring ${winner.overall.toFixed(1)}/10 overall. ${winner.verdict} For more niche requirements like ${loserDims.length ? loserDims[0].toLowerCase() : "specific integrations"}, ${loser.name} may be worth evaluating.`,
+    },
+  ];
+
+  return {
+    slug,
+    category: catLabel,
+    categoryEmoji: catEmoji,
+    toolA,
+    toolB,
+    headline: `${first.name} vs ${second.name} — Which Is Better in 2026?`,
+    description: `${first.name} vs ${second.name}: independent head-to-head scored on Performance, Value, Reliability, and Ease of Use. See scores, pros, cons, and our verdict.`,
+    verdict,
+    chooseA,
+    chooseB,
+    faqs,
+    relatedSlugs: [],
+    lastUpdated: "2026-04-09",
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Set of tool-ID pairs already covered by hand-crafted pages (to avoid duplication)
+// ─────────────────────────────────────────────────────────────────────────────
+const HANDCRAFTED_PAIRS = new Set<string>(
+  vsPages
+    .filter((p) => p.toolA.id && p.toolB.id)
+    .map((p) => [p.toolA.id!, p.toolB.id!].sort().join("|"))
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Public API
+// ─────────────────────────────────────────────────────────────────────────────
+export function getVsPage(slug: string): VsPage | undefined {
+  // 1. Hand-crafted pages take priority
+  const handcrafted = vsPages.find((p) => p.slug === slug);
+  if (handcrafted) return handcrafted;
+
+  // 2. Parse generated slug: "{idA}-vs-{idB}" (first occurrence of "-vs-")
+  const vsIdx = slug.indexOf("-vs-");
+  if (vsIdx === -1) return undefined;
+
+  const idA = slug.slice(0, vsIdx);
+  const idB = slug.slice(vsIdx + 4);
+
+  const scoreA = ALL_SCORES.find((s) => s.id === idA);
+  const scoreB = ALL_SCORES.find((s) => s.id === idB);
+  if (!scoreA || !scoreB) return undefined;
+
+  return generateVsPage(scoreA, scoreB);
+}
+
+export function getVsSlugs(): string[] {
+  const handcraftedSlugs = vsPages.map((p) => p.slug);
+
+  // Generate all pairwise combinations not already covered by hand-crafted pages
+  const generatedSlugs: string[] = [];
+  for (let i = 0; i < ALL_SCORES.length; i++) {
+    for (let j = i + 1; j < ALL_SCORES.length; j++) {
+      const a = ALL_SCORES[i];
+      const b = ALL_SCORES[j];
+
+      // Skip if already covered by a hand-crafted page
+      const pairKey = [a.id, b.id].sort().join("|");
+      if (HANDCRAFTED_PAIRS.has(pairKey)) continue;
+
+      const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
+      generatedSlugs.push(`${first.id}-vs-${second.id}`);
+    }
+  }
+
+  return [...handcraftedSlugs, ...generatedSlugs];
+}
