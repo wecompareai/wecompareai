@@ -29,7 +29,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(9.0, 8.2, 9.0, 9.5),
     verdict: "Best all-rounder. Unmatched ecosystem and ease of use.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "claude-opus-4",
@@ -42,7 +42,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(9.5, 7.5, 9.0, 8.5),
     verdict: "Top reasoning quality. Best for complex, high-stakes tasks.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "gemini-2-5-pro",
@@ -55,7 +55,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.2,
     overall: calcOverall(8.8, 8.5, 8.5, 8.2),
     verdict: "Excellent value. Best choice for Google Workspace teams.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "deepseek-v3",
@@ -68,7 +68,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.0,
     overall: calcOverall(8.5, 9.5, 6.5, 7.0),
     verdict: "Exceptional value. Strong performance at a fraction of the cost.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "mistral-large",
@@ -81,7 +81,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.5,
     overall: calcOverall(8.0, 8.5, 7.5, 7.5),
     verdict: "Strong European alternative with good price and GDPR compliance.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "llama-3-1-405b",
@@ -94,7 +94,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 5.0,
     overall: calcOverall(8.5, 9.5, 6.0, 5.0),
     verdict: "Best open-source model. Free to run, but requires infrastructure.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Coding Tools ──
@@ -109,7 +109,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(8.5, 8.2, 9.0, 9.5),
     verdict: "Best IDE integration. The most frictionless coding assistant available.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "cursor",
@@ -122,7 +122,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(9.0, 8.0, 8.0, 8.5),
     verdict: "Best AI-native editor. Codebase-wide context sets it apart.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "claude-code",
@@ -135,7 +135,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(9.2, 7.5, 8.5, 8.0),
     verdict: "Best for complex engineering tasks and large refactors.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "windsurf",
@@ -148,7 +148,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(8.5, 8.8, 7.5, 8.5),
     verdict: "Best value coding editor. Strong Cursor alternative at lower price.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Image Generation ──
@@ -163,7 +163,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.0,
     overall: calcOverall(9.5, 7.5, 8.0, 7.0),
     verdict: "Best image quality available. Discord interface is the main drawback.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "dall-e-3",
@@ -176,7 +176,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(8.5, 9.0, 8.5, 9.5),
     verdict: "Most accessible image generator. Included in ChatGPT Plus.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "stable-diffusion",
@@ -189,7 +189,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 5.5,
     overall: calcOverall(8.0, 10.0, 7.0, 5.5),
     verdict: "Best open-source option. Free to run locally with no restrictions.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Audio / Voice ──
@@ -204,7 +204,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(9.5, 7.5, 8.5, 8.5),
     verdict: "Best-in-class voice cloning. Unmatched realism and language support.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "openai-tts",
@@ -217,7 +217,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(8.5, 9.0, 9.0, 9.0),
     verdict: "Best value TTS. Fast, natural, and priced for scale.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Cloud Providers ──
@@ -232,7 +232,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.0,
     overall: calcOverall(8.5, 7.8, 9.5, 7.0),
     verdict: "Most reliable enterprise AI platform. Best for AWS-native teams.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "azure-openai",
@@ -245,7 +245,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(9.0, 7.5, 9.5, 8.0),
     verdict: "Best for Microsoft/enterprise shops. GPT-4o with enterprise SLAs.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "vertex-ai",
@@ -258,7 +258,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.5,
     overall: calcOverall(8.8, 8.0, 9.0, 7.5),
     verdict: "Best for Google Cloud teams. Gemini natively integrated.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── New April 2026 models ──
@@ -273,7 +273,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(9.2, 8.8, 9.0, 8.5),
     verdict: "Best price-performance LLM in 2026. Outperforms GPT-4o at lower cost.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "gemini-2-5-flash",
@@ -286,7 +286,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.8,
     overall: calcOverall(8.5, 9.8, 8.5, 8.8),
     verdict: "Best value LLM — ultra-fast, incredibly cheap, strong for high-volume tasks.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "gpt-4-1-mini",
@@ -299,7 +299,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(8.2, 9.5, 9.0, 9.5),
     verdict: "Best budget OpenAI model. Near GPT-4o quality at a fraction of the API cost.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "gpt-4-1",
@@ -312,7 +312,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(9.3, 8.0, 9.2, 9.5),
     verdict: "OpenAI's latest flagship. Best coding performance in the GPT family.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "mistral-large-2",
@@ -325,7 +325,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.8,
     overall: calcOverall(8.5, 8.8, 8.0, 7.8),
     verdict: "Best European sovereign AI. Strong GDPR compliance and multilingual capabilities.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Video Generation ──
@@ -340,7 +340,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(9.2, 6.0, 8.0, 8.0),
     verdict: "Best AI video quality. Requires ChatGPT Pro at $200/mo.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "runway-gen3",
@@ -353,7 +353,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(8.5, 7.5, 8.0, 8.5),
     verdict: "Industry standard for creative professionals. Best camera control and editing tools.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "pika",
@@ -366,7 +366,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(7.5, 9.0, 7.5, 9.0),
     verdict: "Best value AI video. Fast, easy, and generous free tier for social content.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Additional LLMs ──
@@ -381,7 +381,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(8.8, 7.5, 7.5, 8.0),
     verdict: "Best real-time AI with live web and X/Twitter data. Strong reasoning via DeepSearch.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "o1",
@@ -394,7 +394,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.5,
     overall: calcOverall(9.5, 6.0, 8.5, 7.5),
     verdict: "Best AI for hard reasoning, math, and science. Expensive and slow but uniquely powerful.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "o3-mini",
@@ -407,7 +407,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(8.8, 8.5, 8.5, 8.0),
     verdict: "Affordable reasoning model. o1-level coding at a fraction of the cost.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "command-r-plus",
@@ -420,7 +420,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.5,
     overall: calcOverall(7.8, 8.0, 8.0, 7.5),
     verdict: "Best enterprise RAG model. Purpose-built for grounded, citation-based answers.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "phi-4",
@@ -433,7 +433,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.0,
     overall: calcOverall(7.5, 9.5, 7.5, 7.0),
     verdict: "Best small model for on-device AI. Remarkable quality for 14B parameters.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "qwen-2-5",
@@ -446,7 +446,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.0,
     overall: calcOverall(8.0, 9.2, 7.0, 7.0),
     verdict: "Best multilingual open model. Exceptional for Asian languages and cost-sensitive developers.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "llama-3-3-70b",
@@ -459,7 +459,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 5.5,
     overall: calcOverall(8.0, 9.8, 6.5, 5.5),
     verdict: "Best open-source model for local deployment. Near GPT-4o quality at zero API cost.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Additional Coding Tools ──
@@ -474,7 +474,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(7.5, 8.5, 8.5, 9.0),
     verdict: "Best privacy-first code completion. On-premise deployment for enterprise data security.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "replit",
@@ -487,7 +487,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(7.8, 8.0, 8.0, 9.5),
     verdict: "Best cloud IDE for beginners. Full environment + AI in one browser-based platform.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "codeium",
@@ -500,7 +500,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(7.8, 9.5, 8.0, 9.0),
     verdict: "Best free code completion. Unlimited AI coding assistance at zero cost for individuals.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Additional Image Generation ──
@@ -515,7 +515,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(8.0, 8.8, 8.0, 8.5),
     verdict: "Best AI generator for text inside images. Ideal for logos, posters, and branded content.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "adobe-firefly",
@@ -528,7 +528,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(7.5, 8.5, 8.5, 9.0),
     verdict: "Best commercially safe AI images. Trained on licensed content with Adobe IP indemnity.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "flux-1-1-pro",
@@ -541,7 +541,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 7.0,
     overall: calcOverall(8.8, 8.5, 7.5, 7.0),
     verdict: "Best new open-source image model. Near-Midjourney photorealism with open weights.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "leonardo-ai",
@@ -554,7 +554,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(7.8, 8.5, 7.8, 8.0),
     verdict: "Best AI platform for game assets and character design. Strong for concept art workflows.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "playground-ai",
@@ -567,7 +567,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(7.0, 9.5, 7.5, 8.5),
     verdict: "Best free image generator by volume. 500 images/day free tier is unmatched.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Additional Audio ──
@@ -582,7 +582,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.8,
     overall: calcOverall(8.0, 7.5, 8.5, 8.8),
     verdict: "Best business TTS studio. Built-in video editor and team collaboration features.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "playht",
@@ -595,7 +595,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(8.2, 7.5, 8.0, 8.5),
     verdict: "Best voice cloning with developer-friendly API. 800+ voices, 140 languages.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "speechify",
@@ -608,7 +608,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(7.5, 7.5, 8.0, 9.0),
     verdict: "Best text-to-speech for reading and learning. Ideal for consuming long-form content at speed.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Additional Video Generation ──
@@ -623,7 +623,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(8.5, 8.5, 7.5, 8.0),
     verdict: "Best value AI video with cinematic motion quality. Strong alternative to Runway at lower cost.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "luma-dream-machine",
@@ -636,7 +636,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(8.0, 8.0, 7.8, 8.5),
     verdict: "Best accessible cinematic video. Photorealistic motion without Sora's $200/mo barrier.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "hailuo",
@@ -649,7 +649,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(7.8, 9.0, 7.5, 8.0),
     verdict: "Best budget AI video. Generous free tier with surprising quality for social content.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Search / Research AI ──
@@ -664,7 +664,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.0,
     overall: calcOverall(8.5, 8.8, 8.5, 9.0),
     verdict: "Best AI search with real-time citations. Go-to for research and fact-checking.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "youcom",
@@ -677,7 +677,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.5,
     overall: calcOverall(7.5, 9.0, 7.8, 8.5),
     verdict: "Best privacy-first AI search. Free unlimited searches with no user tracking.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ── Music Generation ──
@@ -692,7 +692,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 9.5,
     overall: calcOverall(8.5, 9.0, 8.0, 9.5),
     verdict: "Best AI music generator. Full songs with vocals in 30 seconds — no music knowledge needed.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
   {
     id: "udio",
@@ -705,7 +705,7 @@ export const ALL_SCORES: ToolScore[] = [
     easeOfUse: 8.0,
     overall: calcOverall(8.2, 8.8, 7.8, 8.0),
     verdict: "Best AI music for professionals. More control and higher quality ceiling than Suno.",
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 ];
 

@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Pricing data for major AI tools
-// Updated: 2026-04-09
+// Updated: 2026-04-11
 // ─────────────────────────────────────────────────────────────────────────────
 
 export interface PricingTier {
@@ -45,7 +45,7 @@ export interface PricingPage {
   faqs: { q: string; a: string }[];
 }
 
-const LAST_UPDATED = "2026-04-09";
+const LAST_UPDATED = "2026-04-11";
 
 export const pricingPages: PricingPage[] = [
 

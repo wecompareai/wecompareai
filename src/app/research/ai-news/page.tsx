@@ -125,7 +125,7 @@ function AiNewsJsonLd() {
     description: "Weekly AI news digest: model releases, pricing changes, benchmark results, and compliance updates across OpenAI, Anthropic, Google, Meta & more.",
     url,
     datePublished: "2026-03-15",
-    dateModified: "2026-04-09",
+    dateModified: "2026-04-11",
     publisher: {
       "@type": "Organization",
       name: "We Compare AI",
