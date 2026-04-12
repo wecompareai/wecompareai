@@ -227,13 +227,17 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right: stats 2×2 grid */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Right: stats 2×4 grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { value: `${totalCount}`, label: "Battle arenas",   sub: "AI categories we track",       color: "text-primary" },
                 { value: "100+",          label: "AI contestants",  sub: "Models, tools & platforms",    color: "text-violet-600 dark:text-violet-400" },
-                { value: "1,000+",        label: "Things we check", sub: "So you don't have to",         color: "text-emerald-600 dark:text-emerald-400" },
+                { value: "1,000+",        label: "Data points",     sub: "Tracked across every AI tool", color: "text-emerald-600 dark:text-emerald-400" },
                 { value: "Every Second",  label: "Updated Instantaneously",     sub: "Powered by autonomous AI agents operating around the clock.", color: "text-amber-600 dark:text-amber-400" },
+                { value: "1,200+",        label: "VS Comparisons",  sub: "Head-to-head tool battles",    color: "text-rose-600 dark:text-rose-400" },
+                { value: "53",            label: "Rankings",        sub: "AI tools scored & ranked",     color: "text-sky-600 dark:text-sky-400" },
+                { value: "25",            label: "Best For guides", sub: "Find the right tool fast",     color: "text-teal-600 dark:text-teal-400" },
+                { value: "10",            label: "Alternatives",    sub: "Top tool swap guides",         color: "text-orange-600 dark:text-orange-400" },
               ].map((s) => (
                 <div key={s.label} className="rounded-xl border border-border bg-card px-5 py-5 flex flex-col gap-1 hover:bg-muted/40 transition-colors">
                   <div className={`text-2xl sm:text-3xl font-extrabold ${s.color}`}>{s.value}</div>
