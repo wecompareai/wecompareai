@@ -27,6 +27,12 @@ export interface SlotResult {
   comparison: AIResult;
 }
 
+// Newer OpenAI models (o-series, GPT-5.x) use max_completion_tokens instead of max_tokens
+function openAiTokenParam(modelId: string, maxTokens: number): Record<string, number> {
+  const usesCompletion = /^(o\d|gpt-5)/i.test(modelId);
+  return usesCompletion ? { max_completion_tokens: maxTokens } : { max_tokens: maxTokens };
+}
+
 function resolveApiKey(provider: { apiKeyEnv: string | null; encryptedApiKey: string | null }): string | undefined {
   if (provider.apiKeyEnv) {
     const envKey = process.env[provider.apiKeyEnv];
@@ -57,7 +63,7 @@ async function callModel(
         const res = await fetch(`${baseUrl}/chat/completions`, {
           method: "POST",
           headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-          body: JSON.stringify({ model: model.modelId, max_tokens: maxTokens, messages: [{ role: "user", content: prompt }] }),
+          body: JSON.stringify({ model: model.modelId, ...openAiTokenParam(model.modelId, maxTokens), messages: [{ role: "user", content: prompt }] }),
         });
         if (!res.ok) {
           const err = await res.text();
@@ -79,7 +85,7 @@ async function callModel(
         const res = await fetch("https://api.anthropic.com/v1/messages", {
           method: "POST",
           headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-          body: JSON.stringify({ model: model.modelId, max_tokens: maxTokens, messages: [{ role: "user", content: prompt }] }),
+          body: JSON.stringify({ model: model.modelId, ...openAiTokenParam(model.modelId, maxTokens), messages: [{ role: "user", content: prompt }] }),
         });
         if (!res.ok) {
           const err = await res.text();
