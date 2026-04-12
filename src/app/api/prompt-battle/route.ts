@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { decrypt } from "@/lib/encryption";
 
@@ -152,6 +153,7 @@ async function callModel(model: ModelWithProvider, prompt: string): Promise<Mode
 }
 
 export async function POST(request: NextRequest) {
+  const session = await auth();
   const body = await request.json().catch(() => null);
 
   if (!body?.prompt || typeof body.prompt !== "string" || body.prompt.trim().length < 1) {
@@ -215,7 +217,7 @@ export async function POST(request: NextRequest) {
       const errorMessage = result && "error" in result ? result.error : outcome.status === "rejected" ? String(outcome.reason) : null;
       return prisma.apiRequestLog.create({
         data: {
-          userId: null,
+          userId: session?.user?.id ?? null,
           feature: "prompt-battle",
           promptTruncated,
           promptTokens: 0,
