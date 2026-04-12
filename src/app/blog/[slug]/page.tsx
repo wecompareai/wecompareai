@@ -6,6 +6,8 @@ import { getCommentsByArticle } from "@/lib/comments";
 import ArticleContent from "@/components/blog/ArticleContent";
 import CommentSection from "@/components/blog/CommentSection";
 
+export const dynamic = "force-dynamic";
+
 const AUTHOR_BIOS: Record<string, { title: string; bio: string; twitter?: string }> = {
   "Jigar Acharya": {
     title: "Co-founder & Solution Architect",
