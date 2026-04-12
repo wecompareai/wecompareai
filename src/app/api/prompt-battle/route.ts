@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { decrypt } from "@/lib/encryption";
 
 export const maxDuration = 60;
+
+const MAX_SLOTS = 5;
 
 type ModelResult =
   | { status: "ok"; text: string; model: string; latencyMs: number }
@@ -21,6 +24,11 @@ type ModelWithProvider = {
     apiBaseUrl: string | null;
   };
 };
+
+function openAiTokenParam(modelId: string, maxTokens: number): Record<string, number> {
+  const usesCompletion = /^(o\d|gpt-5)/i.test(modelId);
+  return usesCompletion ? { max_completion_tokens: maxTokens } : { max_tokens: maxTokens };
+}
 
 function resolveApiKey(provider: ModelWithProvider["provider"]): string | undefined {
   // 1. Env var takes priority
@@ -59,7 +67,7 @@ async function callModel(model: ModelWithProvider, prompt: string): Promise<Mode
           },
           body: JSON.stringify({
             model: model.modelId,
-            max_tokens: 1024,
+            ...openAiTokenParam(model.modelId, 1024),
             messages: [{ role: "user", content: prompt }],
           }),
           signal: controller.signal,
@@ -145,19 +153,27 @@ async function callModel(model: ModelWithProvider, prompt: string): Promise<Mode
 }
 
 export async function POST(request: NextRequest) {
+  const session = await auth();
   const body = await request.json().catch(() => null);
 
   if (!body?.prompt || typeof body.prompt !== "string" || body.prompt.trim().length < 1) {
     return NextResponse.json({ error: "A non-empty prompt is required." }, { status: 400 });
   }
-  if (!Array.isArray(body.models) || body.models.length === 0) {
-    return NextResponse.json({ error: "At least one model must be selected." }, { status: 400 });
+
+  // Support both slot-based { slots: [{slotId, modelSlug}] } and legacy { models: string[] }
+  const isSlotBased = Array.isArray(body.slots) && body.slots.length > 0;
+  const slots: { slotId: string; modelSlug: string }[] = isSlotBased
+    ? body.slots
+    : (body.models ?? []).map((slug: string) => ({ slotId: slug, modelSlug: slug }));
+
+  if (slots.length === 0 || slots.length > MAX_SLOTS) {
+    return NextResponse.json({ error: `Select between 1 and ${MAX_SLOTS} model slots.` }, { status: 400 });
   }
 
   const prompt = body.prompt.trim();
-  const modelSlugs: string[] = body.models;
+  const modelSlugs = [...new Set(slots.map((s) => s.modelSlug))];
 
-  const models = await prisma.aIModel.findMany({
+  const dbModels = await prisma.aIModel.findMany({
     where: { slug: { in: modelSlugs }, isActive: true },
     include: {
       provider: {
@@ -166,24 +182,34 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  if (models.length === 0) {
+  if (dbModels.length === 0) {
     return NextResponse.json({ error: "No active models found for the given selection." }, { status: 400 });
   }
 
-  const settled = await Promise.allSettled(models.map((m) => callModel(m, prompt)));
+  const modelMap = new Map(dbModels.map((m) => [m.slug, m]));
+
+  const settled = await Promise.allSettled(
+    slots.map((s) => {
+      const m = modelMap.get(s.modelSlug);
+      if (!m) return Promise.resolve({ status: "error" as const, error: "Model not found or inactive" });
+      return callModel(m, prompt);
+    })
+  );
 
   const results: Record<string, ModelResult> = {};
   settled.forEach((outcome, i) => {
-    const slug = models[i].slug;
-    results[slug] = outcome.status === "fulfilled"
+    const slotId = slots[i].slotId;
+    results[slotId] = outcome.status === "fulfilled"
       ? outcome.value
       : { status: "error", error: String(outcome.reason) };
   });
 
-  // Fire-and-forget logging — never block the response
+  // Fire-and-forget logging
   const promptTruncated = prompt.slice(0, 3000);
   void Promise.allSettled(
-    models.map((m, i) => {
+    slots.map((s, i) => {
+      const m = modelMap.get(s.modelSlug);
+      if (!m) return Promise.resolve();
       const outcome = settled[i];
       const result = outcome.status === "fulfilled" ? outcome.value : null;
       const latencyMs = result && "latencyMs" in result ? result.latencyMs : undefined;
@@ -191,7 +217,7 @@ export async function POST(request: NextRequest) {
       const errorMessage = result && "error" in result ? result.error : outcome.status === "rejected" ? String(outcome.reason) : null;
       return prisma.apiRequestLog.create({
         data: {
-          userId: null,
+          userId: session?.user?.id ?? null,
           feature: "prompt-battle",
           promptTruncated,
           promptTokens: 0,

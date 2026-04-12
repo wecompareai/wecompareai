@@ -1,26 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import Link from "next/link";
 import PremiumGate from "@/components/PremiumGate";
 
-type DBModel = {
+const MAX_SLOTS = 5;
+
+type AvailableModel = {
   id: string;
   name: string;
   slug: string;
-  modelId: string;
   initial: string;
   colorClass: string;
   borderClass: string;
   gradientClass: string;
-  provider: { name: string; tier: number };
 };
 
-const EXAMPLE_PROMPTS = [
-  "Explain quantum computing to a 10-year-old",
-  "Write a haiku about burnout at work",
-  "What's the best AI model for coding in 2025?",
-];
+type AvailableProvider = {
+  id: string;
+  name: string;
+  slug: string;
+  tier: number;
+  models: AvailableModel[];
+};
+
+type Slot = {
+  slotId: string;
+  providerId: string;
+  modelSlug: string;
+};
 
 type ModelResult =
   | { status: "ok"; text: string; model: string; latencyMs: number }
@@ -28,17 +36,22 @@ type ModelResult =
   | { status: "no_key" }
   | { status: "loading" };
 
+const EXAMPLE_PROMPTS = [
+  "Explain quantum computing to a 10-year-old",
+  "Write a haiku about burnout at work",
+  "What's the best AI model for coding in 2025?",
+];
+
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
-  function handleCopy() {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
-  }
   return (
     <button
-      onClick={handleCopy}
+      onClick={() => {
+        navigator.clipboard.writeText(text).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1500);
+        });
+      }}
       className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
       title="Copy response"
     >
@@ -56,7 +69,98 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-function ResultCard({ model, result }: { model: DBModel; result?: ModelResult }) {
+function SlotCard({
+  slot,
+  index,
+  providers,
+  onProviderChange,
+  onModelChange,
+  onRemove,
+  canRemove,
+}: {
+  slot: Slot;
+  index: number;
+  providers: AvailableProvider[];
+  onProviderChange: (slotId: string, providerId: string) => void;
+  onModelChange: (slotId: string, modelSlug: string) => void;
+  onRemove: (slotId: string) => void;
+  canRemove: boolean;
+}) {
+  const provider = providers.find((p) => p.id === slot.providerId);
+  const model = provider?.models.find((m) => m.slug === slot.modelSlug);
+
+  return (
+    <div className={`rounded-xl border ${model?.borderClass ?? "border-border"} bg-card p-4 space-y-3`}>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          {model && (
+            <span className={`inline-flex items-center justify-center w-7 h-7 rounded-md text-xs font-bold ${model.colorClass}`}>
+              {model.initial}
+            </span>
+          )}
+          <span className="text-sm font-medium text-foreground">Slot {index + 1}</span>
+        </div>
+        {canRemove && (
+          <button
+            onClick={() => onRemove(slot.slotId)}
+            className="text-muted-foreground hover:text-red-500 transition-colors"
+            title="Remove slot"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <select
+          value={slot.providerId}
+          onChange={(e) => onProviderChange(slot.slotId, e.target.value)}
+          className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+        >
+          <option value="">— Select Provider —</option>
+          {providers.map((p) => (
+            <option key={p.id} value={p.id}>
+              T{p.tier} · {p.name}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={slot.modelSlug}
+          onChange={(e) => onModelChange(slot.slotId, e.target.value)}
+          disabled={!slot.providerId}
+          className="w-full px-3 py-2 rounded-lg border border-border bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
+        >
+          <option value="">— Select Model —</option>
+          {(provider?.models ?? []).map((m) => (
+            <option key={m.slug} value={m.slug}>{m.name}</option>
+          ))}
+        </select>
+      </div>
+
+      {model && (
+        <div className={`text-xs px-2 py-1 rounded-md ${model.colorClass} font-mono`}>
+          {model.slug}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ResultCard({
+  slot,
+  provider,
+  model,
+  result,
+}: {
+  slot: Slot;
+  provider: AvailableProvider | undefined;
+  model: AvailableModel | undefined;
+  result?: ModelResult;
+}) {
+  if (!model || !provider) return null;
   return (
     <div className={`rounded-xl border ${model.borderClass} bg-gradient-to-b ${model.gradientClass} p-5 flex flex-col gap-3 min-h-[200px]`}>
       <div className="flex items-center justify-between gap-2">
@@ -65,8 +169,8 @@ function ResultCard({ model, result }: { model: DBModel; result?: ModelResult })
             {model.initial}
           </span>
           <div>
-            <span className="font-semibold text-foreground text-sm">{model.name}</span>
-            <span className="ml-1.5 text-xs text-muted-foreground">{model.provider.name}</span>
+            <p className="font-semibold text-foreground text-sm">{model.name}</p>
+            <p className="text-xs text-muted-foreground">{provider.name}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -76,19 +180,13 @@ function ResultCard({ model, result }: { model: DBModel; result?: ModelResult })
             </span>
           )}
           {result?.status === "no_key" && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400">
-              No API key
-            </span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-700 dark:text-amber-400">No API key</span>
           )}
           {result?.status === "error" && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-red-500/10 text-red-700 dark:text-red-400">
-              Error
-            </span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-red-500/10 text-red-700 dark:text-red-400">Error</span>
           )}
           {result?.status === "loading" && (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground animate-pulse">
-              Waiting...
-            </span>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground animate-pulse">Waiting…</span>
           )}
           {result?.status === "ok" && <CopyButton text={result.text} />}
         </div>
@@ -96,9 +194,7 @@ function ResultCard({ model, result }: { model: DBModel; result?: ModelResult })
 
       <div className="flex-1">
         {!result && (
-          <div className="h-full flex items-center justify-center text-muted-foreground text-sm italic">
-            No result yet
-          </div>
+          <div className="h-full flex items-center justify-center text-muted-foreground text-sm italic">No result yet</div>
         )}
         {result?.status === "loading" && (
           <div className="h-full flex items-center justify-center">
@@ -113,7 +209,7 @@ function ResultCard({ model, result }: { model: DBModel; result?: ModelResult })
         )}
         {result?.status === "no_key" && (
           <div className="text-sm text-amber-600 dark:text-amber-400">
-            API key not configured for this provider. Add {model.provider.name}&apos;s API key to your environment variables.
+            API key not configured for {provider.name}.
           </div>
         )}
         {result?.status === "error" && (
@@ -125,7 +221,7 @@ function ResultCard({ model, result }: { model: DBModel; result?: ModelResult })
           </div>
         )}
         {result?.status === "ok" && (
-          <div className="max-h-64 overflow-y-auto">
+          <div className="max-h-72 overflow-y-auto">
             <pre className="whitespace-pre-wrap text-sm text-foreground/90 leading-relaxed font-sans">
               {result.text || <span className="text-muted-foreground italic">No content returned.</span>}
             </pre>
@@ -137,66 +233,84 @@ function ResultCard({ model, result }: { model: DBModel; result?: ModelResult })
 }
 
 export default function PromptBattlePage() {
-  const [models, setModels] = useState<DBModel[]>([]);
-  const [modelsLoading, setModelsLoading] = useState(true);
+  const uid = useId();
+  const [providers, setProviders] = useState<AvailableProvider[]>([]);
+  const [providersLoading, setProvidersLoading] = useState(true);
 
+  const [slots, setSlots] = useState<Slot[]>([]);
   const [prompt, setPrompt] = useState("");
-  const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<Record<string, ModelResult>>({});
 
-  // Group models by provider tier for the selector UI
-  const tierGroups: Record<number, DBModel[]> = {};
-  for (const m of models) {
-    (tierGroups[m.provider.tier] ??= []).push(m);
-  }
-
   useEffect(() => {
-    fetch("/api/ai-providers?withModels=true&activeOnly=true")
+    fetch("/api/ai-providers/available")
       .then((r) => r.json())
-      .then((providers: { models: DBModel[]; name: string; tier: number }[]) => {
-        const allModels: DBModel[] = providers.flatMap((p) =>
-          p.models.map((m) => ({ ...m, provider: { name: p.name, tier: p.tier } }))
-        );
-        setModels(allModels);
-        setSelectedModels(allModels.map((m) => m.slug));
+      .then((data: AvailableProvider[]) => {
+        setProviders(data);
+        // Pre-fill up to 3 slots with first available provider+model
+        const defaults: Slot[] = [];
+        for (const p of data.slice(0, 3)) {
+          if (p.models.length > 0) {
+            defaults.push({ slotId: `${uid}-${defaults.length}`, providerId: p.id, modelSlug: p.models[0].slug });
+          }
+        }
+        setSlots(defaults.length > 0 ? defaults : [{ slotId: `${uid}-0`, providerId: "", modelSlug: "" }]);
       })
-      .finally(() => setModelsLoading(false));
-  }, []);
+      .finally(() => setProvidersLoading(false));
+  }, [uid]);
 
-  function toggleModel(slug: string) {
-    setSelectedModels((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
-    );
+  function addSlot() {
+    if (slots.length >= MAX_SLOTS) return;
+    setSlots((prev) => [...prev, { slotId: `${uid}-${Date.now()}`, providerId: "", modelSlug: "" }]);
   }
+
+  function removeSlot(slotId: string) {
+    setSlots((prev) => prev.filter((s) => s.slotId !== slotId));
+  }
+
+  function handleProviderChange(slotId: string, providerId: string) {
+    const provider = providers.find((p) => p.id === providerId);
+    const modelSlug = provider?.models[0]?.slug ?? "";
+    setSlots((prev) => prev.map((s) => s.slotId === slotId ? { ...s, providerId, modelSlug } : s));
+  }
+
+  function handleModelChange(slotId: string, modelSlug: string) {
+    setSlots((prev) => prev.map((s) => s.slotId === slotId ? { ...s, modelSlug } : s));
+  }
+
+  const validSlots = slots.filter((s) => s.providerId && s.modelSlug);
 
   async function handleRunBattle() {
-    if (!prompt.trim() || loading || selectedModels.length === 0) return;
+    if (!prompt.trim() || loading || validSlots.length === 0) return;
     setLoading(true);
 
+    // Show loading state per slot
     const loadingState: Record<string, ModelResult> = {};
-    selectedModels.forEach((slug) => { loadingState[slug] = { status: "loading" }; });
+    validSlots.forEach((s) => { loadingState[s.slotId] = { status: "loading" }; });
     setResults(loadingState);
 
     try {
       const res = await fetch("/api/prompt-battle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: prompt.trim(), models: selectedModels }),
+        body: JSON.stringify({
+          prompt: prompt.trim(),
+          slots: validSlots.map((s) => ({ slotId: s.slotId, modelSlug: s.modelSlug })),
+        }),
       });
       const data = await res.json();
       if (res.ok && data.results) {
         setResults(data.results as Record<string, ModelResult>);
       } else {
-        const errResult: ModelResult = { status: "error", error: data.error ?? "Unexpected error" };
+        const err: ModelResult = { status: "error", error: data.error ?? "Unexpected error" };
         const errorState: Record<string, ModelResult> = {};
-        selectedModels.forEach((slug) => { errorState[slug] = errResult; });
+        validSlots.forEach((s) => { errorState[s.slotId] = err; });
         setResults(errorState);
       }
     } catch {
-      const errResult: ModelResult = { status: "error", error: "Network error — please check your connection." };
+      const err: ModelResult = { status: "error", error: "Network error — please check your connection." };
       const errorState: Record<string, ModelResult> = {};
-      selectedModels.forEach((slug) => { errorState[slug] = errResult; });
+      validSlots.forEach((s) => { errorState[s.slotId] = err; });
       setResults(errorState);
     } finally {
       setLoading(false);
@@ -211,7 +325,8 @@ export default function PromptBattlePage() {
 
   return (
     <PremiumGate>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+
         {/* Header */}
         <div className="space-y-3">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -226,173 +341,160 @@ export default function PromptBattlePage() {
               </svg>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-foreground">&#9876;&#65039; AI Prompt Battle</h1>
+              <h1 className="text-2xl font-bold text-foreground">AI Prompt Battle</h1>
               <p className="text-muted-foreground text-sm mt-0.5">
-                Type a prompt. Watch all the models fight for your approval.
+                Choose up to 5 models — same prompt, live race. See who responds fastest.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Input panel */}
-        <div className="rounded-xl border border-border bg-card p-6 space-y-5">
-          {/* Example prompts */}
-          <div className="space-y-2">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Try an example</p>
-            <div className="flex flex-wrap gap-2">
-              {EXAMPLE_PROMPTS.map((example) => (
-                <button
-                  key={example}
-                  onClick={() => setPrompt(example)}
-                  disabled={loading}
-                  className="text-xs px-3 py-1.5 rounded-full border border-border bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {example}
-                </button>
-              ))}
-            </div>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-          {/* Prompt textarea */}
-          <div className="space-y-2">
-            <label htmlFor="battle-prompt" className="block text-sm font-medium text-foreground">
-              Your prompt
-            </label>
-            <textarea
-              id="battle-prompt"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask something interesting… e.g. 'Explain quantum computing to a 10-year-old'"
-              rows={3}
-              disabled={loading}
-              className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y disabled:opacity-60"
-            />
-          </div>
+          {/* Left — slot config */}
+          <div className="lg:col-span-1 space-y-5">
+            <div className="rounded-xl border border-border bg-card p-5 space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-semibold text-foreground">Model Selection</h2>
+                <span className="text-xs text-muted-foreground">{validSlots.length}/{MAX_SLOTS} slots</span>
+              </div>
 
-          {/* Model selector */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-foreground">Select models</p>
-              {!modelsLoading && models.length > 0 && (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setSelectedModels(models.map((m) => m.slug))}
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Select all
-                  </button>
-                  <span className="text-muted-foreground text-xs">·</span>
-                  <button
-                    onClick={() => setSelectedModels([])}
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Clear
-                  </button>
+              {providersLoading ? (
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => <div key={i} className="h-24 rounded-xl bg-muted animate-pulse" />)}
+                </div>
+              ) : providers.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No providers with API keys found.{" "}
+                  <Link href="/admin/ai-providers" className="text-primary hover:underline">Configure in admin panel.</Link>
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {slots.map((slot, i) => (
+                    <SlotCard
+                      key={slot.slotId}
+                      slot={slot}
+                      index={i}
+                      providers={providers}
+                      onProviderChange={handleProviderChange}
+                      onModelChange={handleModelChange}
+                      onRemove={removeSlot}
+                      canRemove={slots.length > 1}
+                    />
+                  ))}
+
+                  {slots.length < MAX_SLOTS && (
+                    <button
+                      onClick={addSlot}
+                      className="w-full py-2.5 rounded-xl border border-dashed border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                      </svg>
+                      Add Slot ({slots.length}/{MAX_SLOTS})
+                    </button>
+                  )}
                 </div>
               )}
             </div>
+          </div>
 
-            {modelsLoading ? (
-              <div className="flex gap-2 flex-wrap">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="h-8 w-24 rounded-lg bg-muted animate-pulse" />
-                ))}
-              </div>
-            ) : models.length === 0 ? (
-              <p className="text-sm text-muted-foreground italic">
-                No models configured.{" "}
-                <Link href="/admin/ai-providers" className="text-primary hover:underline">
-                  Add models in the admin panel.
-                </Link>
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {Object.entries(tierGroups)
-                  .sort(([a], [b]) => Number(a) - Number(b))
-                  .map(([tier, tierModels]) => (
-                    <div key={tier}>
-                      <p className="text-xs text-muted-foreground mb-1.5">Tier {tier}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {tierModels.map((model) => {
-                          const isSelected = selectedModels.includes(model.slug);
-                          return (
-                            <button
-                              key={model.slug}
-                              onClick={() => toggleModel(model.slug)}
-                              disabled={loading}
-                              title={model.provider.name}
-                              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-                                isSelected
-                                  ? `${model.colorClass} ${model.borderClass} border`
-                                  : "border-border text-muted-foreground hover:text-foreground hover:border-border/80"
-                              }`}
-                            >
-                              <span className={`inline-flex items-center justify-center w-5 h-5 rounded text-xs font-bold ${isSelected ? model.colorClass : "bg-muted text-muted-foreground"}`}>
-                                {model.initial}
-                              </span>
-                              {model.name}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
+          {/* Right — prompt + results */}
+          <div className="lg:col-span-2 space-y-6">
+
+            {/* Prompt input */}
+            <div className="rounded-xl border border-border bg-card p-5 space-y-4">
+              {/* Example prompts */}
+              <div className="space-y-2">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Try an example</p>
+                <div className="flex flex-wrap gap-2">
+                  {EXAMPLE_PROMPTS.map((example) => (
+                    <button
+                      key={example}
+                      onClick={() => setPrompt(example)}
+                      disabled={loading}
+                      className="text-xs px-3 py-1.5 rounded-full border border-border bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                    >
+                      {example}
+                    </button>
                   ))}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="battle-prompt" className="block text-sm font-medium text-foreground mb-2">
+                  Your prompt
+                </label>
+                <textarea
+                  id="battle-prompt"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask something interesting…"
+                  rows={4}
+                  disabled={loading}
+                  className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y disabled:opacity-60"
+                />
+              </div>
+
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-xs text-muted-foreground">
+                  <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-mono text-xs">Ctrl+Enter</kbd> to run
+                </p>
+                <button
+                  onClick={handleRunBattle}
+                  disabled={loading || !prompt.trim() || validSlots.length === 0}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                >
+                  {loading ? (
+                    <>
+                      <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                      </svg>
+                      Running…
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                      Run Battle
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Results */}
+            {hasResults && (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-px flex-1 bg-border" />
+                  <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider whitespace-nowrap">
+                    Battle Results
+                  </h2>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <div className={`grid gap-4 ${validSlots.length === 1 ? "grid-cols-1" : validSlots.length === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"}`}>
+                  {validSlots.map((slot) => {
+                    const provider = providers.find((p) => p.id === slot.providerId);
+                    const model = provider?.models.find((m) => m.slug === slot.modelSlug);
+                    return (
+                      <ResultCard
+                        key={slot.slotId}
+                        slot={slot}
+                        provider={provider}
+                        model={model}
+                        result={results[slot.slotId]}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
-
-          {/* Run button */}
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-muted-foreground">
-              Tip: Press{" "}
-              <kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-mono text-xs">Ctrl+Enter</kbd>{" "}
-              to run
-            </p>
-            <button
-              onClick={handleRunBattle}
-              disabled={loading || !prompt.trim() || selectedModels.length === 0}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <>
-                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                  </svg>
-                  Running…
-                </>
-              ) : (
-                <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  Run Battle
-                </>
-              )}
-            </button>
-          </div>
         </div>
-
-        {/* Results grid */}
-        {hasResults && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="h-px flex-1 bg-border" />
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider whitespace-nowrap">
-                Battle Results
-              </h2>
-              <div className="h-px flex-1 bg-border" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {models
-                .filter((m) => results[m.slug] !== undefined)
-                .map((model) => (
-                  <ResultCard key={model.slug} model={model} result={results[model.slug]} />
-                ))}
-            </div>
-          </div>
-        )}
       </div>
     </PremiumGate>
   );

@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { decrypt } from "@/lib/encryption";
 
 export const maxDuration = 120;
 
-// Pricing per 1M tokens (USD) as of 2025
-const PRICING = {
-  "gpt-4o-mini": { input: 0.15, output: 0.60 },
-  "claude-sonnet-4-6": { input: 3.0, output: 15.0 },
-  "gemini-1.5-flash": { input: 0.075, output: 0.30 },
-};
+const MAX_SLOTS = 5;
 
 const SAFETY_PATTERNS = [
   /i (can't|cannot|am unable to|will not|won't) (help|assist|provide|generate|create)/i,
@@ -27,15 +24,31 @@ function detectSafetyFlag(content: string): { flagged: boolean; note?: string } 
   return { flagged: false };
 }
 
-function calcCost(model: keyof typeof PRICING, inputTokens: number, outputTokens: number): number {
-  const price = PRICING[model];
-  if (!price) return 0;
-  return (inputTokens / 1_000_000) * price.input + (outputTokens / 1_000_000) * price.output;
+function openAiTokenParam(modelId: string, maxTokens: number): Record<string, number> {
+  const usesCompletion = /^(o\d|gpt-5)/i.test(modelId);
+  return usesCompletion ? { max_completion_tokens: maxTokens } : { max_tokens: maxTokens };
+}
+
+function resolveApiKey(provider: { apiKeyEnv: string | null; encryptedApiKey: string | null }): string | undefined {
+  if (provider.apiKeyEnv) {
+    const envKey = process.env[provider.apiKeyEnv];
+    if (envKey) return envKey;
+  }
+  if (provider.encryptedApiKey) {
+    try { return decrypt(provider.encryptedApiKey); } catch { return undefined; }
+  }
+  return undefined;
 }
 
 export interface BenchmarkResult {
-  provider: string;
-  model: string;
+  slotId: string;
+  providerName: string;
+  modelName: string;
+  modelSlug: string;
+  colorClass: string;
+  borderClass: string;
+  gradientClass: string;
+  initial: string;
   responseTimeMs: number;
   inputTokens: number;
   outputTokens: number;
@@ -47,108 +60,132 @@ export interface BenchmarkResult {
   error?: string;
 }
 
-async function benchmarkChatGPT(prompt: string): Promise<BenchmarkResult> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  const model = "gpt-4o-mini";
-  if (!apiKey || apiKey.startsWith("sk-your-")) {
-    return { provider: "ChatGPT", model, responseTimeMs: 0, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: "OpenAI API key not configured" };
-  }
-  const start = Date.now();
-  try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ model, max_tokens: 1024, messages: [{ role: "user", content: prompt }] }),
-    });
-    const responseTimeMs = Date.now() - start;
-    if (!res.ok) {
-      const err = await res.text();
-      return { provider: "ChatGPT", model, responseTimeMs, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `OpenAI error ${res.status}: ${err.slice(0, 200)}` };
-    }
-    const data = await res.json();
-    const content = data.choices?.[0]?.message?.content ?? "";
-    const inputTokens = data.usage?.prompt_tokens ?? 0;
-    const outputTokens = data.usage?.completion_tokens ?? 0;
-    const totalTokens = data.usage?.total_tokens ?? 0;
-    const costUsd = calcCost(model, inputTokens, outputTokens);
-    const safety = detectSafetyFlag(content);
-    return { provider: "ChatGPT", model: data.model ?? model, responseTimeMs, inputTokens, outputTokens, totalTokens, costUsd, content, safetyFlag: safety.flagged, safetyNote: safety.note };
-  } catch (e) {
-    return { provider: "ChatGPT", model, responseTimeMs: Date.now() - start, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: String(e) };
-  }
-}
+type DBModel = {
+  id: string;
+  slug: string;
+  name: string;
+  modelId: string;
+  initial: string;
+  colorClass: string;
+  borderClass: string;
+  gradientClass: string;
+  inputPricePer1M: number;
+  outputPricePer1M: number;
+  provider: {
+    name: string;
+    apiKeyEnv: string | null;
+    encryptedApiKey: string | null;
+    apiFormat: string;
+    apiBaseUrl: string | null;
+  };
+};
 
-async function benchmarkAnthropic(prompt: string): Promise<BenchmarkResult> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  const model = "claude-sonnet-4-6";
+async function runBenchmark(slotId: string, model: DBModel, prompt: string): Promise<BenchmarkResult> {
+  const base: Omit<BenchmarkResult, "responseTimeMs" | "inputTokens" | "outputTokens" | "totalTokens" | "costUsd" | "content" | "safetyFlag"> = {
+    slotId,
+    providerName: model.provider.name,
+    modelName: model.name,
+    modelSlug: model.slug,
+    colorClass: model.colorClass,
+    borderClass: model.borderClass,
+    gradientClass: model.gradientClass,
+    initial: model.initial,
+  };
+
+  const apiKey = resolveApiKey(model.provider);
   if (!apiKey) {
-    return { provider: "Claude", model, responseTimeMs: 0, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: "Anthropic API key not configured" };
+    return { ...base, responseTimeMs: 0, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `No API key configured for ${model.provider.name}` };
   }
-  const start = Date.now();
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model, max_tokens: 1024, messages: [{ role: "user", content: prompt }] }),
-    });
-    const responseTimeMs = Date.now() - start;
-    if (!res.ok) {
-      const err = await res.text();
-      return { provider: "Claude", model, responseTimeMs, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `Anthropic error ${res.status}: ${err.slice(0, 200)}` };
-    }
-    const data = await res.json();
-    const content = data.content?.[0]?.text ?? "";
-    const inputTokens = data.usage?.input_tokens ?? 0;
-    const outputTokens = data.usage?.output_tokens ?? 0;
-    const totalTokens = inputTokens + outputTokens;
-    const costUsd = calcCost(model, inputTokens, outputTokens);
-    const safety = detectSafetyFlag(content);
-    return { provider: "Claude", model: data.model ?? model, responseTimeMs, inputTokens, outputTokens, totalTokens, costUsd, content, safetyFlag: safety.flagged, safetyNote: safety.note };
-  } catch (e) {
-    return { provider: "Claude", model, responseTimeMs: Date.now() - start, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: String(e) };
-  }
-}
 
-async function benchmarkGemini(prompt: string): Promise<BenchmarkResult> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const model = "gemini-1.5-flash";
-  if (!apiKey || apiKey === "your-gemini-api-key-here") {
-    return { provider: "Gemini", model, responseTimeMs: 0, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: "Gemini API key not configured" };
-  }
   const start = Date.now();
+
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 1024 } }),
+    let content = "";
+    let inputTokens = 0;
+    let outputTokens = 0;
+    let safetyFlag = false;
+    let safetyNote: string | undefined;
+
+    switch (model.provider.apiFormat) {
+      case "openai": {
+        const baseUrl = model.provider.apiBaseUrl || "https://api.openai.com/v1";
+        const res = await fetch(`${baseUrl}/chat/completions`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: model.modelId, ...openAiTokenParam(model.modelId, 1024), messages: [{ role: "user", content: prompt }] }),
+        });
+        const responseTimeMs = Date.now() - start;
+        if (!res.ok) {
+          const err = await res.text();
+          return { ...base, responseTimeMs, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `${model.provider.name} ${res.status}: ${err.slice(0, 200)}` };
+        }
+        const data = await res.json();
+        content = data.choices?.[0]?.message?.content ?? "";
+        inputTokens = data.usage?.prompt_tokens ?? 0;
+        outputTokens = data.usage?.completion_tokens ?? 0;
+        const sf = detectSafetyFlag(content);
+        safetyFlag = sf.flagged;
+        safetyNote = sf.note;
+        const costUsd = (inputTokens / 1_000_000) * model.inputPricePer1M + (outputTokens / 1_000_000) * model.outputPricePer1M;
+        return { ...base, responseTimeMs, inputTokens, outputTokens, totalTokens: inputTokens + outputTokens, costUsd, content, safetyFlag, safetyNote };
       }
-    );
-    const responseTimeMs = Date.now() - start;
-    if (!res.ok) {
-      const err = await res.text();
-      return { provider: "Gemini", model, responseTimeMs, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `Gemini error ${res.status}: ${err.slice(0, 200)}` };
+
+      case "anthropic": {
+        const res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+          body: JSON.stringify({ model: model.modelId, ...openAiTokenParam(model.modelId, 1024), messages: [{ role: "user", content: prompt }] }),
+        });
+        const responseTimeMs = Date.now() - start;
+        if (!res.ok) {
+          const err = await res.text();
+          return { ...base, responseTimeMs, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `Anthropic ${res.status}: ${err.slice(0, 200)}` };
+        }
+        const data = await res.json();
+        content = data.content?.[0]?.text ?? "";
+        inputTokens = data.usage?.input_tokens ?? 0;
+        outputTokens = data.usage?.output_tokens ?? 0;
+        const sf = detectSafetyFlag(content);
+        safetyFlag = sf.flagged;
+        safetyNote = sf.note;
+        const costUsd = (inputTokens / 1_000_000) * model.inputPricePer1M + (outputTokens / 1_000_000) * model.outputPricePer1M;
+        return { ...base, responseTimeMs, inputTokens, outputTokens, totalTokens: inputTokens + outputTokens, costUsd, content, safetyFlag, safetyNote };
+      }
+
+      case "gemini": {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model.modelId}:generateContent?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 1024 } }),
+          }
+        );
+        const responseTimeMs = Date.now() - start;
+        if (!res.ok) {
+          const err = await res.text();
+          return { ...base, responseTimeMs, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `Gemini ${res.status}: ${err.slice(0, 200)}` };
+        }
+        const data = await res.json();
+        content = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+        inputTokens = data.usageMetadata?.promptTokenCount ?? 0;
+        outputTokens = data.usageMetadata?.candidatesTokenCount ?? 0;
+        const blocked = data.candidates?.[0]?.finishReason === "SAFETY";
+        const safetyRatings = data.candidates?.[0]?.safetyRatings ?? [];
+        const sf = detectSafetyFlag(content);
+        safetyFlag = blocked || sf.flagged;
+        safetyNote = blocked
+          ? `Blocked by Gemini safety filter: ${safetyRatings.map((r: { category: string; probability: string }) => `${r.category}=${r.probability}`).join(", ")}`
+          : sf.note;
+        const costUsd = (inputTokens / 1_000_000) * model.inputPricePer1M + (outputTokens / 1_000_000) * model.outputPricePer1M;
+        return { ...base, responseTimeMs, inputTokens, outputTokens, totalTokens: data.usageMetadata?.totalTokenCount ?? inputTokens + outputTokens, costUsd, content, safetyFlag, safetyNote };
+      }
+
+      default:
+        return { ...base, responseTimeMs: Date.now() - start, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: `Unsupported API format: ${model.provider.apiFormat}` };
     }
-    const data = await res.json();
-    const content = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-    const inputTokens = data.usageMetadata?.promptTokenCount ?? 0;
-    const outputTokens = data.usageMetadata?.candidatesTokenCount ?? 0;
-    const totalTokens = data.usageMetadata?.totalTokenCount ?? inputTokens + outputTokens;
-    const costUsd = calcCost(model, inputTokens, outputTokens);
-
-    // Gemini returns safety ratings per candidate
-    const safetyRatings = data.candidates?.[0]?.safetyRatings ?? [];
-    const blocked = data.candidates?.[0]?.finishReason === "SAFETY";
-    const contentSafety = detectSafetyFlag(content);
-    const safetyFlag = blocked || contentSafety.flagged;
-    const safetyNote = blocked
-      ? `Blocked by Gemini safety filter: ${safetyRatings.map((r: { category: string; probability: string }) => `${r.category}=${r.probability}`).join(", ")}`
-      : contentSafety.note;
-
-    return { provider: "Gemini", model, responseTimeMs, inputTokens, outputTokens, totalTokens, costUsd, content, safetyFlag, safetyNote };
   } catch (e) {
-    return { provider: "Gemini", model, responseTimeMs: Date.now() - start, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: String(e) };
+    return { ...base, responseTimeMs: Date.now() - start, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false, error: String(e) };
   }
 }
 
@@ -164,14 +201,65 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Please provide a prompt of at least 5 characters." }, { status: 400 });
   }
 
+  const slots: { slotId: string; modelSlug: string }[] = body.slots ?? [];
+  if (!Array.isArray(slots) || slots.length === 0 || slots.length > MAX_SLOTS) {
+    return NextResponse.json({ error: `Select between 1 and ${MAX_SLOTS} model slots.` }, { status: 400 });
+  }
+
   const prompt = body.prompt.trim();
+  const modelSlugs = [...new Set(slots.map((s) => s.modelSlug))];
 
-  // Run all 3 benchmarks in parallel
-  const [chatgpt, claude, gemini] = await Promise.all([
-    benchmarkChatGPT(prompt),
-    benchmarkAnthropic(prompt),
-    benchmarkGemini(prompt),
-  ]);
+  const dbModels = await prisma.aIModel.findMany({
+    where: { slug: { in: modelSlugs }, isActive: true },
+    include: {
+      provider: {
+        select: { name: true, apiKeyEnv: true, encryptedApiKey: true, apiFormat: true, apiBaseUrl: true },
+      },
+    },
+  });
 
-  return NextResponse.json({ prompt, results: [chatgpt, claude, gemini] });
+  const modelMap = new Map(dbModels.map((m) => [m.slug, m]));
+
+  const results = await Promise.all(
+    slots.map((s) => {
+      const m = modelMap.get(s.modelSlug);
+      if (!m) {
+        return Promise.resolve<BenchmarkResult>({
+          slotId: s.slotId, providerName: "Unknown", modelName: s.modelSlug, modelSlug: s.modelSlug,
+          colorClass: "bg-zinc-500/10 text-zinc-700", borderClass: "border-zinc-500/20", gradientClass: "from-zinc-500/10 to-zinc-500/5",
+          initial: "?", responseTimeMs: 0, inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0, content: "", safetyFlag: false,
+          error: "Model not found or inactive",
+        });
+      }
+      return runBenchmark(s.slotId, m, prompt);
+    })
+  );
+
+  // Fire-and-forget logging
+  const promptTruncated = prompt.slice(0, 3000);
+  void Promise.allSettled(
+    results.map((r) => {
+      const m = modelMap.get(r.modelSlug);
+      return prisma.apiRequestLog.create({
+        data: {
+          userId: session.user.id,
+          feature: "benchmark",
+          promptTruncated,
+          promptTokens: r.inputTokens,
+          completionTokens: r.outputTokens,
+          totalTokens: r.totalTokens,
+          costUsd: r.costUsd,
+          providerName: r.providerName,
+          modelName: r.modelName,
+          modelSlug: r.modelSlug,
+          modelDbId: m?.id ?? null,
+          latencyMs: r.responseTimeMs,
+          status: r.error ? "error" : "ok",
+          errorMessage: r.error ?? null,
+        },
+      });
+    })
+  );
+
+  return NextResponse.json({ prompt, results });
 }

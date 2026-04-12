@@ -116,43 +116,27 @@ const providers = [
 
 // Initial models for providers that have active API keys configured
 const initialModels = [
-  // OpenAI models
-  {
-    providerSlug: "openai",
-    name: "GPT-4o",
-    slug: "gpt-4o",
-    modelId: "gpt-4o",
-    description: "Most capable GPT-4 multimodal model",
-    initial: "G",
-    colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
-    borderClass: "border-emerald-500/20",
-    gradientClass: "from-emerald-500/10 to-emerald-500/5",
-    order: 1,
-  },
-  {
-    providerSlug: "openai",
-    name: "GPT-4o Mini",
-    slug: "gpt-4o-mini",
-    modelId: "gpt-4o-mini",
-    description: "Lightweight and fast GPT-4o model",
-    initial: "G",
-    colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
-    borderClass: "border-emerald-500/20",
-    gradientClass: "from-emerald-500/10 to-emerald-500/5",
-    order: 2,
-  },
-  {
-    providerSlug: "openai",
-    name: "o3 Mini",
-    slug: "o3-mini",
-    modelId: "o3-mini",
-    description: "OpenAI o3 reasoning model — mini",
-    initial: "G",
-    colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
-    borderClass: "border-emerald-500/20",
-    gradientClass: "from-emerald-500/10 to-emerald-500/5",
-    order: 3,
-  },
+  // OpenAI models — Latest Frontier (GPT-5 series)
+  { providerSlug: "openai", name: "GPT-5.4",       slug: "gpt-5-4",       modelId: "gpt-5.4",       description: "OpenAI flagship frontier model",                initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 1 },
+  { providerSlug: "openai", name: "GPT-5.4 Mini",  slug: "gpt-5-4-mini",  modelId: "gpt-5.4-mini",  description: "Compact GPT-5.4 model",                         initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 2 },
+  { providerSlug: "openai", name: "GPT-5.4 Nano",  slug: "gpt-5-4-nano",  modelId: "gpt-5.4-nano",  description: "Lightweight GPT-5.4 model",                     initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 3 },
+  { providerSlug: "openai", name: "GPT-5.2",       slug: "gpt-5-2",       modelId: "gpt-5.2",       description: "GPT-5.2 frontier model",                        initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 4 },
+  { providerSlug: "openai", name: "GPT-5.2 Pro",   slug: "gpt-5-2-pro",   modelId: "gpt-5.2-pro",   description: "Pro variant of GPT-5.2",                        initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 5 },
+  { providerSlug: "openai", name: "GPT-5.1",       slug: "gpt-5-1",       modelId: "gpt-5.1",       description: "GPT-5.1 frontier model",                        initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 6 },
+  { providerSlug: "openai", name: "GPT-5",         slug: "gpt-5",         modelId: "gpt-5",         description: "OpenAI GPT-5 base model",                       initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 7 },
+  // OpenAI models — Reasoning (o-series)
+  { providerSlug: "openai", name: "o3",                    slug: "o3",                    modelId: "o3",                    description: "OpenAI o3 reasoning model",                     initial: "o", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 8 },
+  { providerSlug: "openai", name: "o3 Pro",                slug: "o3-pro",                modelId: "o3-pro",                description: "OpenAI o3 Pro — extended reasoning",            initial: "o", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 9 },
+  { providerSlug: "openai", name: "o3 Mini",               slug: "o3-mini",               modelId: "o3-mini",               description: "OpenAI o3 reasoning model — mini",              initial: "o", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 10 },
+  { providerSlug: "openai", name: "o4 Mini",               slug: "o4-mini",               modelId: "o4-mini",               description: "OpenAI o4 Mini reasoning model",                initial: "o", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 11 },
+  { providerSlug: "openai", name: "o3 Deep Research",      slug: "o3-deep-research",      modelId: "o3-deep-research",      description: "OpenAI o3 optimised for deep research tasks",   initial: "o", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 12 },
+  { providerSlug: "openai", name: "o4 Mini Deep Research", slug: "o4-mini-deep-research", modelId: "o4-mini-deep-research", description: "OpenAI o4 Mini optimised for deep research",    initial: "o", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 13 },
+  // OpenAI models — Multimodal / Chat (still supported)
+  { providerSlug: "openai", name: "GPT-4.1",       slug: "gpt-4-1",       modelId: "gpt-4.1",       description: "GPT-4.1 multimodal chat model",                 initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 14 },
+  { providerSlug: "openai", name: "GPT-4.1 Mini",  slug: "gpt-4-1-mini",  modelId: "gpt-4.1-mini",  description: "Lightweight GPT-4.1 model",                     initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 15 },
+  { providerSlug: "openai", name: "GPT-4.1 Nano",  slug: "gpt-4-1-nano",  modelId: "gpt-4.1-nano",  description: "Ultra-lightweight GPT-4.1 model",               initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 16 },
+  { providerSlug: "openai", name: "GPT-4o",        slug: "gpt-4o",        modelId: "gpt-4o",        description: "GPT-4o multimodal model",                       initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 17 },
+  { providerSlug: "openai", name: "GPT-4o Mini",   slug: "gpt-4o-mini",   modelId: "gpt-4o-mini",   description: "Lightweight and fast GPT-4o model",             initial: "G", colorClass: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", borderClass: "border-emerald-500/20", gradientClass: "from-emerald-500/10 to-emerald-500/5", order: 18 },
   // Anthropic models — Claude 4.x series (latest)
   {
     providerSlug: "anthropic",
