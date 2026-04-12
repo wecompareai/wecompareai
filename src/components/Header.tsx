@@ -121,6 +121,10 @@ export default function Header() {
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">By Feature <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
                     <div className="text-xs text-muted-foreground mt-0.5">Find AI tools by specific capability</div>
                   </Link>
+                  <Link href="/providers" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Provider <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">OpenAI, Anthropic, Google & 50+ providers by tier</div>
+                  </Link>
                   {divider}
                   {sectionLabel("Analyze")}
                   <Link href="/research/integrations" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
@@ -505,6 +509,7 @@ export default function Header() {
             <MobileLink href="/domains"     onClick={closeMobile}>By Domain</MobileLink>
             <MobileLink href="/countries"   onClick={closeMobile}>By Country</MobileLink>
             <MobileLink href="/features"    onClick={closeMobile}>By Feature</MobileLink>
+            <MobileLink href="/providers"   onClick={closeMobile}>By Provider</MobileLink>
             <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Analyze</p>
             <MobileLink href="/research/integrations" onClick={closeMobile}>Integration Graphs</MobileLink>
             <MobileLink href="/research/compliance"   onClick={closeMobile}>Security &amp; Compliance</MobileLink>
