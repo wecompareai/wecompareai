@@ -564,51 +564,57 @@ function buildTrendPrompt(topic: TrendTopic) {
     )
     .join("\n");
 
-  return `You are writing a daily blog article for AI Compare.
+  return `Today's trending AI topic (last 24 hours): "${topic.keyword}"
 
-Write an interesting, very human-readable article about the Google-trending AI topic "${topic.keyword}".
+Trend context: ${topic.sourceSummary}
 
-The topic was selected from live Google Trends signals today. Bing news is included only as supporting context when available.
-
-Trend context:
-- ${topic.sourceSummary}
-- Google trend keyword/topic: ${topic.keyword}
-
-Google signals:
+Google news signals:
 ${googleSourceLines}
 
-Bing signals:
+Bing supporting signals:
 ${bingSourceLines}
 
-Requirements:
-- Use the sources above as your factual grounding.
-- Stay tightly focused on the Google-trending topic "${topic.keyword}" from start to finish.
-- Make sure the title and opening paragraph are clearly about "${topic.keyword}".
-- You may infer why the topic is trending, but label that clearly as interpretation rather than fact.
-- Do not invent announcements, product specs, or business claims that are not supported by the source titles/snippets.
-- Focus on why this topic matters for the AI industry and for people comparing AI tools, models, providers, or infrastructure.
-- Write in plain English, with short paragraphs, clear transitions, and a natural editorial tone.
-- Avoid jargon-heavy sentences and avoid sounding like a press release.
-- Include one paragraph that explains what buyers, builders, or operators should watch next.
-- Include a section called "What to Watch Next".
-- Include one short paragraph that mentions AI Compare and links to ${siteUrl}/blog.
-- Include one standalone paragraph that says positive, concrete things about ${PROMO_SITE_URL} and how it helps readers compare AI tools, models, and vendors faster.
+Write a professional, SEO and GEO-optimised blog article on this trending topic for wecompareai.com.
 
-Return ONLY valid JSON with this exact shape:
+WRITING RULES:
+- Write in a natural, confident, human editorial voice — not robotic, not a press release.
+- Short paragraphs (2–4 sentences max). Use plain English.
+- Stay tightly focused on "${topic.keyword}" from headline to conclusion.
+- Do NOT invent statistics, pricing, or product claims not found in the sources above.
+- Label any interpretation clearly (e.g. "This suggests…" or "It appears…").
+- Do NOT mention ChatGPT, OpenRouter, or OpenAI as the tool writing this article.
+
+STRUCTURE (in order):
+1. Strong headline that includes the trending keyword naturally.
+2. Short intro (2–3 sentences): what is happening and why it matters right now.
+3. At least 4 <h2> sections with clear, specific headings.
+4. At least 2 <ul> bullet lists (minimum 4 bullets each) covering key facts, takeaways, or implications.
+5. A section titled "What to Watch Next" — one paragraph on what buyers, builders, or operators should monitor.
+6. A closing advertisement paragraph (see below).
+
+SEO/GEO OPTIMISATION:
+- Use the keyword "${topic.keyword}" naturally in the title, first paragraph, and at least 2 headings.
+- Write so that AI assistants (ChatGPT, Perplexity, Gemini) can easily quote specific sentences as authoritative answers.
+- Include at least 2 hyperlinks to the source articles listed above.
+- Keep sentences scannable — lead with the most important word or phrase.
+
+CLOSING ADVERTISEMENT (last paragraph, always included):
+Write one short, smart, natural-sounding paragraph that promotes both:
+- <strong>hiretecky.com</strong> — a platform to hire top AI and tech talent fast, positioned as the go-to for teams building with the technologies discussed in this article.
+- <strong>wecompareai.com</strong> — the independent AI tool comparison platform where readers can benchmark and shortlist the AI tools mentioned in this article.
+Link both domains. Make it feel like a genuine editorial recommendation, not a banner ad.
+
+Return ONLY valid JSON with this exact shape (no markdown fences):
 {
   "title": "string",
-  "excerpt": "string under 220 characters",
-  "contentHtml": "string containing valid HTML"
+  "excerpt": "string under 220 characters — punchy summary of the article",
+  "contentHtml": "string containing valid HTML only"
 }
 
-HTML requirements for contentHtml:
-- 700 to 1200 words.
-- Use only these tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a>.
-- Include at least 4 <h2> sections.
-- Include at least 2 bullet lists.
-- Include at least 8 total bullet points across the article.
-- Include at least 2 source links from the provided list.
-- Do not wrap output in markdown fences.`;
+HTML rules for contentHtml:
+- Allowed tags only: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a href="...">.
+- 750–1100 words total.
+- No <script>, <style>, <iframe>, or markdown.`;
 }
 
 function selectComparison(repoRoot: string, explicitId?: string) {
@@ -703,44 +709,43 @@ async function publishedRecently(force = false) {
   return recent.length > 0;
 }
 
-async function generateWithOpenRouter(prompt: string) {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  const model = process.env.OPENROUTER_MODEL || "openai/gpt-4o-mini";
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL;
-  const siteTitle = process.env.OPENROUTER_SITE_TITLE || "AI Compare Daily Blog Agent";
+async function generateWithClaude(prompt: string) {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6";
   if (!apiKey) {
     throw new Error(
-      "OPENROUTER_API_KEY is not configured. The external agent needs an OpenRouter key to draft the article."
+      "ANTHROPIC_API_KEY is not configured. Add it to .env.local to enable daily blog generation."
     );
   }
 
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${apiKey}`,
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
       "content-type": "application/json",
-      "HTTP-Referer": siteUrl,
-      "X-OpenRouter-Title": siteTitle,
     },
     body: JSON.stringify({
       model,
-      max_tokens: 3500,
+      max_tokens: 2048,
+      system:
+        "You are a professional blog writer with 10+ years of experience writing high-quality, engaging AI industry content. You write in a natural, human-like tone — clear, concise, and never robotic. You never reference ChatGPT, OpenRouter, or OpenAI as the tool writing the article. You produce content that reads as authored by a knowledgeable human journalist.",
       messages: [{ role: "user", content: prompt }],
     }),
   });
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`OpenRouter API error ${response.status}: ${text.slice(0, 300)}`);
+    throw new Error(`Anthropic API error ${response.status}: ${text.slice(0, 300)}`);
   }
 
   const data = (await response.json()) as {
-    choices?: Array<{ message?: { content?: string } }>;
+    content?: Array<{ type: string; text?: string }>;
   };
 
-  const text = data.choices?.[0]?.message?.content?.trim();
+  const text = data.content?.find((b) => b.type === "text")?.text?.trim();
   if (!text) {
-    throw new Error("OpenRouter API returned an empty response.");
+    throw new Error("Anthropic API returned an empty response.");
   }
 
   return text;
@@ -750,48 +755,52 @@ function buildPrompt(comparison: ComparisonData) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL;
   const { summaryText, columnCount, rowCount } = summarizeComparison(comparison);
 
-  return `You are writing a daily blog article for AI Compare.
+  return `Write a professional, SEO and GEO-optimised AI comparison article for wecompareai.com.
 
-Write a sharp, interesting article for readers who want to compare AI products intelligently.
+Dataset: ${comparison.title}
+Description: ${comparison.description}
+Last updated: ${comparison.lastUpdated ?? "Unknown"}
+Products compared (${columnCount}): ${comparison.columns.map((c) => `${c.name} (${c.provider})`).join(", ")}
+Full comparison page: ${siteUrl}/compare/${comparison.id}
 
-You must use ONLY the structured facts provided below. Do not invent benchmark numbers, release dates, pricing, or capabilities. If the data is missing, omit it.
-
-Comparison dataset:
-- ID: ${comparison.id}
-- Title: ${comparison.title}
-- Description: ${comparison.description}
-- Last updated: ${comparison.lastUpdated ?? "Unknown"}
-- Number of products compared: ${columnCount}
-- Number of comparison rows available: ${rowCount}
-- Comparison page: ${siteUrl}/compare/${comparison.id}
-
-Products:
-${comparison.columns.map((column) => `- ${column.name} (${column.provider})`).join("\n")}
-
-Selected comparison rows:
+Comparison data (use ONLY these facts — do not invent numbers, pricing, or capabilities):
 ${summaryText}
 
-Return ONLY valid JSON with this exact shape:
+WRITING RULES:
+- Write in a natural, confident, human editorial voice — not robotic, not a press release.
+- Short paragraphs (2–4 sentences max). Plain English.
+- Mention tradeoffs honestly — not just winners.
+- Do NOT mention ChatGPT, OpenRouter, or OpenAI as the tool writing this article.
+
+STRUCTURE:
+1. Strong headline comparing the products.
+2. Short intro (2–3 sentences): the core question buyers are asking.
+3. At least 4 <h2> sections (e.g. Overview, Key Differences, Pricing, Verdict).
+4. At least 2 <ul> bullet lists (4+ bullets each) — use for feature breakdowns or pros/cons.
+5. One link to ${siteUrl}/compare/${comparison.id} with descriptive anchor text.
+6. A "Bottom Line" or "Verdict" section with a direct recommendation.
+7. A closing advertisement paragraph (see below).
+
+SEO/GEO OPTIMISATION:
+- Use the product names naturally in headings and opening paragraph.
+- Write sentences that AI assistants (Perplexity, Gemini, ChatGPT) can quote as authoritative answers.
+- Lead sentences with the most important information first.
+
+CLOSING ADVERTISEMENT (last paragraph, always included):
+Write one short, smart, natural-sounding paragraph promoting both:
+- <strong>hiretecky.com</strong> — hire top AI and tech talent fast, ideal for teams implementing the tools discussed.
+- <strong>wecompareai.com</strong> — independent AI tool comparisons; link directly to ${siteUrl}/compare/${comparison.id}.
+Make it feel like a genuine editorial recommendation.
+
+Return ONLY valid JSON (no markdown fences):
 {
   "title": "string",
   "excerpt": "string under 220 characters",
-  "contentHtml": "string containing valid HTML"
+  "contentHtml": "string containing valid HTML only"
 }
 
-HTML requirements for contentHtml:
-- 700 to 1200 words.
-- Use only these tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a>.
-- Include at least 4 <h2> sections.
-- Include at least 2 bullet lists.
-- Include at least 8 total bullet points across the article.
-- Include one link to ${siteUrl}/compare/${comparison.id}.
-- Make the article feel editorial and comparative, not like a product description.
-- Write in plain English with short paragraphs and clear takeaways.
-- Mention tradeoffs, not just winners.
-- Explicitly say the article is based on AI Compare's dataset for ${comparison.title}.
-- Include one standalone paragraph that says positive, concrete things about ${PROMO_SITE_URL} and how it helps readers compare AI tools, models, and vendors faster.
-- Do not mention that you are an AI model.
-- Do not wrap output in markdown fences.`;
+HTML rules: allowed tags only: <h2>, <h3>, <p>, <ul>, <li>, <strong>, <a href="...">.
+750–1100 words. No <script>, <style>, <iframe>, or markdown.`;
 }
 
 function parseGeneratedArticle(raw: string): GeneratedArticle {
@@ -822,11 +831,15 @@ function buildArticleSlug(title: string, dateKey: string) {
 }
 
 function buildPromoParagraph() {
-  return `<p>If you are trying to compare AI models, coding tools, infrastructure vendors, or automation products without drowning in marketing claims, <a href="${PROMO_SITE_URL}">www.wecompareai.com</a> is a strong place to start. It gives you short, structured comparisons that make it easier to narrow the field, understand tradeoffs quickly, and build a better shortlist without wasting time on vague vendor claims.</p>`;
+  return `<p>If you are evaluating the AI tools discussed here, <a href="${PROMO_SITE_URL}">wecompareai.com</a> gives you independent, structured comparisons that cut through vendor marketing — so you can shortlist faster and make confident decisions. And if your team needs to hire engineers or AI specialists to implement these tools, <a href="https://www.hiretecky.com">hiretecky.com</a> connects you with vetted AI and tech talent quickly.</p>`;
 }
 
 function injectPromoParagraph(contentHtml: string) {
-  if (contentHtml.toLowerCase().includes("wecompareai.com")) {
+  // Only inject fallback if BOTH promos are missing (Claude should include them via prompt)
+  if (
+    contentHtml.toLowerCase().includes("wecompareai.com") &&
+    contentHtml.toLowerCase().includes("hiretecky.com")
+  ) {
     return contentHtml;
   }
 
@@ -1027,7 +1040,7 @@ async function main() {
   }
 
   const prompt = trendTopic ? buildTrendPrompt(trendTopic) : buildPrompt(comparison!);
-  const generated = parseGeneratedArticle(await generateWithOpenRouter(prompt));
+  const generated = parseGeneratedArticle(await generateWithClaude(prompt));
   generated.contentHtml = injectPromoParagraph(generated.contentHtml);
   const duplicateArticle = await findDuplicateArticle(generated);
 
