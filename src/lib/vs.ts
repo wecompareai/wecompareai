@@ -82,7 +82,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has a better free tier?", a: "ChatGPT's free tier gives access to GPT-4o (with some limits). Claude's free tier is more limited. Both require a paid plan for heavy use." },
     ],
     relatedSlugs: ["chatgpt-vs-gemini", "claude-vs-gemini", "deepseek-vs-chatgpt"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -124,7 +124,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is better for SEO and content?", a: "For writing quality, ChatGPT (or better, Claude) produces more natural content. Gemini's Google Search grounding is useful for up-to-date SEO research." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "claude-vs-gemini", "gpt-4o-vs-gemini-flash"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -166,7 +166,7 @@ export const vsPages: VsPage[] = [
       { q: "Can Gemini replace Claude?", a: "For Google-native workflows and long context tasks, Gemini is now competitive. For writing quality, subtle instruction-following, and complex analytical tasks, Claude maintains a meaningful edge." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "chatgpt-vs-gemini"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -208,7 +208,7 @@ export const vsPages: VsPage[] = [
       { q: "Should I switch from GPT-4o to Claude Sonnet 4.6?", a: "If your primary use case is writing, document analysis, or reasoning, yes — Claude Sonnet 4.6 outperforms GPT-4o at a competitive price. For image generation, voice, or heavy OpenAI tooling integrations, GPT-4o remains better." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "deepseek-vs-chatgpt"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -250,7 +250,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I mix GPT-4o and Gemini Flash in the same app?", a: "Yes — many production applications use a model router: Gemini Flash for high-volume simple tasks, GPT-4o or Claude Sonnet for complex or user-facing tasks. This can reduce overall API costs by 70%+ while maintaining quality where it matters." },
     ],
     relatedSlugs: ["chatgpt-vs-gemini", "gpt-4-1-vs-claude-sonnet"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -292,7 +292,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I self-host DeepSeek?", a: "Yes — DeepSeek V3's open-source weights can be downloaded and run locally or on your own cloud infrastructure. This eliminates the data privacy concern but requires significant GPU resources (the full model is 685B parameters)." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "gpt-4-1-vs-claude-sonnet"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -334,7 +334,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use Mistral open-source models commercially?", a: "Yes — Mistral's open-source models (Mistral 7B, Mixtral 8x7B) use Apache 2.0 licensing which allows commercial use. These are smaller than Mistral Large but free to self-host." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "deepseek-vs-chatgpt"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -379,7 +379,7 @@ export const vsPages: VsPage[] = [
       { q: "Does Cursor send my code to OpenAI?", a: "Cursor sends your code to AI providers (OpenAI, Anthropic) for processing. Cursor Business offers privacy mode. For proprietary enterprise code, evaluate their data processing agreement carefully." },
     ],
     relatedSlugs: ["cursor-vs-windsurf", "claude-code-vs-copilot", "cursor-vs-claude-code"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -421,7 +421,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I switch from Cursor to Windsurf easily?", a: "Yes — both are VS Code forks, so your extensions, settings, and keybindings transfer almost entirely. The switch typically takes less than 30 minutes." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "claude-code-vs-copilot"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -463,7 +463,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use Claude Code in VS Code?", a: "Yes — via the Cline extension (formerly Code Claude) or directly via the Claude API in the terminal. It's not a native VS Code extension but integrates via the terminal from within VS Code's integrated terminal." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "cursor-vs-claude-code"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -505,7 +505,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use both Cursor and Claude Code?", a: "Yes — many engineers use Cursor for daily development and Claude Code for specific high-complexity tasks that benefit from autonomous agent behaviour. They complement each other well." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "cursor-vs-windsurf", "claude-code-vs-copilot"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -547,7 +547,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has a better free tier?", a: "Windsurf's free tier is significantly more generous than Copilot's free plan (which is only available to students and OSS maintainers). Windsurf is the better choice for trialling without payment." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "cursor-vs-windsurf"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -592,7 +592,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is better for logos and branding?", a: "Neither is ideal for logos (AI image generators struggle with exact brand specs). For concepts and inspiration, DALL-E 3 is better because it follows text descriptions more precisely. Use a designer to clean up the output." },
     ],
     relatedSlugs: ["midjourney-vs-stable-diffusion", "midjourney-vs-flux", "dalle-vs-stable-diffusion"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -634,7 +634,7 @@ export const vsPages: VsPage[] = [
       { q: "Are Stable Diffusion images copyright free?", a: "Images you generate with Stable Diffusion on your own hardware are generally yours to use commercially. Always check the specific model checkpoint's licence — community fine-tunes vary. The base Stable Diffusion model uses the CreativeML Open RAIL-M licence." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-flux", "dalle-vs-stable-diffusion"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -676,7 +676,7 @@ export const vsPages: VsPage[] = [
       { q: "Can non-technical users run Stable Diffusion?", a: "Via tools like Automatic1111 or ComfyUI with pre-built installers, it's possible. But it still requires initial GPU setup. Cloud platforms like Leonardo.ai or NightCafe provide Stable Diffusion with a no-setup web interface." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-stable-diffusion"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -717,7 +717,7 @@ export const vsPages: VsPage[] = [
       { q: "Is Flux free?", a: "Flux open-source models (Flux.1 Schnell) can be run locally for free. Cloud inference via Replicate/fal.ai costs around $0.003 per image. Flux Pro (higher quality) costs more via cloud APIs." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-stable-diffusion"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -758,7 +758,7 @@ export const vsPages: VsPage[] = [
       { q: "Is Firefly available outside of Creative Cloud?", a: "Yes — Adobe Firefly has a standalone web app at firefly.adobe.com with a free tier (25 credits/month). Full access requires a Creative Cloud subscription." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-flux"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -803,7 +803,7 @@ export const vsPages: VsPage[] = [
       { q: "How long can AI videos be in 2026?", a: "Sora generates up to 20 seconds. Runway Gen-3 generates up to 10 seconds per clip (extendable). Longer videos require stitching clips. Full-length AI video generation remains experimental." },
     ],
     relatedSlugs: ["runway-vs-pika", "sora-vs-pika"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -845,7 +845,7 @@ export const vsPages: VsPage[] = [
       { q: "Can Runway and Pika generate video from images?", a: "Yes — both accept image inputs to guide video generation (image-to-video). Runway's implementation gives more control over the resulting motion. This is a popular workflow for product demos and brand content." },
     ],
     relatedSlugs: ["sora-vs-runway", "sora-vs-pika"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -887,7 +887,7 @@ export const vsPages: VsPage[] = [
       { q: "What are the best alternatives to both?", a: "Runway Gen-3 ($15–95/mo) sits between them in both quality and price. It offers better quality than Pika with more creative control than Sora, at a more reasonable price than ChatGPT Pro." },
     ],
     relatedSlugs: ["sora-vs-runway", "runway-vs-pika"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -932,7 +932,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has better free tier?", a: "Both have limited free tiers. ElevenLabs free gives 10,000 characters/month. Murf free gives limited preview access. For meaningful production use, both require paid plans." },
     ],
     relatedSlugs: ["elevenlabs-vs-openai-tts", "playht-vs-elevenlabs"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -975,7 +975,7 @@ export const vsPages: VsPage[] = [
       { q: "Can OpenAI TTS be used for real-time voice?", a: "Yes — OpenAI TTS supports streaming, enabling real-time voice output with latency suitable for many conversational AI applications. ElevenLabs also supports streaming with similar or slightly lower latency depending on voice model." },
     ],
     relatedSlugs: ["elevenlabs-vs-murf", "playht-vs-elevenlabs"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -1017,7 +1017,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is better for a voice AI startup?", a: "For initial development and product validation, ElevenLabs ($5–$22/mo entry) gives you better quality at lower cost. As you scale to production with real-time requirements, re-evaluate Play.ht's streaming performance and per-character pricing." },
     ],
     relatedSlugs: ["elevenlabs-vs-murf", "elevenlabs-vs-openai-tts"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1060,7 +1060,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use my own lyrics with Suno and Udio?", a: "Yes — both allow custom lyrics on paid plans. Suno's free tier uses AI-generated lyrics only. You can provide your own lyrics on Pro plans and have the AI compose music around them." },
     ],
     relatedSlugs: [],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1105,7 +1105,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is more reliable for enterprise production?", a: "Both offer 99.9%+ SLAs. AWS Bedrock is backed by AWS's infrastructure (typically 99.99%). Azure OpenAI is backed by Azure (99.9% SLA). For multi-region failover, AWS's global footprint is broader." },
     ],
     relatedSlugs: ["azure-openai-vs-vertex-ai"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -1147,7 +1147,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has better MLOps tooling?", a: "Vertex AI includes significantly more native MLOps tooling — managed notebooks, AutoML, model registry, training pipelines, and monitoring. Azure OpenAI is a model API service, not a full ML platform. Azure ML is the equivalent Azure MLOps product." },
     ],
     relatedSlugs: ["aws-bedrock-vs-azure-openai"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1191,7 +1191,7 @@ export const vsPages: VsPage[] = [
       { q: "Does ChatGPT have real-time search?", a: "ChatGPT Plus includes web browsing via Bing search. However, citations are less prominently presented than in Perplexity, and the web search is not always triggered automatically. Perplexity is search-first by design." },
     ],
     relatedSlugs: ["perplexity-vs-youcom", "chatgpt-vs-claude"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 
   {
@@ -1231,19 +1231,11 @@ export const vsPages: VsPage[] = [
       { q: "Is Perplexity worth $20/month over You.com free?", a: "If you do regular professional research, Perplexity Pro's academic database access, unlimited Pro Search (multi-step deep research), and higher-quality citations are worth $20/month. For casual research, You.com free is excellent." },
     ],
     relatedSlugs: ["perplexity-vs-chatgpt"],
-    lastUpdated: "2026-04-09",
+    lastUpdated: "2026-04-11",
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-export function getVsPage(slug: string): VsPage | undefined {
-  return vsPages.find((p) => p.slug === slug);
-}
-
-export function getVsSlugs(): string[] {
-  return vsPages.map((p) => p.slug);
-}
-
 export const VS_CATEGORIES = [
   { label: "AI Models",         emoji: "🤖" },
   { label: "Coding Tools",      emoji: "💻" },
@@ -1254,3 +1246,193 @@ export const VS_CATEGORIES = [
   { label: "Cloud AI Platforms",emoji: "☁️" },
   { label: "AI Search",         emoji: "🔍" },
 ] as const;
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Programmatic VS page generator — turns two ToolScore entries into a VsPage
+// ─────────────────────────────────────────────────────────────────────────────
+import { ALL_SCORES, type ToolScore } from "./scores";
+import { getVsMeta } from "./vs-meta";
+
+const SCORE_CAT_TO_VS_LABEL: Record<string, string> = {
+  LLM:    "AI Models",
+  Coding: "Coding Tools",
+  Image:  "Image Generators",
+  Video:  "Video Generators",
+  Audio:  "Voice & Audio",
+  Music:  "Music Generation",
+  Cloud:  "Cloud AI Platforms",
+  Search: "AI Search",
+};
+
+const VS_LABEL_TO_EMOJI: Record<string, string> = {
+  "AI Models":          "🤖",
+  "Coding Tools":       "💻",
+  "Image Generators":   "🎨",
+  "Video Generators":   "🎬",
+  "Voice & Audio":      "🔊",
+  "Music Generation":   "🎵",
+  "Cloud AI Platforms": "☁️",
+  "AI Search":          "🔍",
+};
+
+const DIM_LABEL: Record<string, string> = {
+  performance: "Performance",
+  value:       "Value",
+  reliability: "Reliability",
+  easeOfUse:   "Ease of Use",
+};
+
+type Dim = "performance" | "value" | "reliability" | "easeOfUse";
+const DIMS: Dim[] = ["performance", "value", "reliability", "easeOfUse"];
+
+function scoreToVsTool(s: ToolScore): VsTool {
+  const meta = getVsMeta(s.id, { verdict: s.verdict, name: s.name, provider: s.provider });
+  return {
+    id: s.id,
+    name: s.name,
+    provider: s.provider,
+    tagline: meta.tagline,
+    performance: s.performance,
+    value: s.value,
+    reliability: s.reliability,
+    easeOfUse: s.easeOfUse,
+    overall: s.overall,
+    pricing: meta.pricing,
+    pros: meta.pros,
+    cons: meta.cons,
+    bestFor: meta.bestFor,
+    href: meta.href,
+  };
+}
+
+function generateVsPage(a: ToolScore, b: ToolScore): VsPage {
+  // Canonical slug: alphabetically sort IDs
+  const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
+  const slug = `${first.id}-vs-${second.id}`;
+
+  const toolA = scoreToVsTool(first);
+  const toolB = scoreToVsTool(second);
+  const winner = first.overall >= second.overall ? first : second;
+  const loser  = first.overall >= second.overall ? second : first;
+  const winnerTool = first.overall >= second.overall ? toolA : toolB;
+  const loserTool  = first.overall >= second.overall ? toolB : toolA;
+
+  const firstWinsDims = DIMS.filter((d) => first[d] > second[d]);
+  const secondWinsDims = DIMS.filter((d) => second[d] > first[d]);
+  const winnerDims = (winner === first ? firstWinsDims : secondWinsDims).map((d) => DIM_LABEL[d]);
+  const loserDims  = (winner === first ? secondWinsDims : firstWinsDims).map((d) => DIM_LABEL[d]);
+
+  const catLabel = first.category === second.category
+    ? (SCORE_CAT_TO_VS_LABEL[first.category] ?? first.category)
+    : "AI Tools";
+  const catEmoji = first.category === second.category
+    ? (VS_LABEL_TO_EMOJI[SCORE_CAT_TO_VS_LABEL[first.category] ?? ""] ?? "🤖")
+    : "🤖";
+
+  const verdictDimStr = winnerDims.length > 0 ? `, winning on ${winnerDims.slice(0, 2).join(" and ")}` : "";
+  const verdict = `${winner.name} scores higher overall (${winner.overall.toFixed(1)}/10 vs ${loser.overall.toFixed(1)}/10)${verdictDimStr}. ${winner.verdict}`;
+
+  const chooseA: string[] = [
+    firstWinsDims.length > 0
+      ? `${DIM_LABEL[firstWinsDims[0]]} is your top priority — ${first.name} leads by ${(first[firstWinsDims[0]] - second[firstWinsDims[0]]).toFixed(1)} points`
+      : `${first.name} better fits your existing ${first.provider} ecosystem`,
+    toolA.bestFor.split(",")[0],
+    firstWinsDims.length > 1
+      ? `You also value ${DIM_LABEL[firstWinsDims[1]]} — ${first.name} wins that dimension too`
+      : `${first.provider} support, documentation, and community suit your team`,
+  ];
+
+  const chooseB: string[] = [
+    secondWinsDims.length > 0
+      ? `${DIM_LABEL[secondWinsDims[0]]} is your top priority — ${second.name} leads by ${(second[secondWinsDims[0]] - first[secondWinsDims[0]]).toFixed(1)} points`
+      : `${second.name} better fits your existing ${second.provider} ecosystem`,
+    toolB.bestFor.split(",")[0],
+    secondWinsDims.length > 1
+      ? `You also value ${DIM_LABEL[secondWinsDims[1]]} — ${second.name} wins that dimension too`
+      : `${second.provider} support, documentation, and community suit your team`,
+  ];
+
+  const faqs = [
+    {
+      q: `Is ${first.name} better than ${second.name}?`,
+      a: `${winner.name} scores ${winner.overall.toFixed(1)}/10 overall vs ${loser.overall.toFixed(1)}/10 for ${loser.name}${winnerDims.length ? `, with an edge on ${winnerDims.join(" and ")}` : ""}. That said, "${loser.name}" may be the better pick if ${loserDims.length ? loserDims[0].toLowerCase() : "specific workflow fit"} is your priority. The right choice depends on your use case.`,
+    },
+    {
+      q: `What is the pricing difference between ${first.name} and ${second.name}?`,
+      a: `${first.name}: ${toolA.pricing}. ${second.name}: ${toolB.pricing}. Compare usage volumes and features needed to determine total cost of ownership for your team.`,
+    },
+    {
+      q: `Which is better for ${winnerTool.bestFor.split(",")[0].toLowerCase()}?`,
+      a: `${winner.name} is generally stronger here, scoring ${winner.overall.toFixed(1)}/10 overall. ${winner.verdict} For more niche requirements like ${loserDims.length ? loserDims[0].toLowerCase() : "specific integrations"}, ${loser.name} may be worth evaluating.`,
+    },
+  ];
+
+  return {
+    slug,
+    category: catLabel,
+    categoryEmoji: catEmoji,
+    toolA,
+    toolB,
+    headline: `${first.name} vs ${second.name} — Which Is Better in 2026?`,
+    description: `${first.name} vs ${second.name}: independent head-to-head scored on Performance, Value, Reliability, and Ease of Use. See scores, pros, cons, and our verdict.`,
+    verdict,
+    chooseA,
+    chooseB,
+    faqs,
+    relatedSlugs: [],
+    lastUpdated: "2026-04-11",
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Set of tool-ID pairs already covered by hand-crafted pages (to avoid duplication)
+// ─────────────────────────────────────────────────────────────────────────────
+const HANDCRAFTED_PAIRS = new Set<string>(
+  vsPages
+    .filter((p) => p.toolA.id && p.toolB.id)
+    .map((p) => [p.toolA.id!, p.toolB.id!].sort().join("|"))
+);
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Public API
+// ─────────────────────────────────────────────────────────────────────────────
+export function getVsPage(slug: string): VsPage | undefined {
+  // 1. Hand-crafted pages take priority
+  const handcrafted = vsPages.find((p) => p.slug === slug);
+  if (handcrafted) return handcrafted;
+
+  // 2. Parse generated slug: "{idA}-vs-{idB}" (first occurrence of "-vs-")
+  const vsIdx = slug.indexOf("-vs-");
+  if (vsIdx === -1) return undefined;
+
+  const idA = slug.slice(0, vsIdx);
+  const idB = slug.slice(vsIdx + 4);
+
+  const scoreA = ALL_SCORES.find((s) => s.id === idA);
+  const scoreB = ALL_SCORES.find((s) => s.id === idB);
+  if (!scoreA || !scoreB) return undefined;
+
+  return generateVsPage(scoreA, scoreB);
+}
+
+export function getVsSlugs(): string[] {
+  const handcraftedSlugs = vsPages.map((p) => p.slug);
+
+  // Generate all pairwise combinations not already covered by hand-crafted pages
+  const generatedSlugs: string[] = [];
+  for (let i = 0; i < ALL_SCORES.length; i++) {
+    for (let j = i + 1; j < ALL_SCORES.length; j++) {
+      const a = ALL_SCORES[i];
+      const b = ALL_SCORES[j];
+
+      // Skip if already covered by a hand-crafted page
+      const pairKey = [a.id, b.id].sort().join("|");
+      if (HANDCRAFTED_PAIRS.has(pairKey)) continue;
+
+      const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
+      generatedSlugs.push(`${first.id}-vs-${second.id}`);
+    }
+  }
+
+  return [...handcraftedSlugs, ...generatedSlugs];
+}

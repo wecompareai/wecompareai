@@ -36,8 +36,8 @@ function LeaderboardJsonLd() {
     headline: "LLM Leaderboard 2026 — Best AI Models Ranked",
     description: "Independent rankings of large language models across Performance, Value, Reliability and Ease of Use.",
     url,
-    dateModified: "2026-04-09",
-    datePublished: "2026-04-09",
+    dateModified: "2026-04-11",
+    datePublished: "2026-04-11",
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
       { "@type": "Person", name: "Jigar Acharya", url: `${SITE_URL}/about` },
