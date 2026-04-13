@@ -38,8 +38,8 @@ function LeaderboardJsonLd() {
     headline: "LLM Leaderboard 2026 — Best AI Models Ranked",
     description: "Independent rankings of large language models across Performance, Value, Reliability and Ease of Use.",
     url,
-    dateModified: "2026-04-11",
-    datePublished: "2026-04-11",
+    dateModified: "2026-04-13",
+    datePublished: "2026-04-13",
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
       { "@type": "Person", name: "Jigar Acharya", url: `${SITE_URL}/about` },
@@ -137,7 +137,7 @@ export default function LlmLeaderboardPage() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Live rankings · Updated April 9, 2026
+            Live rankings · Updated April 13, 2026
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             AI Model Leaderboard 2026

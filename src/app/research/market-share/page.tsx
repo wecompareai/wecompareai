@@ -157,7 +157,7 @@ export default function MarketSharePage() {
 
       {/* Footer note */}
       <p className="text-xs text-muted-foreground border-t border-border pt-4">
-        Data estimated from public signals: SimilarWeb, GitHub API stats, SEMrush search trends, Statista enterprise surveys. Updated Q1 2026. Figures are approximations and may not reflect real-time market conditions.
+        Data estimated from public signals: SimilarWeb, GitHub API stats, SEMrush search trends, Statista enterprise surveys. Updated April 2026. Figures are approximations and may not reflect real-time market conditions.
       </p>
     </div>
   );

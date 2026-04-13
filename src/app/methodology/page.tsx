@@ -122,8 +122,8 @@ function MethodologyJsonLd() {
     headline: "Our Methodology — How We Compare AI Tools",
     description: "Transparent methodology for comparing 100+ AI tools across pricing, benchmarks, compliance, integrations and more.",
     url,
-    dateModified: "2026-04-11",
-    datePublished: "2025-01-01",
+    dateModified: "2026-04-13",
+    datePublished: "2026-01-01",
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL_CONST },
     author: [
       { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL_CONST}/about` },

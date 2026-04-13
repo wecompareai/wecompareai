@@ -12,17 +12,20 @@ interface TokenPriceRow {
 }
 
 const tokenPrices: TokenPriceRow[] = [
-  { model: "GPT-4o",            provider: "OpenAI",     inputPer1M: "$2.50",   outputPer1M: "$10.00",  inputRaw: 2.50,   outputRaw: 10.00,  contextWindow: "128K", updated: "Jan 2026"  },
-  { model: "GPT-4o mini",       provider: "OpenAI",     inputPer1M: "$0.15",   outputPer1M: "$0.60",   inputRaw: 0.15,   outputRaw: 0.60,   contextWindow: "128K", updated: "Jan 2026"  },
-  { model: "GPT-o1",            provider: "OpenAI",     inputPer1M: "$15.00",  outputPer1M: "$60.00",  inputRaw: 15.00,  outputRaw: 60.00,  contextWindow: "200K", updated: "Jan 2026"  },
-  { model: "Claude 3.7 Sonnet", provider: "Anthropic",  inputPer1M: "$3.00",   outputPer1M: "$15.00",  inputRaw: 3.00,   outputRaw: 15.00,  contextWindow: "200K", updated: "Feb 2026"  },
-  { model: "Claude 3.5 Haiku",  provider: "Anthropic",  inputPer1M: "$0.80",   outputPer1M: "$4.00",   inputRaw: 0.80,   outputRaw: 4.00,   contextWindow: "200K", updated: "Dec 2025"  },
-  { model: "Claude Opus 4",     provider: "Anthropic",  inputPer1M: "$15.00",  outputPer1M: "$75.00",  inputRaw: 15.00,  outputRaw: 75.00,  contextWindow: "200K", updated: "Mar 2026"  },
-  { model: "Gemini 2.0 Flash",  provider: "Google",     inputPer1M: "$0.075",  outputPer1M: "$0.30",   inputRaw: 0.075,  outputRaw: 0.30,   contextWindow: "1M",   updated: "Feb 2026"  },
-  { model: "Gemini 1.5 Pro",    provider: "Google",     inputPer1M: "$1.25",   outputPer1M: "$5.00",   inputRaw: 1.25,   outputRaw: 5.00,   contextWindow: "2M",   updated: "Oct 2025"  },
-  { model: "Llama 3.3 70B",     provider: "Together AI",inputPer1M: "$0.88",   outputPer1M: "$0.88",   inputRaw: 0.88,   outputRaw: 0.88,   contextWindow: "128K", updated: "Jan 2026"  },
-  { model: "Mistral Large",     provider: "Mistral",    inputPer1M: "$2.00",   outputPer1M: "$6.00",   inputRaw: 2.00,   outputRaw: 6.00,   contextWindow: "128K", updated: "Nov 2025"  },
-  { model: "Grok-2",            provider: "xAI",        inputPer1M: "$2.00",   outputPer1M: "$10.00",  inputRaw: 2.00,   outputRaw: 10.00,  contextWindow: "131K", updated: "Jan 2026"  },
+  { model: "GPT-4.1",           provider: "OpenAI",     inputPer1M: "$2.00",   outputPer1M: "$8.00",   inputRaw: 2.00,   outputRaw: 8.00,   contextWindow: "1M",   updated: "Apr 2026"  },
+  { model: "GPT-4.1 Mini",      provider: "OpenAI",     inputPer1M: "$0.40",   outputPer1M: "$1.60",   inputRaw: 0.40,   outputRaw: 1.60,   contextWindow: "1M",   updated: "Apr 2026"  },
+  { model: "GPT-4o",            provider: "OpenAI",     inputPer1M: "$2.50",   outputPer1M: "$10.00",  inputRaw: 2.50,   outputRaw: 10.00,  contextWindow: "128K", updated: "Apr 2026"  },
+  { model: "GPT-4o mini",       provider: "OpenAI",     inputPer1M: "$0.15",   outputPer1M: "$0.60",   inputRaw: 0.15,   outputRaw: 0.60,   contextWindow: "128K", updated: "Apr 2026"  },
+  { model: "o3-mini",           provider: "OpenAI",     inputPer1M: "$1.10",   outputPer1M: "$4.40",   inputRaw: 1.10,   outputRaw: 4.40,   contextWindow: "200K", updated: "Apr 2026"  },
+  { model: "Claude Sonnet 4.6", provider: "Anthropic",  inputPer1M: "$3.00",   outputPer1M: "$15.00",  inputRaw: 3.00,   outputRaw: 15.00,  contextWindow: "200K", updated: "Apr 2026"  },
+  { model: "Claude Opus 4",     provider: "Anthropic",  inputPer1M: "$15.00",  outputPer1M: "$75.00",  inputRaw: 15.00,  outputRaw: 75.00,  contextWindow: "200K", updated: "Apr 2026"  },
+  { model: "Claude Haiku 3.5",  provider: "Anthropic",  inputPer1M: "$0.80",   outputPer1M: "$4.00",   inputRaw: 0.80,   outputRaw: 4.00,   contextWindow: "200K", updated: "Apr 2026"  },
+  { model: "Gemini 2.5 Pro",    provider: "Google",     inputPer1M: "$1.25",   outputPer1M: "$10.00",  inputRaw: 1.25,   outputRaw: 10.00,  contextWindow: "1M",   updated: "Apr 2026"  },
+  { model: "Gemini 2.5 Flash",  provider: "Google",     inputPer1M: "$0.075",  outputPer1M: "$0.30",   inputRaw: 0.075,  outputRaw: 0.30,   contextWindow: "1M",   updated: "Apr 2026"  },
+  { model: "Llama 3.3 70B",     provider: "Together AI",inputPer1M: "$0.88",   outputPer1M: "$0.88",   inputRaw: 0.88,   outputRaw: 0.88,   contextWindow: "128K", updated: "Apr 2026"  },
+  { model: "Mistral Large 2",   provider: "Mistral",    inputPer1M: "$2.00",   outputPer1M: "$6.00",   inputRaw: 2.00,   outputRaw: 6.00,   contextWindow: "128K", updated: "Apr 2026"  },
+  { model: "DeepSeek V3",       provider: "DeepSeek",   inputPer1M: "$0.27",   outputPer1M: "$1.10",   inputRaw: 0.27,   outputRaw: 1.10,   contextWindow: "128K", updated: "Apr 2026"  },
+  { model: "Grok 3",            provider: "xAI",        inputPer1M: "$3.00",   outputPer1M: "$15.00",  inputRaw: 3.00,   outputRaw: 15.00,  contextWindow: "131K", updated: "Apr 2026"  },
 ];
 
 const minInput = Math.min(...tokenPrices.map((r) => r.inputRaw));
@@ -35,20 +38,20 @@ function inputClass(raw: number): string {
 }
 
 const subscriptionTiers = [
-  { name: "ChatGPT Plus",   price: "$20/mo",       features: ["GPT-4o access", "DALL-E 3 image gen", "Advanced data analysis", "Custom GPTs"] },
-  { name: "ChatGPT Pro",    price: "$200/mo",       features: ["Unlimited GPT-o1 access", "Extended compute", "Operator mode", "Priority capacity"] },
-  { name: "Claude Pro",     price: "$20/mo",        features: ["Claude 3.7 Sonnet + Opus 4", "5× more usage", "Priority access", "Projects feature"] },
+  { name: "ChatGPT Plus",   price: "$20/mo",       features: ["GPT-4.1 & GPT-4o access", "DALL-E 3 image gen", "Advanced data analysis", "Custom GPTs"] },
+  { name: "ChatGPT Pro",    price: "$200/mo",       features: ["Unlimited o3 access", "Extended compute", "Operator mode", "Priority capacity"] },
+  { name: "Claude Pro",     price: "$20/mo",        features: ["Claude Sonnet 4.6 + Opus 4", "5× more usage", "Priority access", "Projects feature"] },
   { name: "Claude Team",    price: "$30/user/mo",   features: ["Team billing", "Central admin", "No training on data", "Higher rate limits"] },
-  { name: "Gemini Advanced",price: "$20/mo",        features: ["Gemini 1.5 Ultra access", "1M context window", "Google One 2TB storage", "Workspace integration"] },
-  { name: "Copilot Pro",    price: "$20/mo",        features: ["GPT-4o in Office apps", "Copilot in Word/Excel/PPT", "Designer boosts", "Priority access"] },
+  { name: "Gemini Advanced",price: "$20/mo",        features: ["Gemini 2.5 Pro access", "1M context window", "Google One 2TB storage", "Workspace integration"] },
+  { name: "Copilot Pro",    price: "$20/mo",        features: ["GPT-4.1 in Office apps", "Copilot in Word/Excel/PPT", "Designer boosts", "Priority access"] },
 ];
 
 const priceChanges = [
-  { date: "Feb 2026", text: "Gemini 2.0 Flash launched at $0.075/1M input — a 40% reduction vs Flash 1.5. Output priced at $0.30/1M.",     direction: "down" },
-  { date: "Jan 2026", text: "OpenAI raised GPT-o1 pricing to $15/$60 per 1M input/output tokens, reflecting increased reasoning compute cost.", direction: "up" },
+  { date: "Apr 2026", text: "OpenAI launched GPT-4.1 at $2.00/$8.00 per 1M tokens with a 1M context window — replacing GPT-4o as the recommended flagship API model.", direction: "neutral" },
+  { date: "Apr 2026", text: "GPT-4.1 Mini priced at $0.40/$1.60 per 1M tokens — 63% cheaper than GPT-4o mini with a much larger context window.", direction: "down" },
+  { date: "Apr 2026", text: "DeepSeek V3 available via API at $0.27/$1.10 per 1M — the most cost-effective frontier-class model for budget-sensitive workloads.", direction: "down" },
   { date: "Mar 2026", text: "Anthropic released Claude Opus 4 at $15/$75 per 1M tokens, their flagship model targeting complex enterprise reasoning tasks.", direction: "neutral" },
-  { date: "Nov 2025", text: "Mistral cut Mistral Large pricing by 20% to $2.00/$6.00 per 1M tokens in response to competitive pressure from Google and Anthropic.", direction: "down" },
-  { date: "Oct 2025", text: "Google extended Gemini 1.5 Pro context window from 1M to 2M tokens with no price change, maintaining $1.25/$5.00 per 1M.", direction: "neutral" },
+  { date: "Feb 2026", text: "Gemini 2.5 Flash launched at $0.075/1M input with 1M context window — Google's best value API model by price-to-capability ratio.", direction: "down" },
 ];
 
 function DirectionIcon({ direction }: { direction: string }) {
@@ -101,7 +104,7 @@ export default function PricingIndexPage() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">AI Pricing Index</h1>
           <p className="mt-1 text-muted-foreground">
-            Current token prices, subscription tiers, and recent cost changes across major AI models. Updated Q1 2026.
+            Current token prices, subscription tiers, and recent cost changes across major AI models. Updated April 2026.
           </p>
         </div>
       </div>

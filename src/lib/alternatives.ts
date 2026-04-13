@@ -88,7 +88,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Which ChatGPT alternative has the longest context window?", a: "Gemini 1.5 Pro has the longest at 1M tokens (2M for some tiers). Claude comes in second at 200K. Standard ChatGPT is 128K tokens." },
     ],
     relatedSlugs: ["claude-alternatives", "gemini-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "claude-alternatives",
@@ -153,7 +153,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Can I run Claude locally?", a: "No — Claude is closed-source and only available via Anthropic's API or Claude.ai. For a self-hosted alternative, LLaMA 3.1 or Mistral open-source models are the best options." },
     ],
     relatedSlugs: ["chatgpt-alternatives", "gemini-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "midjourney-alternatives",
@@ -218,7 +218,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Can AI image generators be used commercially?", a: "Midjourney Pro+, DALL-E 3, Adobe Firefly, and Ideogram paid tiers all allow commercial use. Stable Diffusion open-source is unrestricted. Always verify current terms before publishing commercially." },
     ],
     relatedSlugs: ["stable-diffusion-alternatives", "chatgpt-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "github-copilot-alternatives",
@@ -283,7 +283,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Can I use Claude instead of GitHub Copilot?", a: "Yes — Claude via Cursor, Cline (VS Code extension), or Claude Code (terminal) is an excellent Copilot replacement. Claude's reasoning ability outperforms Copilot on complex tasks." },
     ],
     relatedSlugs: ["chatgpt-alternatives", "claude-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "elevenlabs-alternatives",
@@ -348,7 +348,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Can I clone my voice for free?", a: "ElevenLabs requires a paid plan for voice cloning. Most platforms require payment for cloning. Some open-source tools (Coqui TTS, Tortoise TTS) allow local voice cloning for free but require technical setup." },
     ],
     relatedSlugs: ["chatgpt-alternatives", "midjourney-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "perplexity-alternatives",
@@ -413,7 +413,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Can Claude replace Perplexity?", a: "For real-time web information and cited answers, Perplexity is better. For analyzing documents you provide and deeper synthesis, Claude is better. They complement each other rather than being direct replacements." },
     ],
     relatedSlugs: ["chatgpt-alternatives", "claude-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "cursor-alternatives",
@@ -478,7 +478,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Which AI code editor is best for privacy?", a: "Tabnine can run fully on-premise. Continue (open source) can be configured with local models. For cloud-based editors, all major options (Cursor, Copilot, Windsurf) send code to their servers — check their data policies." },
     ],
     relatedSlugs: ["github-copilot-alternatives", "chatgpt-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "gemini-alternatives",
@@ -543,7 +543,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Can I use Gemini without Google?", a: "Gemini is available at gemini.google.com without needing other Google apps. However, its Workspace integrations (Docs, Gmail, etc.) require a Google account and Workspace subscription." },
     ],
     relatedSlugs: ["chatgpt-alternatives", "claude-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
   {
     slug: "stable-diffusion-alternatives",
@@ -608,7 +608,7 @@ export const alternativePages: AlternativePage[] = [
       { q: "Which alternative works without GPU?", a: "All cloud-based alternatives (Midjourney, DALL-E 3, Ideogram, Firefly, Flux via API) work without a GPU. Only self-hosted Stable Diffusion and Flux require your own hardware." },
     ],
     relatedSlugs: ["midjourney-alternatives", "chatgpt-alternatives"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 ];
 

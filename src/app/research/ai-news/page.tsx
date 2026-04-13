@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 const NEWS_ITEMS = [
   {
-    date: "April 9, 2026",
+    date: "April 13, 2026",
     week: "Week 15, 2026",
     category: "Pricing",
     categoryColor: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
@@ -125,7 +125,7 @@ function AiNewsJsonLd() {
     description: "Weekly AI news digest: model releases, pricing changes, benchmark results, and compliance updates across OpenAI, Anthropic, Google, Meta & more.",
     url,
     datePublished: "2026-03-15",
-    dateModified: "2026-04-11",
+    dateModified: "2026-04-13",
     publisher: {
       "@type": "Organization",
       name: "We Compare AI",
@@ -199,7 +199,7 @@ export default function AiNewsPage() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Weekly digest · Updated April 9, 2026
+            Weekly digest · Updated April 13, 2026
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             AI News & Pricing Updates
