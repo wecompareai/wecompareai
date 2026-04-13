@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ALL_SCORES, SCORE_DIMENSIONS } from "@/lib/scores";
+import { LeaderboardRadar } from "@/components/charts/LeaderboardRadar";
+import { OverallBarChart } from "@/components/charts/ScoreBarChart";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -144,6 +146,22 @@ export default function LlmLeaderboardPage() {
             Independent rankings of {ALL_SCORES.length}+ AI tools across Performance, Value, Reliability, and Ease of Use.
             Weighted score: Performance 35% · Value 30% · Reliability 20% · Ease of Use 15%.
           </p>
+        </div>
+
+        {/* ── Visual Charts ── */}
+        <div className="mb-10 grid lg:grid-cols-2 gap-6">
+          {/* Radar: top 4 LLMs across all dimensions */}
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Top LLMs — Dimension Radar</p>
+            <p className="text-[11px] text-muted-foreground mb-3">4-dimension comparison of the leading models</p>
+            <LeaderboardRadar tools={ALL_SCORES.filter(s => s.category === "LLM").sort((a,b) => b.overall - a.overall).slice(0,4)} />
+          </div>
+          {/* Overall Bar: top 10 all categories */}
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Top 8 Overall — All Categories</p>
+            <p className="text-[11px] text-muted-foreground mb-3">Ranked by overall weighted score</p>
+            <OverallBarChart tools={[...ALL_SCORES].sort((a,b) => b.overall - a.overall).slice(0,8)} />
+          </div>
         </div>
 
         {/* ── Winner Podium ── */}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ConsumerPieChart, EnterpriseBarChart, DevEcosystemChart, SearchTrendsRadar } from "@/components/charts/MarketShareCharts";
 
 const consumerShares = [
   { name: "ChatGPT / OpenAI",          share: 41, trend: "stable",    trendLabel: "Stable",      trendColor: "text-blue-600 dark:text-blue-400",    bg: "bg-blue-500/10"    },
@@ -90,19 +91,25 @@ export default function MarketSharePage() {
           </h2>
           <div className="h-px flex-1 bg-border" />
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {consumerShares.map((item) => (
-            <div key={item.name} className={`rounded-xl border border-border p-5 space-y-3 ${item.bg}`}>
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-foreground">{item.name}</span>
-                <div className="flex items-center gap-1">
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Donut chart */}
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Market Share — Donut View</p>
+            <ConsumerPieChart data={consumerShares} />
+          </div>
+          {/* Stat cards */}
+          <div className="grid grid-cols-2 gap-4 content-start">
+            {consumerShares.map((item) => (
+              <div key={item.name} className={`rounded-xl border border-border p-5 space-y-3 ${item.bg}`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-foreground">{item.name}</span>
                   <TrendArrow trend={item.trend} />
                 </div>
+                <div className="text-3xl font-bold text-foreground">{item.share}%</div>
+                <div className={`text-xs font-medium ${item.trendColor}`}>{item.trendLabel}</div>
               </div>
-              <div className="text-3xl font-bold text-foreground">{item.share}%</div>
-              <div className={`text-xs font-medium ${item.trendColor}`}>{item.trendLabel}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -115,21 +122,8 @@ export default function MarketSharePage() {
           </h2>
           <div className="h-px flex-1 bg-border" />
         </div>
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-          {enterpriseShares.map((item) => (
-            <div key={item.name} className="space-y-1.5">
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-medium text-foreground">{item.name}</span>
-                <span className="font-mono text-foreground">{item.share}%</span>
-              </div>
-              <div className="h-2.5 rounded-full bg-muted overflow-hidden">
-                <div
-                  className={`h-full rounded-full ${item.color}`}
-                  style={{ width: `${item.share}%` }}
-                />
-              </div>
-            </div>
-          ))}
+        <div className="rounded-xl border border-border bg-card p-6">
+          <EnterpriseBarChart data={enterpriseShares} />
         </div>
       </section>
 
@@ -142,23 +136,8 @@ export default function MarketSharePage() {
           </h2>
           <div className="h-px flex-1 bg-border" />
         </div>
-        <div className="rounded-xl border border-border bg-card divide-y divide-border overflow-hidden">
-          {devEcosystem.map((item) => (
-            <div key={item.name} className="px-6 py-4 space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-bold text-muted-foreground w-4">#{item.rank}</span>
-                <span className="font-semibold text-foreground flex-1">{item.name}</span>
-                <span className="font-mono text-sm text-foreground font-bold">{item.pct}%</span>
-                <span className="text-xs text-muted-foreground">{item.note}</span>
-              </div>
-              <div className="h-2 rounded-full bg-muted overflow-hidden ml-7">
-                <div
-                  className={`h-full rounded-full ${item.color}`}
-                  style={{ width: `${item.pct}%` }}
-                />
-              </div>
-            </div>
-          ))}
+        <div className="rounded-xl border border-border bg-card p-6">
+          <DevEcosystemChart data={devEcosystem} />
         </div>
       </section>
 
@@ -171,21 +150,8 @@ export default function MarketSharePage() {
           </h2>
           <div className="h-px flex-1 bg-border" />
         </div>
-        <div className="rounded-xl border border-border bg-card p-6 space-y-4">
-          {[...searchTrends].sort((a, b) => b.index - a.index).map((item) => (
-            <div key={item.term} className="space-y-1.5">
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-medium text-foreground">{item.term}</span>
-                <span className="font-mono text-foreground">{item.index}</span>
-              </div>
-              <div className="h-2.5 rounded-full bg-muted overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-primary"
-                  style={{ width: `${item.index}%` }}
-                />
-              </div>
-            </div>
-          ))}
+        <div className="rounded-xl border border-border bg-card p-6">
+          <SearchTrendsRadar data={searchTrends} />
         </div>
       </section>
 
