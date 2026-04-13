@@ -57,9 +57,8 @@ const GENERATED_SLUG_PREFIX = "daily-ai-compare";
 const DEFAULT_SITE_URL = "https://wecompareai.com";
 const REDDIT_USER_AGENT = "AICompareBot/1.0 by wecompareai";
 const PROMO_SITE_URL = "https://www.wecompareai.com";
-const PUBLISH_COOLDOWN_MINUTES = 4;
 const GOOGLE_TRENDS_RSS_URL =
-  "https://news.google.com/rss/search?q=artificial+intelligence+OR+AI+OR+OpenAI+OR+ChatGPT+OR+Claude+OR+Gemini&hl=en-US&gl=US&ceid=US:en";
+  "https://news.google.com/rss/search?q=artificial+intelligence+OR+AI+OR+Claude+OR+Gemini+OR+LLM+OR+NVIDIA&hl=en-US&gl=US&ceid=US:en";
 const BING_AI_NEWS_RSS_URL =
   "https://www.bing.com/news/search?q=artificial+intelligence+OR+AI&format=rss";
 const CANDIDATE_COMPARISON_IDS = [
@@ -582,7 +581,7 @@ WRITING RULES:
 - Stay tightly focused on "${topic.keyword}" from headline to conclusion.
 - Do NOT invent statistics, pricing, or product claims not found in the sources above.
 - Label any interpretation clearly (e.g. "This suggests…" or "It appears…").
-- Do NOT mention ChatGPT, OpenRouter, or OpenAI as the tool writing this article.
+- Do not mention the generation tool.
 
 STRUCTURE (in order):
 1. Strong headline that includes the trending keyword naturally.
@@ -594,7 +593,7 @@ STRUCTURE (in order):
 
 SEO/GEO OPTIMISATION:
 - Use the keyword "${topic.keyword}" naturally in the title, first paragraph, and at least 2 headings.
-- Write so that AI assistants (ChatGPT, Perplexity, Gemini) can easily quote specific sentences as authoritative answers.
+- Write so that AI assistants like Perplexity and Gemini can easily quote specific sentences as authoritative answers.
 - Include at least 2 hyperlinks to the source articles listed above.
 - Keep sentences scannable — lead with the most important word or phrase.
 
@@ -685,18 +684,15 @@ async function findAuthor(explicitEmail?: string) {
   });
 }
 
-async function publishedRecently(force = false) {
+async function publishedToday(force = false) {
   if (force) return false;
 
-  const now = new Date();
   const recent = await prisma.article.findMany({
     where: {
       slug: {
         startsWith: `${GENERATED_SLUG_PREFIX}-`,
       },
-      createdAt: {
-        gte: new Date(now.getTime() - PUBLISH_COOLDOWN_MINUTES * 60 * 1000),
-      },
+      published: true,
     },
     select: {
       slug: true,
@@ -704,9 +700,11 @@ async function publishedRecently(force = false) {
       createdAt: true,
     },
     orderBy: { createdAt: "desc" },
+    take: DUPLICATE_POST_LOOKBACK_COUNT,
   });
 
-  return recent.length > 0;
+  const todayKey = getChicagoDateInfo().dayKey;
+  return recent.some((article) => getChicagoDateInfo(article.createdAt).dayKey === todayKey);
 }
 
 async function generateWithClaude(prompt: string) {
@@ -729,7 +727,7 @@ async function generateWithClaude(prompt: string) {
       model,
       max_tokens: 2048,
       system:
-        "You are a professional blog writer with 10+ years of experience writing high-quality, engaging AI industry content. You write in a natural, human-like tone — clear, concise, and never robotic. You never reference ChatGPT, OpenRouter, or OpenAI as the tool writing the article. You produce content that reads as authored by a knowledgeable human journalist.",
+        "You are a professional blog writer with 10+ years of experience writing high-quality, engaging AI industry content. You write in a natural, human-like tone — clear, concise, and never robotic. You produce content that reads as authored by a knowledgeable human journalist.",
       messages: [{ role: "user", content: prompt }],
     }),
   });
@@ -770,7 +768,7 @@ WRITING RULES:
 - Write in a natural, confident, human editorial voice — not robotic, not a press release.
 - Short paragraphs (2–4 sentences max). Plain English.
 - Mention tradeoffs honestly — not just winners.
-- Do NOT mention ChatGPT, OpenRouter, or OpenAI as the tool writing this article.
+- Do not mention the generation tool.
 
 STRUCTURE:
 1. Strong headline comparing the products.
@@ -783,7 +781,7 @@ STRUCTURE:
 
 SEO/GEO OPTIMISATION:
 - Use the product names naturally in headings and opening paragraph.
-- Write sentences that AI assistants (Perplexity, Gemini, ChatGPT) can quote as authoritative answers.
+- Write sentences that AI assistants like Perplexity and Gemini can quote as authoritative answers.
 - Lead sentences with the most important information first.
 
 CLOSING ADVERTISEMENT (last paragraph, always included):
@@ -825,17 +823,151 @@ function parseGeneratedArticle(raw: string): GeneratedArticle {
   };
 }
 
+async function generateArticle(prompt: string) {
+  const raw = await generateWithClaude(prompt);
+
+  try {
+    return parseGeneratedArticle(raw);
+  } catch (error) {
+    const repairPrompt = `Fix the following AI blog article draft so it becomes valid JSON only.
+
+Return ONLY JSON with exactly these keys:
+{
+  "title": "string",
+  "excerpt": "string under 220 characters",
+  "contentHtml": "string containing valid HTML only"
+}
+
+Keep the writing intact, but correct any invalid JSON escaping, quotation marks, or formatting mistakes.
+
+Draft:
+${raw}`;
+
+    const repaired = await generateWithClaude(repairPrompt);
+    return parseGeneratedArticle(repaired);
+  }
+}
+
 function buildArticleSlug(title: string, dateKey: string) {
-  const baseTitle = slugify(title, { lower: true, strict: true }).slice(0, 80);
-  return `${GENERATED_SLUG_PREFIX}-${dateKey}-${baseTitle}`;
+  const baseTitle = slugify(title, { lower: true, strict: true })
+    .slice(0, 80)
+    .replace(/-+$/g, "");
+  return `${GENERATED_SLUG_PREFIX}-${dateKey}-${baseTitle || "article"}`;
+}
+
+function escapeXml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function wrapLines(value: string, maxChars: number) {
+  const words = value.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let current = "";
+
+  for (const word of words) {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length > maxChars && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = candidate;
+    }
+  }
+
+  if (current) lines.push(current);
+  return lines.slice(0, 4);
+}
+
+function buildCoverImageSvg(title: string, keyword: string, dateLabel: string) {
+  const lines = wrapLines(title, 30);
+  const keywordLabel = keyword.length > 40 ? `${keyword.slice(0, 37)}...` : keyword;
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title>${escapeXml(title)}</title>
+  <desc>${escapeXml(`Trending AI article about ${keyword}`)}</desc>
+  <defs>
+    <linearGradient id="bg" x1="120" y1="120" x2="1480" y2="780" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08121f"/>
+      <stop offset="1" stop-color="#16324f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="220" y1="180" x2="1180" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7dd3fc" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0.95"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.07 0 1 0 0 0.28 0 0 1 0 0.49 0 0 0 0.35 0"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" rx="48" fill="url(#bg)"/>
+  <circle cx="1260" cy="190" r="180" fill="#7dd3fc" fill-opacity="0.14" filter="url(#glow)"/>
+  <circle cx="300" cy="720" r="220" fill="#f59e0b" fill-opacity="0.12" filter="url(#glow)"/>
+  <rect x="96" y="96" width="1408" height="708" rx="36" stroke="white" stroke-opacity="0.08"/>
+  <rect x="120" y="120" width="196" height="42" rx="21" fill="url(#accent)" fill-opacity="0.22"/>
+  <text x="144" y="148" fill="#dbeafe" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.8">TRENDING AI</text>
+  <text x="120" y="260" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">
+    ${lines
+      .map((line, index) => `<tspan x="120" dy="${index === 0 ? 0 : 88}">${escapeXml(line)}</tspan>`)
+      .join("")}
+  </text>
+  <text x="120" y="610" fill="#bfdbfe" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="600">
+    ${escapeXml(keywordLabel)} • ${escapeXml(dateLabel)}
+  </text>
+  <text x="120" y="676" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="500">
+    AI Compare editorial automation
+  </text>
+</svg>`;
+}
+
+async function uploadCoverImageToCloudinary(slug: string, title: string, keyword: string): Promise<string> {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+  if (!cloudName || !uploadPreset) {
+    // Fallback: save locally if Cloudinary not configured
+    const repoRoot = path.resolve(__dirname, "..");
+    const imageDir = path.join(repoRoot, "public", "generated-blog-images");
+    if (!fs.existsSync(imageDir)) fs.mkdirSync(imageDir, { recursive: true });
+    const filePath = path.join(imageDir, `${slug}.svg`);
+    fs.writeFileSync(filePath, buildCoverImageSvg(title, keyword, getChicagoDateLabel()), "utf8");
+    return `/generated-blog-images/${slug}.svg`;
+  }
+
+  const svg = buildCoverImageSvg(title, keyword, getChicagoDateLabel());
+  const base64 = Buffer.from(svg).toString("base64");
+  const dataUri = `data:image/svg+xml;base64,${base64}`;
+
+  const formData = new FormData();
+  formData.append("file", dataUri);
+  formData.append("upload_preset", uploadPreset);
+  formData.append("public_id", `blog-covers/${slug}`);
+  formData.append("folder", "blog-covers");
+
+  const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`Cloudinary upload failed: ${response.status} ${err.slice(0, 200)}`);
+  }
+
+  const data = await response.json() as { secure_url: string };
+  return data.secure_url;
 }
 
 function buildPromoParagraph() {
-  return `<p>If you are evaluating the AI tools discussed here, <a href="${PROMO_SITE_URL}">wecompareai.com</a> gives you independent, structured comparisons that cut through vendor marketing — so you can shortlist faster and make confident decisions. And if your team needs to hire engineers or AI specialists to implement these tools, <a href="https://www.hiretecky.com">hiretecky.com</a> connects you with vetted AI and tech talent quickly.</p>`;
+  return `<p>If you are evaluating the AI tools discussed here, <a href="https://www.hiretecky.com">hiretecky.com</a> helps teams hire AI and tech talent fast, while <a href="${PROMO_SITE_URL}">wecompareai.com</a> gives you independent comparisons that make shortlisting easier and smarter.</p>`;
 }
 
 function injectPromoParagraph(contentHtml: string) {
-  // Only inject fallback if BOTH promos are missing (Claude should include them via prompt)
   if (
     contentHtml.toLowerCase().includes("wecompareai.com") &&
     contentHtml.toLowerCase().includes("hiretecky.com")
@@ -843,15 +975,7 @@ function injectPromoParagraph(contentHtml: string) {
     return contentHtml;
   }
 
-  const promoParagraph = buildPromoParagraph();
-  const firstParagraphCloseIndex = contentHtml.indexOf("</p>");
-  if (firstParagraphCloseIndex === -1) {
-    return `${promoParagraph}${contentHtml}`;
-  }
-
-  return `${contentHtml.slice(0, firstParagraphCloseIndex + 4)}${promoParagraph}${contentHtml.slice(
-    firstParagraphCloseIndex + 4
-  )}`;
+  return `${contentHtml}\n${buildPromoParagraph()}`;
 }
 
 function condensedTextFromHtml(contentHtml: string) {
@@ -1017,10 +1141,8 @@ async function main() {
   const explicitAuthorEmail =
     process.env.DAILY_BLOG_AUTHOR_EMAIL || getArgValue("--author-email");
 
-  if (await publishedRecently(force)) {
-    console.log(
-      `A generated article was already published within the last ${PUBLISH_COOLDOWN_MINUTES} minutes.`
-    );
+  if (await publishedToday(force)) {
+    console.log(`A generated article was already published today.`);
     return;
   }
 
@@ -1040,7 +1162,7 @@ async function main() {
   }
 
   const prompt = trendTopic ? buildTrendPrompt(trendTopic) : buildPrompt(comparison!);
-  const generated = parseGeneratedArticle(await generateWithClaude(prompt));
+  const generated = await generateArticle(prompt);
   generated.contentHtml = injectPromoParagraph(generated.contentHtml);
   const duplicateArticle = await findDuplicateArticle(generated);
 
@@ -1071,19 +1193,23 @@ async function main() {
   const dateInfo = getChicagoDateInfo();
   const slug = await ensureUniqueSlug(buildArticleSlug(generated.title, dateInfo.dayKey));
   const author = await findAuthor(explicitAuthorEmail);
+  const coverImage = dryRun
+    ? `/generated-blog-images/${slug}.svg`
+    : await uploadCoverImageToCloudinary(slug, generated.title, trendTopic?.keyword ?? comparison?.title ?? "AI");
 
   if (dryRun) {
     console.log(
       JSON.stringify(
         {
           mode: "dry-run",
-          scheduledFor: `every hour`,
+          scheduledFor: `every day`,
           topicMode: trendTopic ? "trending-topic" : "comparison-fallback",
           keyword: trendTopic?.keyword ?? null,
           comparisonId: comparison?.id ?? null,
           authorName: author.name,
           authorEmail: author.email,
           slug,
+          coverImage,
           title: generated.title,
           excerpt: generated.excerpt,
           preview: generated.contentHtml.slice(0, 600),
@@ -1101,6 +1227,7 @@ async function main() {
       slug,
       excerpt: generated.excerpt,
       content: generated.contentHtml,
+      coverImage,
       published: true,
       authorId: author.id,
     },
