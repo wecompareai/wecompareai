@@ -1,7 +1,7 @@
 param(
   [string]$TaskName = "AICompareDailyBlogAgent",
   [string]$StartTime = "00:00",
-  [int]$EveryMinutes = 60
+  [int]$EveryMinutes = 1440
 )
 
 $ErrorActionPreference = "Stop"
