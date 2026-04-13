@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { ScoreWeightDonut } from "@/components/charts/ScoreWeightDonut";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -121,8 +122,8 @@ function MethodologyJsonLd() {
     headline: "Our Methodology — How We Compare AI Tools",
     description: "Transparent methodology for comparing 100+ AI tools across pricing, benchmarks, compliance, integrations and more.",
     url,
-    dateModified: "2026-04-11",
-    datePublished: "2025-01-01",
+    dateModified: "2026-04-13",
+    datePublished: "2026-01-01",
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL_CONST },
     author: [
       { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL_CONST}/about` },
@@ -196,6 +197,38 @@ export default function MethodologyPage() {
               <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Score Weights Visual */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">How We Calculate the Overall Score</h2>
+          <p className="text-sm text-muted-foreground mt-1">A weighted formula across 4 dimensions — reflecting what matters most to real users.</p>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-6 items-center">
+          <div className="rounded-xl border border-border bg-card p-5">
+            <ScoreWeightDonut />
+          </div>
+          <div className="space-y-3">
+            {[
+              { label: "Performance", weight: "35%", color: "bg-blue-500", desc: "Benchmark scores (MMLU, HumanEval, MT-Bench, Chatbot Arena ELO). The most heavily weighted dimension — a tool must perform well to rank." },
+              { label: "Value",       weight: "30%", color: "bg-emerald-500", desc: "Price-to-capability ratio. A $0.15/M token model that matches a $15/M model in quality scores very high here." },
+              { label: "Reliability", weight: "20%", color: "bg-violet-500", desc: "Uptime records, API stability, vendor risk signals, and outage history over the past 12 months." },
+              { label: "Ease of Use", weight: "15%", color: "bg-amber-500", desc: "API quality, documentation, onboarding friction, and UI/UX for end-users and developers alike." },
+            ].map((d) => (
+              <div key={d.label} className="flex items-start gap-3">
+                <div className={`w-2.5 h-2.5 rounded-full ${d.color} mt-1.5 shrink-0`} />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-sm text-foreground">{d.label}</span>
+                    <span className="text-xs font-bold text-muted-foreground">{d.weight}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{d.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

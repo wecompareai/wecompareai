@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ALL_SCORES, SCORE_DIMENSIONS } from "@/lib/scores";
+import { LeaderboardRadar } from "@/components/charts/LeaderboardRadar";
+import { OverallBarChart } from "@/components/charts/ScoreBarChart";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -36,8 +38,8 @@ function LeaderboardJsonLd() {
     headline: "LLM Leaderboard 2026 — Best AI Models Ranked",
     description: "Independent rankings of large language models across Performance, Value, Reliability and Ease of Use.",
     url,
-    dateModified: "2026-04-11",
-    datePublished: "2026-04-11",
+    dateModified: "2026-04-13",
+    datePublished: "2026-04-13",
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
       { "@type": "Person", name: "Jigar Acharya", url: `${SITE_URL}/about` },
@@ -135,7 +137,7 @@ export default function LlmLeaderboardPage() {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Live rankings · Updated April 9, 2026
+            Live rankings · Updated April 13, 2026
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3">
             AI Model Leaderboard 2026
@@ -144,6 +146,22 @@ export default function LlmLeaderboardPage() {
             Independent rankings of {ALL_SCORES.length}+ AI tools across Performance, Value, Reliability, and Ease of Use.
             Weighted score: Performance 35% · Value 30% · Reliability 20% · Ease of Use 15%.
           </p>
+        </div>
+
+        {/* ── Visual Charts ── */}
+        <div className="mb-10 grid lg:grid-cols-2 gap-6">
+          {/* Radar: top 4 LLMs across all dimensions */}
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Top LLMs — Dimension Radar</p>
+            <p className="text-[11px] text-muted-foreground mb-3">4-dimension comparison of the leading models</p>
+            <LeaderboardRadar tools={ALL_SCORES.filter(s => s.category === "LLM").sort((a,b) => b.overall - a.overall).slice(0,4)} />
+          </div>
+          {/* Overall Bar: top 10 all categories */}
+          <div className="rounded-xl border border-border bg-card p-5">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">Top 8 Overall — All Categories</p>
+            <p className="text-[11px] text-muted-foreground mb-3">Ranked by overall weighted score</p>
+            <OverallBarChart tools={[...ALL_SCORES].sort((a,b) => b.overall - a.overall).slice(0,8)} />
+          </div>
         </div>
 
         {/* ── Winner Podium ── */}

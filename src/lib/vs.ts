@@ -82,7 +82,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has a better free tier?", a: "ChatGPT's free tier gives access to GPT-4o (with some limits). Claude's free tier is more limited. Both require a paid plan for heavy use." },
     ],
     relatedSlugs: ["chatgpt-vs-gemini", "claude-vs-gemini", "deepseek-vs-chatgpt"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -124,7 +124,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is better for SEO and content?", a: "For writing quality, ChatGPT (or better, Claude) produces more natural content. Gemini's Google Search grounding is useful for up-to-date SEO research." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "claude-vs-gemini", "gpt-4o-vs-gemini-flash"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -166,7 +166,7 @@ export const vsPages: VsPage[] = [
       { q: "Can Gemini replace Claude?", a: "For Google-native workflows and long context tasks, Gemini is now competitive. For writing quality, subtle instruction-following, and complex analytical tasks, Claude maintains a meaningful edge." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "chatgpt-vs-gemini"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -208,7 +208,7 @@ export const vsPages: VsPage[] = [
       { q: "Should I switch from GPT-4o to Claude Sonnet 4.6?", a: "If your primary use case is writing, document analysis, or reasoning, yes — Claude Sonnet 4.6 outperforms GPT-4o at a competitive price. For image generation, voice, or heavy OpenAI tooling integrations, GPT-4o remains better." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "deepseek-vs-chatgpt"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -250,7 +250,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I mix GPT-4o and Gemini Flash in the same app?", a: "Yes — many production applications use a model router: Gemini Flash for high-volume simple tasks, GPT-4o or Claude Sonnet for complex or user-facing tasks. This can reduce overall API costs by 70%+ while maintaining quality where it matters." },
     ],
     relatedSlugs: ["chatgpt-vs-gemini", "gpt-4-1-vs-claude-sonnet"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -292,7 +292,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I self-host DeepSeek?", a: "Yes — DeepSeek V3's open-source weights can be downloaded and run locally or on your own cloud infrastructure. This eliminates the data privacy concern but requires significant GPU resources (the full model is 685B parameters)." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "gpt-4-1-vs-claude-sonnet"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -334,7 +334,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use Mistral open-source models commercially?", a: "Yes — Mistral's open-source models (Mistral 7B, Mixtral 8x7B) use Apache 2.0 licensing which allows commercial use. These are smaller than Mistral Large but free to self-host." },
     ],
     relatedSlugs: ["chatgpt-vs-claude", "deepseek-vs-chatgpt"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -379,7 +379,7 @@ export const vsPages: VsPage[] = [
       { q: "Does Cursor send my code to OpenAI?", a: "Cursor sends your code to AI providers (OpenAI, Anthropic) for processing. Cursor Business offers privacy mode. For proprietary enterprise code, evaluate their data processing agreement carefully." },
     ],
     relatedSlugs: ["cursor-vs-windsurf", "claude-code-vs-copilot", "cursor-vs-claude-code"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -421,7 +421,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I switch from Cursor to Windsurf easily?", a: "Yes — both are VS Code forks, so your extensions, settings, and keybindings transfer almost entirely. The switch typically takes less than 30 minutes." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "claude-code-vs-copilot"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -463,7 +463,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use Claude Code in VS Code?", a: "Yes — via the Cline extension (formerly Code Claude) or directly via the Claude API in the terminal. It's not a native VS Code extension but integrates via the terminal from within VS Code's integrated terminal." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "cursor-vs-claude-code"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -505,7 +505,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use both Cursor and Claude Code?", a: "Yes — many engineers use Cursor for daily development and Claude Code for specific high-complexity tasks that benefit from autonomous agent behaviour. They complement each other well." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "cursor-vs-windsurf", "claude-code-vs-copilot"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -547,7 +547,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has a better free tier?", a: "Windsurf's free tier is significantly more generous than Copilot's free plan (which is only available to students and OSS maintainers). Windsurf is the better choice for trialling without payment." },
     ],
     relatedSlugs: ["copilot-vs-cursor", "cursor-vs-windsurf"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -592,7 +592,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is better for logos and branding?", a: "Neither is ideal for logos (AI image generators struggle with exact brand specs). For concepts and inspiration, DALL-E 3 is better because it follows text descriptions more precisely. Use a designer to clean up the output." },
     ],
     relatedSlugs: ["midjourney-vs-stable-diffusion", "midjourney-vs-flux", "dalle-vs-stable-diffusion"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -634,7 +634,7 @@ export const vsPages: VsPage[] = [
       { q: "Are Stable Diffusion images copyright free?", a: "Images you generate with Stable Diffusion on your own hardware are generally yours to use commercially. Always check the specific model checkpoint's licence — community fine-tunes vary. The base Stable Diffusion model uses the CreativeML Open RAIL-M licence." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-flux", "dalle-vs-stable-diffusion"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -676,7 +676,7 @@ export const vsPages: VsPage[] = [
       { q: "Can non-technical users run Stable Diffusion?", a: "Via tools like Automatic1111 or ComfyUI with pre-built installers, it's possible. But it still requires initial GPU setup. Cloud platforms like Leonardo.ai or NightCafe provide Stable Diffusion with a no-setup web interface." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-stable-diffusion"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -717,7 +717,7 @@ export const vsPages: VsPage[] = [
       { q: "Is Flux free?", a: "Flux open-source models (Flux.1 Schnell) can be run locally for free. Cloud inference via Replicate/fal.ai costs around $0.003 per image. Flux Pro (higher quality) costs more via cloud APIs." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-stable-diffusion"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -758,7 +758,7 @@ export const vsPages: VsPage[] = [
       { q: "Is Firefly available outside of Creative Cloud?", a: "Yes — Adobe Firefly has a standalone web app at firefly.adobe.com with a free tier (25 credits/month). Full access requires a Creative Cloud subscription." },
     ],
     relatedSlugs: ["midjourney-vs-dalle", "midjourney-vs-flux"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -803,7 +803,7 @@ export const vsPages: VsPage[] = [
       { q: "How long can AI videos be in 2026?", a: "Sora generates up to 20 seconds. Runway Gen-3 generates up to 10 seconds per clip (extendable). Longer videos require stitching clips. Full-length AI video generation remains experimental." },
     ],
     relatedSlugs: ["runway-vs-pika", "sora-vs-pika"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -845,7 +845,7 @@ export const vsPages: VsPage[] = [
       { q: "Can Runway and Pika generate video from images?", a: "Yes — both accept image inputs to guide video generation (image-to-video). Runway's implementation gives more control over the resulting motion. This is a popular workflow for product demos and brand content." },
     ],
     relatedSlugs: ["sora-vs-runway", "sora-vs-pika"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -887,7 +887,7 @@ export const vsPages: VsPage[] = [
       { q: "What are the best alternatives to both?", a: "Runway Gen-3 ($15–95/mo) sits between them in both quality and price. It offers better quality than Pika with more creative control than Sora, at a more reasonable price than ChatGPT Pro." },
     ],
     relatedSlugs: ["sora-vs-runway", "runway-vs-pika"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -932,7 +932,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has better free tier?", a: "Both have limited free tiers. ElevenLabs free gives 10,000 characters/month. Murf free gives limited preview access. For meaningful production use, both require paid plans." },
     ],
     relatedSlugs: ["elevenlabs-vs-openai-tts", "playht-vs-elevenlabs"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -975,7 +975,7 @@ export const vsPages: VsPage[] = [
       { q: "Can OpenAI TTS be used for real-time voice?", a: "Yes — OpenAI TTS supports streaming, enabling real-time voice output with latency suitable for many conversational AI applications. ElevenLabs also supports streaming with similar or slightly lower latency depending on voice model." },
     ],
     relatedSlugs: ["elevenlabs-vs-murf", "playht-vs-elevenlabs"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -1017,7 +1017,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is better for a voice AI startup?", a: "For initial development and product validation, ElevenLabs ($5–$22/mo entry) gives you better quality at lower cost. As you scale to production with real-time requirements, re-evaluate Play.ht's streaming performance and per-character pricing." },
     ],
     relatedSlugs: ["elevenlabs-vs-murf", "elevenlabs-vs-openai-tts"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1060,7 +1060,7 @@ export const vsPages: VsPage[] = [
       { q: "Can I use my own lyrics with Suno and Udio?", a: "Yes — both allow custom lyrics on paid plans. Suno's free tier uses AI-generated lyrics only. You can provide your own lyrics on Pro plans and have the AI compose music around them." },
     ],
     relatedSlugs: [],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1105,7 +1105,7 @@ export const vsPages: VsPage[] = [
       { q: "Which is more reliable for enterprise production?", a: "Both offer 99.9%+ SLAs. AWS Bedrock is backed by AWS's infrastructure (typically 99.99%). Azure OpenAI is backed by Azure (99.9% SLA). For multi-region failover, AWS's global footprint is broader." },
     ],
     relatedSlugs: ["azure-openai-vs-vertex-ai"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -1147,7 +1147,7 @@ export const vsPages: VsPage[] = [
       { q: "Which has better MLOps tooling?", a: "Vertex AI includes significantly more native MLOps tooling — managed notebooks, AutoML, model registry, training pipelines, and monitoring. Azure OpenAI is a model API service, not a full ML platform. Azure ML is the equivalent Azure MLOps product." },
     ],
     relatedSlugs: ["aws-bedrock-vs-azure-openai"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -1191,7 +1191,7 @@ export const vsPages: VsPage[] = [
       { q: "Does ChatGPT have real-time search?", a: "ChatGPT Plus includes web browsing via Bing search. However, citations are less prominently presented than in Perplexity, and the web search is not always triggered automatically. Perplexity is search-first by design." },
     ],
     relatedSlugs: ["perplexity-vs-youcom", "chatgpt-vs-claude"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 
   {
@@ -1231,7 +1231,7 @@ export const vsPages: VsPage[] = [
       { q: "Is Perplexity worth $20/month over You.com free?", a: "If you do regular professional research, Perplexity Pro's academic database access, unlimited Pro Search (multi-step deep research), and higher-quality citations are worth $20/month. For casual research, You.com free is excellent." },
     ],
     relatedSlugs: ["perplexity-vs-chatgpt"],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   },
 ];
 
@@ -1380,7 +1380,7 @@ function generateVsPage(a: ToolScore, b: ToolScore): VsPage {
     chooseB,
     faqs,
     relatedSlugs: [],
-    lastUpdated: "2026-04-11",
+    lastUpdated: "2026-04-13",
   };
 }
 

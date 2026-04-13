@@ -6,11 +6,12 @@ This agent runs outside the app and publishes blog articles directly into the ex
 
 - Reads your existing `.env`
 - Pulls a live AI-related trend signal from Google and Bing
-- Uses OpenRouter to draft an article around that trending topic
+- Uses Anthropic to draft one article per day around that trend
+- Generates a simple SEO-friendly cover image for each published post
 - Falls back to one comparison dataset from `data/comparisons` if trend lookup fails
-- Prevents back-to-back auto-posts inside a short cooldown window
+- Prevents duplicate daily posts if the job runs more than once
 - Uses a random publisher pen name unless you explicitly provide an author email
-- Injects a short paragraph recommending `www.wecompareai.com`
+- Injects a short closing paragraph recommending `hiretecky.com` and `wecompareai.com`
 - Publishes the article as `published: true`
 
 ## Files
@@ -24,7 +25,7 @@ This agent runs outside the app and publishes blog articles directly into the ex
 - Node.js installed
 - `node_modules` already present
 - A valid `DATABASE_URL`
-- A valid `OPENROUTER_API_KEY`
+- A valid `ANTHROPIC_API_KEY`
 - Outbound network access for Google Trends and Bing RSS lookups
 - At least one admin user in the database
 
@@ -32,8 +33,7 @@ Optional:
 
 - `DAILY_BLOG_AUTHOR_EMAIL=you@example.com`
 - `NEXT_PUBLIC_SITE_URL=https://your-site.example`
-- `OPENROUTER_MODEL=openai/gpt-4o-mini`
-- `OPENROUTER_SITE_TITLE=AI Compare Daily Blog Agent`
+- `ANTHROPIC_MODEL=claude-sonnet-4-6`
 
 ## Manual test
 
@@ -57,7 +57,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\run-daily-blog-age
 
 That `-Comparison` option now acts as the fallback dataset if live trend lookup fails.
 
-## Schedule it every hour
+## Schedule it every day
 
 Register a Windows scheduled task:
 
@@ -65,12 +65,12 @@ Register a Windows scheduled task:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\register-daily-blog-task.ps1
 ```
 
-That registers a task named `AICompareDailyBlogAgent` to start at `00:00` and repeat every 60 minutes in the machine's local timezone.
+That registers a task named `AICompareDailyBlogAgent` to start at `00:00` and repeat every 1440 minutes in the machine's local timezone.
 
 To change the cadence:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\register-daily-blog-task.ps1 -StartTime 00:00 -EveryMinutes 60
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\register-daily-blog-task.ps1 -StartTime 00:00 -EveryMinutes 1440
 ```
 
 ## Logs
@@ -82,7 +82,7 @@ The runner appends output to:
 ## Notes
 
 - The task only runs when your machine can execute scheduled tasks.
-- Duplicate prevention now uses a short cooldown window and compares against the last 100 published posts before inserting a new one.
+- Duplicate prevention now checks whether a generated post already exists for the current Chicago day and compares against the last 100 published posts before inserting a new one.
 - The preferred path is now: Google trend signal + Bing AI news signal -> keyword selection -> article generation -> publish.
 - If Google/Bing trend lookup fails, the agent falls back to your local comparison data so scheduled publishing still works.
-- OpenRouter is the API gateway; the actual model is controlled by `OPENROUTER_MODEL`.
+- The automation writes a simple SVG cover image into `public/generated-blog-images/`.

@@ -72,6 +72,26 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Stats */}
+      <section className="pb-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { value: "53+",    label: "AI Tools Ranked",      color: "text-primary",                        sub: "Scored across 4 dimensions" },
+              { value: "1,200+", label: "VS Comparisons",       color: "text-violet-600 dark:text-violet-400", sub: "Head-to-head tool battles" },
+              { value: "9",      label: "AI Categories",        color: "text-emerald-600 dark:text-emerald-400", sub: "From LLMs to Video AI" },
+              { value: "Daily",  label: "Content Updates",      color: "text-amber-600 dark:text-amber-400",   sub: "AI-powered blog agent" },
+            ].map((s) => (
+              <div key={s.label} className="rounded-xl border border-border bg-card px-4 py-5 text-center hover:bg-muted/40 transition-colors">
+                <div className={`text-2xl sm:text-3xl font-extrabold ${s.color}`}>{s.value}</div>
+                <div className="text-sm font-semibold text-foreground mt-1">{s.label}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{s.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contributors */}
       <section className="pb-16 sm:pb-24 px-4">
         <div className="max-w-4xl mx-auto">
