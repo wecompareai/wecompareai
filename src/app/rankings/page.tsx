@@ -54,8 +54,21 @@ export default function RankingsPage() {
   // Top 8 for chart (keep chart readable)
   const chartTools = filtered.slice(0, 8);
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: "What is the best AI model in 2026?", acceptedAnswer: { "@type": "Answer", text: "Based on our weighted scoring, Claude Opus 4 and GPT-4o lead overall rankings. Claude Opus 4 tops performance and reasoning; GPT-4o leads on ease of use and ecosystem." } },
+      { "@type": "Question", name: "How do you rank AI models?", acceptedAnswer: { "@type": "Answer", text: "We score every AI tool across four dimensions: Performance (35%), Value (30%), Reliability (20%), and Ease of Use (15%). All scores are independently verified." } },
+      { "@type": "Question", name: "Which AI has the best value for money?", acceptedAnswer: { "@type": "Answer", text: "DeepSeek V3 and LLaMA 3.1 405B score highest on value. For API use, Gemini 2.5 Flash offers the lowest cost per token among frontier models." } },
+      { "@type": "Question", name: "Which AI is most reliable?", acceptedAnswer: { "@type": "Answer", text: "GPT-4o and Claude Opus 4 both score 9.0 on reliability — the highest in our rankings. DeepSeek V3 scores lower (6.5) due to reported availability issues." } },
+      { "@type": "Question", name: "Which AI is easiest to use?", acceptedAnswer: { "@type": "Answer", text: "ChatGPT (GPT-4o) scores 9.5 on ease of use — the highest across all tools. Its consumer interface and massive ecosystem of integrations make it the most accessible AI for non-technical users." } },
+    ],
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
@@ -253,6 +266,45 @@ export default function RankingsPage() {
         <Link href="/research/finder" className="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:opacity-90 transition-opacity">
           Try AI Finder →
         </Link>
+      </div>
+
+      {/* People Also Ask */}
+      <div className="space-y-3">
+        <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">People Also Ask</h2>
+        {[
+          {
+            q: "What is the best AI model in 2026?",
+            a: "Based on our weighted scoring (Performance 35%, Value 30%, Reliability 20%, Ease of Use 15%), Claude Opus 4 and GPT-4o lead overall rankings. Claude Opus 4 tops performance and reasoning; GPT-4o leads on ease of use and ecosystem. The best AI model depends on your use case — see our full rankings above.",
+          },
+          {
+            q: "How do you rank AI models?",
+            a: "We score every AI tool across four dimensions: Performance (benchmark scores and output quality, 35%), Value (price-to-performance ratio, 30%), Reliability (uptime and vendor stability, 20%), and Ease of Use (interface, docs, onboarding, 15%). All scores are independently verified — no paid placements influence rankings.",
+          },
+          {
+            q: "Which AI has the best value for money?",
+            a: "DeepSeek V3 and LLaMA 3.1 405B score highest on value — both deliver strong performance at a fraction of the cost of GPT-4o or Claude Opus 4. For API use, Gemini 2.5 Flash offers the lowest cost per token among frontier models.",
+          },
+          {
+            q: "Which AI is most reliable?",
+            a: "GPT-4o and Claude Opus 4 both score 9.0 on reliability — the highest in our rankings. OpenAI and Anthropic maintain strong uptime SLAs and enterprise support. DeepSeek V3 scores lower (6.5) due to reported availability issues.",
+          },
+          {
+            q: "Which AI is easiest to use?",
+            a: "ChatGPT (GPT-4o) scores 9.5 on ease of use — the highest across all tools. Its consumer interface, mobile app, and massive ecosystem of integrations make it the most accessible AI for non-technical users.",
+          },
+        ].map(({ q, a }) => (
+          <details key={q} className="group rounded-xl border border-border bg-card overflow-hidden">
+            <summary className="flex items-center justify-between gap-3 px-4 py-3.5 cursor-pointer list-none text-sm font-medium text-foreground hover:bg-muted/40 transition-colors">
+              {q}
+              <svg className="w-4 h-4 shrink-0 text-muted-foreground group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div className="px-4 pb-4 text-sm text-muted-foreground leading-relaxed border-t border-border pt-3">
+              {a}
+            </div>
+          </details>
+        ))}
       </div>
     </div>
   );
