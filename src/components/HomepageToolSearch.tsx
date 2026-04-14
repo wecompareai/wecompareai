@@ -125,14 +125,14 @@ function MiniCombobox({
 
       {/* Dropdown */}
       {showList && matches.length > 0 && (
-        <ul className="absolute z-50 top-full mt-1 left-0 right-0 rounded-xl border border-border bg-white dark:bg-zinc-900 shadow-2xl overflow-hidden text-left">
+        <ul className="absolute z-50 top-full mt-1 left-0 right-0 rounded-xl border-2 border-border overflow-hidden text-left" style={{ backgroundColor: 'var(--background)', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
           {matches.map((s, i) => (
             <li
               key={s.id}
               onMouseEnter={() => setActiveIdx(i)}
               onMouseDown={(e) => { e.preventDefault(); onSelect(s); setOpen(false); setActiveIdx(-1); }}
-              className={`flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-colors border-b border-border/40 last:border-0 ${
-                i === activeIdx ? "bg-primary/10 dark:bg-primary/20" : "hover:bg-zinc-50 dark:hover:bg-zinc-800"
+              className={`flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-colors border-b border-border last:border-0 ${
+                i === activeIdx ? "bg-primary/10" : "hover:bg-muted"
               }`}
             >
               <div className="flex-1 min-w-0">
@@ -144,7 +144,7 @@ function MiniCombobox({
               </span>
             </li>
           ))}
-          <li className="px-3 py-1.5 bg-zinc-50 dark:bg-zinc-800/80 text-[10px] text-muted-foreground">
+          <li className="px-3 py-1.5 bg-muted text-[10px] text-muted-foreground">
             {ALL_SCORES.length} tools · Can&apos;t find yours?{" "}
             <span className="text-primary font-medium cursor-pointer">Unlock Premium</span>
           </li>
@@ -154,7 +154,8 @@ function MiniCombobox({
       {/* No results */}
       {showList && value.length >= 2 && matches.length === 0 && (
         <div
-          className="absolute z-50 top-full mt-1 left-0 right-0 rounded-xl border border-border bg-white dark:bg-zinc-900 shadow-2xl px-3 py-3 text-left cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+          className="absolute z-50 top-full mt-1 left-0 right-0 rounded-xl border-2 border-border px-3 py-3 text-left cursor-pointer hover:bg-muted transition-colors"
+          style={{ backgroundColor: 'var(--background)', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}
           onMouseDown={(e) => { e.preventDefault(); onPremiumTrigger(value); }}
         >
           <p className="text-xs font-semibold text-foreground">&ldquo;{value}&rdquo; not found</p>
