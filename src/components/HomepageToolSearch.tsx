@@ -19,12 +19,20 @@ const CATEGORY_LABELS: Record<string, string> = {
   Search:     "AI Search",
 };
 
-const EXAMPLE_PAIRS = [
-  ["ChatGPT", "Claude"],
-  ["Midjourney", "DALL-E 3"],
-  ["Cursor", "Copilot"],
-  ["Suno", "Udio"],
-  ["Lovable", "Bolt.new"],
+// Pairs defined by exact ALL_SCORES IDs — guaranteed to resolve without hitting premium gate
+const EXAMPLE_PAIR_IDS: [string, string][] = [
+  ["gpt-4o",        "claude-opus-4"],
+  ["midjourney",    "dall-e-3"],
+  ["cursor",        "github-copilot"],
+  ["suno",          "udio"],
+  ["lovable",       "bolt-new"],
+  ["sora",          "runway-gen3"],
+  ["elevenlabs",    "openai-tts"],
+  ["perplexity",    "chatgpt-search"],
+  ["heygen",        "synthesia"],
+  ["canva-ai",      "figma-ai"],
+  ["aws-bedrock",   "azure-openai"],
+  ["gpt-4-1",       "gemini-2-5-pro"],
 ];
 
 function scoreColor(n: number) {
@@ -247,11 +255,20 @@ export default function HomepageToolSearch() {
   const [error, setError] = useState<string | null>(null);
   const [exampleIdx, setExampleIdx] = useState(0);
 
+  // Pre-resolve example pairs from IDs — guaranteed free, no premium gate
+  const EXAMPLES = EXAMPLE_PAIR_IDS
+    .map(([idA, idB]) => {
+      const a = ALL_SCORES.find((s) => s.id === idA);
+      const b = ALL_SCORES.find((s) => s.id === idB);
+      return a && b ? { a, b } : null;
+    })
+    .filter(Boolean) as { a: ToolScore; b: ToolScore }[];
+
   // Rotate placeholder examples
   useEffect(() => {
-    const t = setInterval(() => setExampleIdx((i) => (i + 1) % EXAMPLE_PAIRS.length), 3000);
+    const t = setInterval(() => setExampleIdx((i) => (i + 1) % EXAMPLES.length), 3000);
     return () => clearInterval(t);
-  }, []);
+  }, [EXAMPLES.length]);
 
   const filtered = ALL_SCORES.filter((s) => category === "All" || s.category === category);
 
@@ -293,16 +310,14 @@ export default function HomepageToolSearch() {
     }
   }
 
-  function fillExample(pair: string[]) {
-    const a = ALL_SCORES.find((s) => s.name === pair[0]) ?? null;
-    const b = ALL_SCORES.find((s) => s.name === pair[1]) ?? null;
-    setToolA({ query: pair[0], resolved: a });
-    setToolB({ query: pair[1], resolved: b });
+  function fillExample(ex: { a: ToolScore; b: ToolScore }) {
+    setToolA({ query: ex.a.name, resolved: ex.a });
+    setToolB({ query: ex.b.name, resolved: ex.b });
     setError(null);
   }
 
   const bothReady = toolA.resolved && toolB.resolved && (!showThird || toolC.resolved);
-  const currentExample = EXAMPLE_PAIRS[exampleIdx];
+  const currentExample = EXAMPLES[exampleIdx] ?? EXAMPLES[0];
 
   return (
     <>
@@ -327,7 +342,7 @@ export default function HomepageToolSearch() {
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <MiniCombobox
-              placeholder={`Tool 1 — e.g. "${currentExample[0]}"`}
+              placeholder={`Tool 1 — e.g. "${currentExample.a.name}"`}
               value={toolA.query}
               resolved={toolA.resolved}
               matches={getMatches(toolA.query)}
@@ -338,7 +353,7 @@ export default function HomepageToolSearch() {
             />
             <span className="text-muted-foreground text-xs font-medium shrink-0">vs</span>
             <MiniCombobox
-              placeholder={`Tool 2 — e.g. "${currentExample[1]}"`}
+              placeholder={`Tool 2 — e.g. "${currentExample.b.name}"`}
               value={toolB.query}
               resolved={toolB.resolved}
               matches={getMatches(toolB.query)}
@@ -398,13 +413,13 @@ export default function HomepageToolSearch() {
         {/* Quick example chips */}
         <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
           <span className="text-[10px] text-muted-foreground shrink-0">Try:</span>
-          {EXAMPLE_PAIRS.slice(0, 4).map((pair) => (
+          {EXAMPLES.slice(0, 4).map((ex) => (
             <button
-              key={pair.join("-")}
-              onClick={() => fillExample(pair)}
+              key={`${ex.a.id}-${ex.b.id}`}
+              onClick={() => fillExample(ex)}
               className="text-[10px] px-2 py-0.5 rounded-full border border-border bg-muted/50 hover:border-primary/50 hover:text-primary text-muted-foreground transition-all font-medium"
             >
-              {pair[0]} vs {pair[1]}
+              {ex.a.name} vs {ex.b.name}
             </button>
           ))}
         </div>
