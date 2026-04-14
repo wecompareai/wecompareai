@@ -243,14 +243,16 @@ interface ToolInput {
 
 function blank(): ToolInput { return { query: "", resolved: null }; }
 
+const MAX_TOOLS = 5;
+const MIN_TOOLS = 2;
+const PLACEHOLDERS = ["Gemini 2.5 Pro", "DeepSeek V3", "Mistral Large", "LLaMA 3.1 405B", "GPT-4.1"];
+
 export default function HomepageToolSearch() {
   const router = useRouter();
 
   const [category, setCategory] = useState("All");
-  const [toolA, setToolA] = useState<ToolInput>(blank());
-  const [toolB, setToolB] = useState<ToolInput>(blank());
-  const [toolC, setToolC] = useState<ToolInput>(blank());
-  const [showThird, setShowThird] = useState(false);
+  // Array of 2–5 tool inputs
+  const [tools, setTools] = useState<ToolInput[]>([blank(), blank()]);
   const [premium, setPremium] = useState<{ show: boolean; name: string }>({ show: false, name: "" });
   const [error, setError] = useState<string | null>(null);
   const [exampleIdx, setExampleIdx] = useState(0);
@@ -264,7 +266,6 @@ export default function HomepageToolSearch() {
     })
     .filter(Boolean) as { a: ToolScore; b: ToolScore }[];
 
-  // Rotate placeholder examples
   useEffect(() => {
     const t = setInterval(() => setExampleIdx((i) => (i + 1) % EXAMPLES.length), 3000);
     return () => clearInterval(t);
@@ -280,54 +281,68 @@ export default function HomepageToolSearch() {
       .slice(0, 7);
   }
 
-  function patch(setter: React.Dispatch<React.SetStateAction<ToolInput>>, update: Partial<ToolInput>) {
-    setter((prev) => ({ ...prev, ...update }));
+  function updateTool(idx: number, update: Partial<ToolInput>) {
+    setTools((prev) => prev.map((t, i) => i === idx ? { ...t, ...update } : t));
     setError(null);
   }
 
-  function handleChange(setter: React.Dispatch<React.SetStateAction<ToolInput>>, v: string) {
+  function handleChange(idx: number, v: string) {
     const resolved = ALL_SCORES.find((s) => s.name.toLowerCase() === v.toLowerCase()) ?? null;
-    patch(setter, { query: v, resolved });
+    updateTool(idx, { query: v, resolved });
+  }
+
+  function addTool() {
+    if (tools.length < MAX_TOOLS) {
+      setTools((prev) => [...prev, blank()]);
+      setError(null);
+    }
+  }
+
+  function removeTool(idx: number) {
+    if (tools.length > MIN_TOOLS) {
+      setTools((prev) => prev.filter((_, i) => i !== idx));
+      setError(null);
+    }
   }
 
   function handleCompare() {
     setError(null);
-    const active = showThird ? [toolA, toolB, toolC] : [toolA, toolB];
 
-    const emptyField = active.find((t) => !t.query.trim());
-    if (emptyField) { setError("Enter a tool name in each field."); return; }
+    const empty = tools.find((t) => !t.query.trim());
+    if (empty) { setError("Enter a tool name in each field."); return; }
 
-    const unresolvedField = active.find((t) => !t.resolved);
-    if (unresolvedField) { setPremium({ show: true, name: unresolvedField.query }); return; }
+    const unresolved = tools.find((t) => !t.resolved);
+    if (unresolved) { setPremium({ show: true, name: unresolved.query }); return; }
 
-    if (!showThird) {
-      const [a, b] = [toolA.resolved!, toolB.resolved!].sort((x, y) => x.id.localeCompare(y.id));
+    if (tools.length === 2) {
+      const [a, b] = [...tools.map((t) => t.resolved!)].sort((x, y) => x.id.localeCompare(y.id));
       router.push(`/vs/${a.id}-vs-${b.id}`);
     } else {
-      // 3-way: go to /search with state encoded in URL
-      const ids = [toolA.resolved!.id, toolB.resolved!.id, toolC.resolved!.id].join(",");
+      const ids = tools.map((t) => t.resolved!.id).join(",");
       router.push(`/search?compare=${ids}`);
     }
   }
 
   function fillExample(ex: { a: ToolScore; b: ToolScore }) {
-    setToolA({ query: ex.a.name, resolved: ex.a });
-    setToolB({ query: ex.b.name, resolved: ex.b });
+    setTools([
+      { query: ex.a.name, resolved: ex.a },
+      { query: ex.b.name, resolved: ex.b },
+    ]);
     setError(null);
   }
 
-  const bothReady = toolA.resolved && toolB.resolved && (!showThird || toolC.resolved);
   const currentExample = EXAMPLES[exampleIdx] ?? EXAMPLES[0];
+  const allReady = tools.every((t) => t.resolved);
 
   return (
     <>
-      <div className="space-y-3 w-full">
+      <div className="space-y-2.5 w-full">
         {/* Category selector */}
         <div className="flex items-center gap-2">
           <label className="text-xs text-muted-foreground shrink-0 font-medium">Category:</label>
           <select
             value={category}
-            onChange={(e) => { setCategory(e.target.value); setToolA(blank()); setToolB(blank()); setToolC(blank()); setError(null); }}
+            onChange={(e) => { setCategory(e.target.value); setTools([blank(), blank()]); setError(null); }}
             className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
           >
             <option value="All">All ({ALL_SCORES.length} tools)</option>
@@ -338,80 +353,85 @@ export default function HomepageToolSearch() {
           </select>
         </div>
 
-        {/* Tool inputs */}
+        {/* Tool inputs — first row is always Tool 1 vs Tool 2 inline */}
         <div className="flex flex-col gap-2">
+          {/* Row 1: always side-by-side */}
           <div className="flex items-center gap-2">
-            <MiniCombobox
-              placeholder={`Tool 1 — e.g. "${currentExample.a.name}"`}
-              value={toolA.query}
-              resolved={toolA.resolved}
-              matches={getMatches(toolA.query)}
-              onChange={(v) => handleChange(setToolA, v)}
-              onSelect={(s) => patch(setToolA, { query: s.name, resolved: s })}
-              onClear={() => setToolA(blank())}
-              onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
-            />
-            <span className="text-muted-foreground text-xs font-medium shrink-0">vs</span>
-            <MiniCombobox
-              placeholder={`Tool 2 — e.g. "${currentExample.b.name}"`}
-              value={toolB.query}
-              resolved={toolB.resolved}
-              matches={getMatches(toolB.query)}
-              onChange={(v) => handleChange(setToolB, v)}
-              onSelect={(s) => patch(setToolB, { query: s.name, resolved: s })}
-              onClear={() => setToolB(blank())}
-              onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
-            />
-          </div>
-
-          {showThird && (
-            <div className="flex items-center gap-2">
+            {[0, 1].map((idx) => (
               <MiniCombobox
-                placeholder='Tool 3 — e.g. "Gemini"'
-                value={toolC.query}
-                resolved={toolC.resolved}
-                matches={getMatches(toolC.query)}
-                onChange={(v) => handleChange(setToolC, v)}
-                onSelect={(s) => patch(setToolC, { query: s.name, resolved: s })}
-                onClear={() => setToolC(blank())}
+                key={idx}
+                placeholder={idx === 0 ? `Tool 1 — e.g. "${currentExample.a.name}"` : `Tool 2 — e.g. "${currentExample.b.name}"`}
+                value={tools[idx]?.query ?? ""}
+                resolved={tools[idx]?.resolved ?? null}
+                matches={getMatches(tools[idx]?.query ?? "")}
+                onChange={(v) => handleChange(idx, v)}
+                onSelect={(s) => updateTool(idx, { query: s.name, resolved: s })}
+                onClear={() => updateTool(idx, blank())}
                 onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
               />
-            </div>
-          )}
+            ))}
+          </div>
+
+          {/* Extra tools 3, 4, 5 — each on own row with remove button */}
+          {tools.slice(2).map((t, i) => {
+            const idx = i + 2;
+            return (
+              <div key={idx} className="flex items-center gap-2">
+                <span className="text-[10px] text-muted-foreground shrink-0 w-10 text-right font-medium">
+                  Tool {idx + 1}
+                </span>
+                <MiniCombobox
+                  placeholder={`e.g. "${PLACEHOLDERS[idx] ?? "Gemini"}"`}
+                  value={t.query}
+                  resolved={t.resolved}
+                  matches={getMatches(t.query)}
+                  onChange={(v) => handleChange(idx, v)}
+                  onSelect={(s) => updateTool(idx, { query: s.name, resolved: s })}
+                  onClear={() => updateTool(idx, blank())}
+                  onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
+                />
+                <button
+                  onClick={() => removeTool(idx)}
+                  className="shrink-0 w-6 h-6 rounded-full border border-border text-muted-foreground hover:text-rose-500 hover:border-rose-400 transition-colors flex items-center justify-center"
+                  aria-label="Remove tool"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
+                  </svg>
+                </button>
+              </div>
+            );
+          })}
         </div>
 
         {/* Error */}
-        {error && (
-          <p className="text-xs text-rose-500">{error}</p>
-        )}
+        {error && <p className="text-xs text-rose-500">{error}</p>}
 
         {/* Actions row */}
         <div className="flex items-center gap-2">
           <button
             onClick={handleCompare}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
-              bothReady
-                ? "bg-primary text-primary-foreground hover:opacity-90 shadow-lg shadow-primary/20"
-                : "bg-primary text-primary-foreground hover:opacity-90"
-            }`}
+            className="flex-1 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 active:opacity-80 transition-opacity flex items-center justify-center gap-2"
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
-            Compare Now
+            Compare {tools.length} Tool{tools.length > 1 ? "s" : ""}
           </button>
 
-          <button
-            onClick={() => { setShowThird((v) => !v); setToolC(blank()); setError(null); }}
-            className="px-3 py-2.5 rounded-xl border border-border text-xs text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all shrink-0 font-medium"
-            title={showThird ? "Remove third tool" : "Add a third tool"}
-          >
-            {showThird ? "− 3rd" : "+ 3rd"}
-          </button>
+          {tools.length < MAX_TOOLS && (
+            <button
+              onClick={addTool}
+              className="px-3 py-2.5 rounded-xl border border-border text-xs text-muted-foreground hover:text-primary hover:border-primary/40 transition-all shrink-0 font-medium"
+              title="Add another tool"
+            >
+              + Add tool
+            </button>
+          )}
         </div>
 
         {/* Quick example chips */}
-        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           <span className="text-[10px] text-muted-foreground shrink-0">Try:</span>
           {EXAMPLES.slice(0, 4).map((ex) => (
             <button
