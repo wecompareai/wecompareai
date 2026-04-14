@@ -231,7 +231,7 @@ export default async function HomePage() {
             </div>
 
             {/* Right: search card top, 8 stat boxes below in 4×2 grid */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-6">
               {/* Search widget */}
               <div className="rounded-2xl border border-primary/20 bg-card p-4 shadow-sm">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-3">
