@@ -56,8 +56,8 @@ function VsJsonLd({ slug, page }: { slug: string; page: ReturnType<typeof getVsP
     datePublished: page.lastUpdated,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
-      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
-      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/authors/jigar-acharya` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/authors/saurabh-gera` },
     ],
     speakable: {
       "@type": "SpeakableSpecification",

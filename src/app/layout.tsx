@@ -110,6 +110,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_URL,
+    types: {
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
+    },
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "a2bae11a313e7ebf",

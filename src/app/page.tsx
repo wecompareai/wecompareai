@@ -2,6 +2,8 @@ import CategoryCard from "@/components/CategoryCard";
 import Link from "next/link";
 import { getCategories } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
+import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/HomepageScoreWrapper";
+import { ALL_SCORES } from "@/lib/scores";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -344,6 +346,19 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ══ SCORES AT A GLANCE ══════════════════════════════════════════════ */}
+      <section className="px-4 pt-6 pb-2">
+        <div className="max-w-7xl mx-auto">
+          <ScoresAtAGlance tools={ALL_SCORES} />
+        </div>
+      </section>
+
+      {/* ══ SCORE BREAKDOWN ═════════════════════════════════════════════════ */}
+      <section className="px-4 pt-4 pb-6">
+        <div className="max-w-7xl mx-auto">
+          <ScoreBreakdownChart tools={ALL_SCORES} />
+        </div>
+      </section>
 
       {/* ══ AI SHOWDOWN — CATEGORIES ════════════════════════════════════════ */}
       <section className="px-4 pb-16 sm:pb-20">

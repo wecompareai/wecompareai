@@ -60,3 +60,20 @@ export async function getAllPublishedSlugs() {
     select: { slug: true, updatedAt: true },
   });
 }
+
+export async function getAllPublishedArticles({ limit = 50 }: { limit?: number } = {}) {
+  return prisma.article.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    select: {
+      slug: true,
+      title: true,
+      excerpt: true,
+      coverImage: true,
+      createdAt: true,
+      updatedAt: true,
+      author: { select: { name: true } },
+    },
+  });
+}

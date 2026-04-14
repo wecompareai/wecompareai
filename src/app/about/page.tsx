@@ -100,15 +100,15 @@ export default function AboutPage() {
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
             {/* Jigar Acharya */}
-            <div className="rounded-xl border border-border p-6 sm:p-8 hover:border-primary/50 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <span className="text-primary font-bold text-xl">JA</span>
+            <Link href="/authors/jigar-acharya" className="block rounded-xl border border-border p-6 sm:p-8 hover:border-primary/50 transition-colors group">
+              <div className="w-14 h-14 rounded-full bg-indigo-500/10 flex items-center justify-center mb-4">
+                <span className="text-indigo-600 dark:text-indigo-400 font-bold text-xl">JA</span>
               </div>
-              <h3 className="text-xl font-semibold text-foreground">
+              <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                 Jigar Acharya
               </h3>
               <p className="text-sm text-primary font-medium mt-1">
-                Solution Architect
+                Co-founder & Solution Architect
               </p>
               <p className="mt-3 text-muted-foreground leading-relaxed text-sm">
                 Jigar brings over 20 years of experience in IT software design
@@ -119,18 +119,19 @@ export default function AboutPage() {
                 &mdash; making it easier for professionals to navigate the
                 ever-growing AI ecosystem.
               </p>
-            </div>
+              <p className="mt-3 text-xs text-primary font-medium">View full profile →</p>
+            </Link>
 
             {/* Saurabh Gera */}
-            <div className="rounded-xl border border-border p-6 sm:p-8 hover:border-primary/50 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <span className="text-primary font-bold text-xl">SG</span>
+            <Link href="/authors/saurabh-gera" className="block rounded-xl border border-border p-6 sm:p-8 hover:border-primary/50 transition-colors group">
+              <div className="w-14 h-14 rounded-full bg-violet-500/10 flex items-center justify-center mb-4">
+                <span className="text-violet-600 dark:text-violet-400 font-bold text-xl">SG</span>
               </div>
-              <h3 className="text-xl font-semibold text-foreground">
+              <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                 Saurabh Gera
               </h3>
               <p className="text-sm text-primary font-medium mt-1">
-                Infrastructure Architect &amp; Director
+                Co-founder & Infrastructure Architect
               </p>
               <p className="mt-3 text-muted-foreground leading-relaxed text-sm">
                 Saurabh is a seasoned infrastructure architect and
@@ -141,20 +142,26 @@ export default function AboutPage() {
                 strategic insight shapes the platform&rsquo;s approach to
                 evaluating the operational aspects of AI technologies.
               </p>
-            </div>
+              <p className="mt-3 text-xs text-primary font-medium">View full profile →</p>
+            </Link>
           </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="pb-16 sm:pb-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center space-y-3">
           <Link
             href="/"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity"
           >
             Explore Comparisons
           </Link>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            <Link href="/authors" className="text-sm text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors">Meet our authors →</Link>
+            <Link href="/changelog" className="text-sm text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors">What's changed in AI →</Link>
+            <Link href="/methodology" className="text-sm text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors">Our methodology →</Link>
+          </div>
         </div>
       </section>
     </div>

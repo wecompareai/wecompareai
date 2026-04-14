@@ -74,7 +74,7 @@ export default async function BlogArticlePage({
     author: {
       "@type": "Person",
       name: article.author.name,
-      url: `${SITE_URL}/about`,
+      url: `${SITE_URL}/authors/${article.author.name.toLowerCase().replace(/\s+/g, "-")}`,
       worksFor: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     },
     publisher: {
@@ -137,14 +137,17 @@ export default async function BlogArticlePage({
             {article.title}
           </h1>
           <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
+            <Link
+              href={`/authors/${article.author.name.toLowerCase().replace(/\s+/g, "-")}`}
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            >
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <span className="text-primary font-medium text-sm">
                   {article.author.name.charAt(0).toUpperCase()}
                 </span>
               </div>
-              <span>{article.author.name}</span>
-            </div>
+              <span className="hover:text-primary transition-colors">{article.author.name}</span>
+            </Link>
             <span>{date}</span>
             <span>{article._count.comments} comments</span>
           </div>
@@ -201,7 +204,7 @@ export default async function BlogArticlePage({
                 </div>
                 <div className="space-y-1.5">
                   <div>
-                    <p className="font-semibold text-sm text-foreground">{article.author.name}</p>
+                    <Link href={`/authors/${article.author.name.toLowerCase().replace(/\s+/g, "-")}`} className="font-semibold text-sm text-foreground hover:text-primary transition-colors">{article.author.name}</Link>
                     {known && (
                       <p className="text-xs text-muted-foreground">{known.title} · <Link href="/about" className="hover:text-primary transition-colors underline underline-offset-2">We Compare AI</Link></p>
                     )}

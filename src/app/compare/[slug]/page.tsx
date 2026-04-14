@@ -75,6 +75,48 @@ export async function generateMetadata({
   };
 }
 
+// ── Generate contextual FAQs from comparison data ────────────────────────────
+function generateFaqs(
+  slug: string,
+  columns: { name: string }[],
+): { q: string; a: string }[] {
+  const names = columns.map((c) => c.name);
+  if (names.length < 2) return [];
+
+  const [first, second, ...rest] = names;
+  const allNames = names.join(", ");
+  const topTwo = `${first} and ${second}`;
+
+  const faqs: { q: string; a: string }[] = [
+    {
+      q: `What is the difference between ${topTwo}?`,
+      a: `${first} and ${second} are both leading tools in this category but serve different use cases. Our comparison breaks down their differences across performance, pricing, reliability, and ease of use — so you can pick the right one for your workflow.`,
+    },
+    {
+      q: `Which is better: ${first} or ${second}?`,
+      a: `The answer depends on your use case. ${first} typically excels for users who prioritise ecosystem integrations and ease of onboarding. ${second} tends to lead on performance depth. See our full score breakdown and "choose if" guide above for a definitive recommendation.`,
+    },
+    {
+      q: `How is We Compare AI's comparison data collected?`,
+      a: `All data is collected independently by our team of AI specialists using a standardised benchmark methodology. We test each tool directly, track public pricing from official sources, and update scores when models release significant updates. No vendor pays to appear or influence their ranking.`,
+    },
+  ];
+
+  if (rest.length > 0) {
+    faqs.push({
+      q: `How does ${first} compare to ${rest[0]}?`,
+      a: `${first} and ${rest[0]} target overlapping use cases but differ in pricing models and feature sets. Our comparison table above includes ${rest[0]} alongside ${topTwo} so you can evaluate all options side by side.`,
+    });
+  }
+
+  faqs.push({
+    q: `Is there a free version of ${first}?`,
+    a: `Most major AI tools including ${first} offer a free tier with usage limits. Check our pricing comparison above for exact plan details, token limits, and cost-per-million-token breakdowns for ${allNames}.`,
+  });
+
+  return faqs;
+}
+
 function ComparisonJsonLd({
   data,
   slug,
@@ -99,8 +141,8 @@ function ComparisonJsonLd({
     url: pageUrl,
     publisher: { "@type": "Organization", name: "We Compare AI", url: SITE_URL },
     author: [
-      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/about` },
-      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/about` },
+      { "@type": "Person", name: "Jigar Acharya", jobTitle: "Co-founder & Solution Architect", url: `${SITE_URL}/authors/jigar-acharya` },
+      { "@type": "Person", name: "Saurabh Gera", jobTitle: "Co-founder & Infrastructure Architect", url: `${SITE_URL}/authors/saurabh-gera` },
     ],
     speakable: {
       "@type": "SpeakableSpecification",
@@ -153,11 +195,23 @@ function ComparisonJsonLd({
     ],
   };
 
+  const faqs = generateFaqs(slug, data.columns);
+  const faqLd = faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  } : null;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
     </>
   );
 }
@@ -271,6 +325,29 @@ export default async function ComparePage({
             </div>
           </div>
         )}
+
+        {/* FAQ Section */}
+        {(() => {
+          const faqs = generateFaqs(slug, data.columns);
+          if (faqs.length === 0) return null;
+          return (
+            <div className="mt-10">
+              <h2 className="text-base font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
+              <div className="space-y-3">
+                {faqs.map((faq) => (
+                  <div key={faq.q} className="rounded-xl border border-border bg-card p-4">
+                    <p className="text-sm font-semibold text-foreground mb-1.5">{faq.q}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground">
+                Last updated: {data.lastUpdated} ·{" "}
+                <Link href="/methodology" className="text-primary hover:underline underline-offset-2">How we collect data →</Link>
+              </p>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
