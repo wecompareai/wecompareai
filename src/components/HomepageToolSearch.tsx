@@ -407,28 +407,29 @@ export default function HomepageToolSearch() {
         {/* Error */}
         {error && <p className="text-xs text-rose-500">{error}</p>}
 
-        {/* Actions row */}
-        <div className="flex items-center gap-2">
+        {/* Add tool button — own row so it's always visible */}
+        {tools.length < MAX_TOOLS && (
           <button
-            onClick={handleCompare}
-            className="flex-1 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 active:opacity-80 transition-opacity flex items-center justify-center gap-2"
+            onClick={addTool}
+            className="w-full py-1.5 rounded-xl border border-dashed border-border text-xs text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all font-medium flex items-center justify-center gap-1.5"
           >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
             </svg>
-            Compare {tools.length} Tool{tools.length > 1 ? "s" : ""}
+            Add {tools.length < MAX_TOOLS ? `tool ${tools.length + 1}` : ""} to compare
           </button>
+        )}
 
-          {tools.length < MAX_TOOLS && (
-            <button
-              onClick={addTool}
-              className="px-3 py-2.5 rounded-xl border border-border text-xs text-muted-foreground hover:text-primary hover:border-primary/40 transition-all shrink-0 font-medium"
-              title="Add another tool"
-            >
-              + Add tool
-            </button>
-          )}
-        </div>
+        {/* Compare button */}
+        <button
+          onClick={handleCompare}
+          className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 active:opacity-80 transition-opacity flex items-center justify-center gap-2"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          Compare {tools.length} Tool{tools.length > 1 ? "s" : ""}
+        </button>
 
         {/* Quick example chips */}
         <div className="flex items-center gap-1.5 flex-wrap">
