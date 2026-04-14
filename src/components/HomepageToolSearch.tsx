@@ -1,0 +1,418 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ALL_SCORES, CATEGORIES, type ToolScore } from "@/lib/scores";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  LLM:        "AI Models",
+  Coding:     "Coding Tools",
+  AppBuilder: "App Builders",
+  Agents:     "AI Agents",
+  Writing:    "Writing Tools",
+  Design:     "Design Tools",
+  Image:      "Image Generators",
+  Video:      "Video Generators",
+  Audio:      "Voice & Audio",
+  Music:      "Music Generation",
+  Cloud:      "Cloud AI Platforms",
+  Search:     "AI Search",
+};
+
+const EXAMPLE_PAIRS = [
+  ["ChatGPT", "Claude"],
+  ["Midjourney", "DALL-E 3"],
+  ["Cursor", "Copilot"],
+  ["Suno", "Udio"],
+  ["Lovable", "Bolt.new"],
+];
+
+function scoreColor(n: number) {
+  if (n >= 9.0) return "text-emerald-500";
+  if (n >= 8.0) return "text-blue-500";
+  if (n >= 7.0) return "text-amber-500";
+  return "text-rose-500";
+}
+
+// ─── Mini combobox ────────────────────────────────────────────────────────────
+interface MiniComboboxProps {
+  placeholder: string;
+  value: string;
+  resolved: ToolScore | null;
+  matches: ToolScore[];
+  onChange: (v: string) => void;
+  onSelect: (s: ToolScore) => void;
+  onClear: () => void;
+  onPremiumTrigger: (name: string) => void;
+}
+
+function MiniCombobox({
+  placeholder, value, resolved, matches,
+  onChange, onSelect, onClear, onPremiumTrigger,
+}: MiniComboboxProps) {
+  const [open, setOpen] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(-1);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function h(e: MouseEvent) {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  function handleKey(e: React.KeyboardEvent) {
+    if (!open) return;
+    if (e.key === "ArrowDown") { e.preventDefault(); setActiveIdx((i) => Math.min(i + 1, matches.length - 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActiveIdx((i) => Math.max(i - 1, 0)); }
+    else if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeIdx >= 0 && matches[activeIdx]) {
+        onSelect(matches[activeIdx]);
+        setOpen(false);
+        setActiveIdx(-1);
+      } else if (value.length >= 2 && matches.length === 0) {
+        onPremiumTrigger(value);
+      }
+    }
+    else if (e.key === "Escape") setOpen(false);
+  }
+
+  const showList = open && value.length >= 1;
+
+  return (
+    <div ref={wrapRef} className="relative flex-1 min-w-0">
+      <div className={`flex items-center gap-2 rounded-xl border bg-background px-3 py-2.5 transition-colors ${
+        resolved ? "border-primary/50" : open ? "border-primary/40" : "border-border"
+      }`}>
+        {resolved && (
+          <span className={`text-xs font-bold tabular-nums shrink-0 ${scoreColor(resolved.overall)}`}>
+            {resolved.overall}
+          </span>
+        )}
+        <input
+          type="text"
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => { onChange(e.target.value); setOpen(true); setActiveIdx(-1); }}
+          onFocus={() => setOpen(true)}
+          onKeyDown={handleKey}
+          className="flex-1 min-w-0 text-sm bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none"
+          autoComplete="off"
+          spellCheck={false}
+        />
+        {value && (
+          <button
+            onClick={() => { onClear(); setOpen(false); }}
+            className="text-muted-foreground hover:text-foreground shrink-0 transition-colors"
+            aria-label="Clear"
+          >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Dropdown */}
+      {showList && matches.length > 0 && (
+        <ul className="absolute z-50 top-full mt-1 left-0 right-0 rounded-xl border border-border bg-card shadow-xl overflow-hidden text-left">
+          {matches.map((s, i) => (
+            <li
+              key={s.id}
+              onMouseEnter={() => setActiveIdx(i)}
+              onMouseDown={(e) => { e.preventDefault(); onSelect(s); setOpen(false); setActiveIdx(-1); }}
+              className={`flex items-center gap-3 px-3 py-2 cursor-pointer transition-colors ${
+                i === activeIdx ? "bg-primary/10" : "hover:bg-muted/50"
+              }`}
+            >
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-medium text-foreground">{s.name}</span>
+                <span className="text-xs text-muted-foreground ml-1.5">{s.provider}</span>
+              </div>
+              <span className={`text-xs font-bold tabular-nums shrink-0 ${scoreColor(s.overall)}`}>
+                {s.overall}
+              </span>
+            </li>
+          ))}
+          <li className="px-3 py-1.5 border-t border-border bg-muted/20 text-[10px] text-muted-foreground">
+            {ALL_SCORES.length} tools · Can&apos;t find yours?{" "}
+            <span className="text-primary font-medium cursor-pointer">Unlock Premium</span>
+          </li>
+        </ul>
+      )}
+
+      {/* No results */}
+      {showList && value.length >= 2 && matches.length === 0 && (
+        <div
+          className="absolute z-50 top-full mt-1 left-0 right-0 rounded-xl border border-border bg-card shadow-xl px-3 py-3 text-left cursor-pointer"
+          onMouseDown={(e) => { e.preventDefault(); onPremiumTrigger(value); }}
+        >
+          <p className="text-xs font-medium text-foreground">&ldquo;{value}&rdquo; not found</p>
+          <p className="text-[10px] text-primary mt-0.5">Not in our free database — click to unlock →</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Premium gate ─────────────────────────────────────────────────────────────
+function PremiumGate({ toolName, onClose }: { toolName: string; onClose: () => void }) {
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div className="relative w-full max-w-sm rounded-2xl border border-border bg-card shadow-2xl overflow-hidden">
+        <div className="h-1 w-full bg-gradient-to-r from-violet-500 via-primary to-blue-500" />
+        <div className="p-5 space-y-4">
+          <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground" aria-label="Close">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+            <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+
+          <div>
+            <h3 className="text-base font-bold text-foreground">
+              &ldquo;{toolName}&rdquo; requires Premium
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+              Our free database covers {ALL_SCORES.length}+ AI tools. Comparing tools outside it requires
+              a live data lookup — available on Premium.
+            </p>
+          </div>
+
+          <ul className="space-y-1.5">
+            {[
+              "Compare any AI tool, including new releases",
+              "Live benchmark data updated daily",
+              "API access for custom integrations",
+            ].map((p) => (
+              <li key={p} className="flex items-center gap-2 text-xs text-muted-foreground">
+                <svg className="w-3.5 h-3.5 text-emerald-500 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                {p}
+              </li>
+            ))}
+          </ul>
+
+          <div className="space-y-2 pt-1">
+            <button className="w-full py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity">
+              Unlock Premium →
+            </button>
+            <button
+              onClick={onClose}
+              className="w-full py-2 rounded-xl border border-border text-xs text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-all"
+            >
+              Browse {ALL_SCORES.length}+ free tools
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main exported component ──────────────────────────────────────────────────
+interface ToolInput {
+  query: string;
+  resolved: ToolScore | null;
+}
+
+function blank(): ToolInput { return { query: "", resolved: null }; }
+
+export default function HomepageToolSearch() {
+  const router = useRouter();
+
+  const [category, setCategory] = useState("All");
+  const [toolA, setToolA] = useState<ToolInput>(blank());
+  const [toolB, setToolB] = useState<ToolInput>(blank());
+  const [toolC, setToolC] = useState<ToolInput>(blank());
+  const [showThird, setShowThird] = useState(false);
+  const [premium, setPremium] = useState<{ show: boolean; name: string }>({ show: false, name: "" });
+  const [error, setError] = useState<string | null>(null);
+  const [exampleIdx, setExampleIdx] = useState(0);
+
+  // Rotate placeholder examples
+  useEffect(() => {
+    const t = setInterval(() => setExampleIdx((i) => (i + 1) % EXAMPLE_PAIRS.length), 3000);
+    return () => clearInterval(t);
+  }, []);
+
+  const filtered = ALL_SCORES.filter((s) => category === "All" || s.category === category);
+
+  function getMatches(q: string) {
+    if (!q) return [];
+    const lq = q.toLowerCase();
+    return filtered
+      .filter((s) => s.name.toLowerCase().includes(lq) || s.provider.toLowerCase().includes(lq) || s.id.includes(lq))
+      .slice(0, 7);
+  }
+
+  function patch(setter: React.Dispatch<React.SetStateAction<ToolInput>>, update: Partial<ToolInput>) {
+    setter((prev) => ({ ...prev, ...update }));
+    setError(null);
+  }
+
+  function handleChange(setter: React.Dispatch<React.SetStateAction<ToolInput>>, v: string) {
+    const resolved = ALL_SCORES.find((s) => s.name.toLowerCase() === v.toLowerCase()) ?? null;
+    patch(setter, { query: v, resolved });
+  }
+
+  function handleCompare() {
+    setError(null);
+    const active = showThird ? [toolA, toolB, toolC] : [toolA, toolB];
+
+    const emptyField = active.find((t) => !t.query.trim());
+    if (emptyField) { setError("Enter a tool name in each field."); return; }
+
+    const unresolvedField = active.find((t) => !t.resolved);
+    if (unresolvedField) { setPremium({ show: true, name: unresolvedField.query }); return; }
+
+    if (!showThird) {
+      const [a, b] = [toolA.resolved!, toolB.resolved!].sort((x, y) => x.id.localeCompare(y.id));
+      router.push(`/vs/${a.id}-vs-${b.id}`);
+    } else {
+      // 3-way: go to /search with state encoded in URL
+      const ids = [toolA.resolved!.id, toolB.resolved!.id, toolC.resolved!.id].join(",");
+      router.push(`/search?compare=${ids}`);
+    }
+  }
+
+  function fillExample(pair: string[]) {
+    const a = ALL_SCORES.find((s) => s.name === pair[0]) ?? null;
+    const b = ALL_SCORES.find((s) => s.name === pair[1]) ?? null;
+    setToolA({ query: pair[0], resolved: a });
+    setToolB({ query: pair[1], resolved: b });
+    setError(null);
+  }
+
+  const bothReady = toolA.resolved && toolB.resolved && (!showThird || toolC.resolved);
+  const currentExample = EXAMPLE_PAIRS[exampleIdx];
+
+  return (
+    <>
+      <div className="space-y-3 w-full">
+        {/* Category selector */}
+        <div className="flex items-center gap-2">
+          <label className="text-xs text-muted-foreground shrink-0 font-medium">Category:</label>
+          <select
+            value={category}
+            onChange={(e) => { setCategory(e.target.value); setToolA(blank()); setToolB(blank()); setToolC(blank()); setError(null); }}
+            className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
+          >
+            <option value="All">All ({ALL_SCORES.length} tools)</option>
+            {CATEGORIES.map((cat) => {
+              const n = ALL_SCORES.filter((s) => s.category === cat).length;
+              return <option key={cat} value={cat}>{CATEGORY_LABELS[cat] ?? cat} ({n})</option>;
+            })}
+          </select>
+        </div>
+
+        {/* Tool inputs */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <MiniCombobox
+              placeholder={`Tool 1 — e.g. "${currentExample[0]}"`}
+              value={toolA.query}
+              resolved={toolA.resolved}
+              matches={getMatches(toolA.query)}
+              onChange={(v) => handleChange(setToolA, v)}
+              onSelect={(s) => patch(setToolA, { query: s.name, resolved: s })}
+              onClear={() => setToolA(blank())}
+              onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
+            />
+            <span className="text-muted-foreground text-xs font-medium shrink-0">vs</span>
+            <MiniCombobox
+              placeholder={`Tool 2 — e.g. "${currentExample[1]}"`}
+              value={toolB.query}
+              resolved={toolB.resolved}
+              matches={getMatches(toolB.query)}
+              onChange={(v) => handleChange(setToolB, v)}
+              onSelect={(s) => patch(setToolB, { query: s.name, resolved: s })}
+              onClear={() => setToolB(blank())}
+              onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
+            />
+          </div>
+
+          {showThird && (
+            <div className="flex items-center gap-2">
+              <MiniCombobox
+                placeholder='Tool 3 — e.g. "Gemini"'
+                value={toolC.query}
+                resolved={toolC.resolved}
+                matches={getMatches(toolC.query)}
+                onChange={(v) => handleChange(setToolC, v)}
+                onSelect={(s) => patch(setToolC, { query: s.name, resolved: s })}
+                onClear={() => setToolC(blank())}
+                onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Error */}
+        {error && (
+          <p className="text-xs text-rose-500">{error}</p>
+        )}
+
+        {/* Actions row */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleCompare}
+            className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2 ${
+              bothReady
+                ? "bg-primary text-primary-foreground hover:opacity-90 shadow-lg shadow-primary/20"
+                : "bg-primary text-primary-foreground hover:opacity-90"
+            }`}
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Compare Now
+          </button>
+
+          <button
+            onClick={() => { setShowThird((v) => !v); setToolC(blank()); setError(null); }}
+            className="px-3 py-2.5 rounded-xl border border-border text-xs text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all shrink-0 font-medium"
+            title={showThird ? "Remove third tool" : "Add a third tool"}
+          >
+            {showThird ? "− 3rd" : "+ 3rd"}
+          </button>
+        </div>
+
+        {/* Quick example chips */}
+        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+          <span className="text-[10px] text-muted-foreground shrink-0">Try:</span>
+          {EXAMPLE_PAIRS.slice(0, 4).map((pair) => (
+            <button
+              key={pair.join("-")}
+              onClick={() => fillExample(pair)}
+              className="text-[10px] px-2 py-0.5 rounded-full border border-border bg-muted/50 hover:border-primary/50 hover:text-primary text-muted-foreground transition-all font-medium"
+            >
+              {pair[0]} vs {pair[1]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {premium.show && (
+        <PremiumGate toolName={premium.name} onClose={() => setPremium({ show: false, name: "" })} />
+      )}
+    </>
+  );
+}

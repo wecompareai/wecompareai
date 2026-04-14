@@ -4,6 +4,7 @@ import { getCategories } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
 import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/HomepageScoreWrapper";
 import { ALL_SCORES } from "@/lib/scores";
+import HomepageToolSearch from "@/components/HomepageToolSearchClient";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -229,24 +230,34 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right: stats 2×4 grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { value: `${totalCount}`, label: "Battle arenas",   sub: "AI categories we track",       color: "text-primary" },
-                { value: "100+",          label: "AI contestants",  sub: "Models, tools & platforms",    color: "text-violet-600 dark:text-violet-400" },
-                { value: "1,000+",        label: "Data points",     sub: "Tracked across every AI tool", color: "text-emerald-600 dark:text-emerald-400" },
-                { value: "Every Second",  label: "Updated Instantaneously",     sub: "Powered by autonomous AI agents operating around the clock.", color: "text-amber-600 dark:text-amber-400" },
-                { value: "1,200+",        label: "VS Comparisons",  sub: "Head-to-head tool battles",    color: "text-rose-600 dark:text-rose-400" },
-                { value: "53",            label: "Rankings",        sub: "AI tools scored & ranked",     color: "text-sky-600 dark:text-sky-400" },
-                { value: "25",            label: "Best For guides", sub: "Find the right tool fast",     color: "text-teal-600 dark:text-teal-400" },
-                { value: "10",            label: "Alternatives",    sub: "Top tool swap guides",         color: "text-orange-600 dark:text-orange-400" },
-              ].map((s) => (
-                <div key={s.label} className="rounded-xl border border-border bg-card px-5 py-5 flex flex-col gap-1 hover:bg-muted/40 transition-colors">
-                  <div className={`text-2xl sm:text-3xl font-extrabold ${s.color}`}>{s.value}</div>
-                  <div className="text-sm font-semibold text-foreground">{s.label}</div>
-                  <div className="text-xs text-muted-foreground">{s.sub}</div>
-                </div>
-              ))}
+            {/* Right: search card top, 8 stat boxes below in 4×2 grid */}
+            <div className="flex flex-col gap-3">
+              {/* Search widget */}
+              <div className="rounded-2xl border border-primary/20 bg-card p-4 shadow-sm">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-3">
+                  Compare any AI tools — free
+                </p>
+                <HomepageToolSearch />
+              </div>
+
+              {/* Stats — 4 cols × 2 rows fills width below search */}
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { value: `${totalCount}`, label: "Battle arenas",  color: "text-primary" },
+                  { value: "100+",          label: "AI tools",       color: "text-violet-600 dark:text-violet-400" },
+                  { value: "1,000+",        label: "Data points",    color: "text-emerald-600 dark:text-emerald-400" },
+                  { value: "Live",          label: "Updated",        color: "text-amber-600 dark:text-amber-400" },
+                  { value: "1,200+",        label: "VS pages",       color: "text-rose-600 dark:text-rose-400" },
+                  { value: "53",            label: "Rankings",       color: "text-sky-600 dark:text-sky-400" },
+                  { value: "25",            label: "Best For",       color: "text-teal-600 dark:text-teal-400" },
+                  { value: "10",            label: "Alternatives",   color: "text-orange-600 dark:text-orange-400" },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-xl border border-border bg-card px-3 py-2.5 flex flex-col gap-0.5 hover:bg-muted/40 transition-colors">
+                    <div className={`text-lg font-extrabold leading-tight tabular-nums ${s.color}`}>{s.value}</div>
+                    <div className="text-[10px] font-semibold text-foreground leading-tight">{s.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
           </div>

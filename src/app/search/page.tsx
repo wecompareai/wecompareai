@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   ALL_SCORES,
@@ -460,6 +460,7 @@ function makeInput(): ToolInput {
 
 export default function SearchPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const [category, setCategory] = useState("All");
@@ -471,6 +472,25 @@ export default function SearchPage() {
     toolName: "",
   });
   const [error, setError] = useState<string | null>(null);
+
+  // Handle ?compare=id1,id2,id3 from homepage widget (3-way only)
+  useEffect(() => {
+    const param = searchParams.get("compare");
+    if (!param) return;
+    const ids = param.split(",").map((s) => s.trim()).filter(Boolean);
+    const tools = ids.map((id) => ALL_SCORES.find((s) => s.id === id)).filter(Boolean) as ToolScore[];
+    if (tools.length >= 3) {
+      setShowThird(true);
+      setToolInputs([
+        { query: tools[0].name, resolved: tools[0] },
+        { query: tools[1].name, resolved: tools[1] },
+        { query: tools[2].name, resolved: tools[2] },
+      ]);
+      setCompareResult(tools.slice(0, 3));
+      setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const activeCount = showThird ? 3 : 2;
 
