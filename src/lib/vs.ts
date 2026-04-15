@@ -1655,9 +1655,30 @@ function generateVsPage(a: ToolScore, b: ToolScore): VsPage {
     chooseA,
     chooseB,
     faqs,
-    relatedSlugs: [],
+    relatedSlugs: getRelatedSlugs(first, second),
     lastUpdated: "2026-04-13",
   };
+}
+
+// Generate up to 4 related slugs — same-category pairs not involving either tool
+function getRelatedSlugs(a: ToolScore, b: ToolScore): string[] {
+  const sameCategory = ALL_SCORES.filter(
+    (s) => s.category === a.category && s.id !== a.id && s.id !== b.id
+  ).sort((x, y) => y.overall - x.overall).slice(0, 3);
+
+  const related: string[] = [];
+  // a vs each same-category peer
+  for (const peer of sameCategory) {
+    const [x, y] = [a, peer].sort((p, q) => p.id.localeCompare(q.id));
+    related.push(`${x.id}-vs-${y.id}`);
+  }
+  // b vs top same-category peer
+  if (sameCategory[0]) {
+    const [x, y] = [b, sameCategory[0]].sort((p, q) => p.id.localeCompare(q.id));
+    const s = `${x.id}-vs-${y.id}`;
+    if (!related.includes(s)) related.push(s);
+  }
+  return related.slice(0, 4);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
