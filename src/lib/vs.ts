@@ -1803,6 +1803,9 @@ export function getVsPage(slug: string): VsPage | undefined {
 export function getVsSlugs(): string[] {
   const handcraftedSlugs = vsPages.map((p) => p.slug);
 
+  // Use a Set of slugs already covered (handcrafted) to avoid duplicates
+  const handcraftedSlugSet = new Set(handcraftedSlugs);
+
   // Generate all pairwise combinations not already covered by hand-crafted pages
   const generatedSlugs: string[] = [];
   for (let i = 0; i < ALL_SCORES.length; i++) {
@@ -1810,17 +1813,21 @@ export function getVsSlugs(): string[] {
       const a = ALL_SCORES[i];
       const b = ALL_SCORES[j];
 
-      // Skip if already covered by a hand-crafted page
+      const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
+      const slug = `${first.id}-vs-${second.id}`;
+
+      // Skip if already covered by a hand-crafted page (by slug OR by ID pair)
+      if (handcraftedSlugSet.has(slug)) continue;
       const pairKey = [a.id, b.id].sort().join("|");
       if (HANDCRAFTED_PAIRS.has(pairKey)) continue;
 
-      const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
-      generatedSlugs.push(`${first.id}-vs-${second.id}`);
+      generatedSlugs.push(slug);
     }
   }
 
-  // Add same-category 3-tool combos (top 5 tools per category)
+  // Add same-category 3-tool combos (top 6 tools per category)
   const multiSlugs = getMultiVsSlugs();
 
-  return [...handcraftedSlugs, ...generatedSlugs, ...multiSlugs];
+  // Deduplicate across all sources (handcrafted pages missing IDs can cause overlap)
+  return [...new Set([...handcraftedSlugs, ...generatedSlugs, ...multiSlugs])];
 }
