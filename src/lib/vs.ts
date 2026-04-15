@@ -1691,6 +1691,94 @@ const HANDCRAFTED_PAIRS = new Set<string>(
 );
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Multi-tool (3–5 way) comparison support
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface MultiVsPage {
+  slug: string;
+  tools: VsTool[];          // 3–5 tools, sorted by id
+  toolScores: ToolScore[];  // raw scores for the table
+  headline: string;
+  description: string;
+  category: string;
+  categoryEmoji: string;
+  winner: VsTool;
+  verdict: string;
+  relatedSlugs: string[];
+  lastUpdated: string;
+}
+
+/** Parse a multi-tool slug and return page data, or undefined if invalid. */
+export function getMultiVsPage(slug: string): MultiVsPage | undefined {
+  const parts = slug.split("-vs-");
+  if (parts.length < 3 || parts.length > 5) return undefined;
+
+  const scores = parts.map((id) => ALL_SCORES.find((s) => s.id === id)).filter(Boolean) as ToolScore[];
+  if (scores.length !== parts.length) return undefined;  // some IDs not found
+
+  const sorted = [...scores].sort((a, b) => a.id.localeCompare(b.id));
+  const canonical = sorted.map((s) => s.id).join("-vs-");
+  if (canonical !== slug) return undefined;              // enforce canonical order
+
+  const tools = sorted.map((s) => scoreToVsTool(s));
+  const winner = tools.reduce((best, t) => (t.overall > best.overall ? t : best));
+  const winnerScore = scores.find((s) => s.id === winner.id)!;
+
+  const catLabel = scores.every((s) => s.category === scores[0].category)
+    ? (SCORE_CAT_TO_VS_LABEL[scores[0].category] ?? scores[0].category)
+    : "AI Tools";
+  const catEmoji = VS_LABEL_TO_EMOJI[catLabel] ?? "🤖";
+
+  const nameList = sorted.map((s) => s.name).join(" vs ");
+  const relatedSlugs = getRelatedSlugs(sorted[0], sorted[1]).slice(0, 3);
+
+  return {
+    slug: canonical,
+    tools,
+    toolScores: sorted,
+    headline: `${nameList} — ${parts.length}-Way Comparison (2026)`,
+    description: `${nameList}: ${parts.length}-way head-to-head scored on Performance, Value, Reliability, and Ease of Use. See scores, pros, cons, and our verdict for each tool.`,
+    category: catLabel,
+    categoryEmoji: catEmoji,
+    winner,
+    verdict: `${winner.name} leads with ${winner.overall.toFixed(1)}/10 overall. ${winnerScore.verdict}`,
+    relatedSlugs,
+    lastUpdated: "2026-04-15",
+  };
+}
+
+/** Build canonical multi-tool slug from an array of tool IDs (sorts them). */
+export function buildMultiVsSlug(ids: string[]): string {
+  return [...ids].sort((a, b) => a.localeCompare(b)).join("-vs-");
+}
+
+/** Generate same-category 3-tool combos for top N tools per category (for static params). */
+export function getMultiVsSlugs(): string[] {
+  const TOP_N = 6; // top 6 tools per category → C(6,3) = 20 combos per category
+  const slugs: string[] = [];
+
+  const categories = [...new Set(ALL_SCORES.map((s) => s.category))];
+  for (const cat of categories) {
+    const catTools = ALL_SCORES
+      .filter((s) => s.category === cat)
+      .sort((a, b) => b.overall - a.overall)
+      .slice(0, TOP_N);
+
+    // All 3-tool combos within top N
+    for (let i = 0; i < catTools.length; i++) {
+      for (let j = i + 1; j < catTools.length; j++) {
+        for (let k = j + 1; k < catTools.length; k++) {
+          const ids = [catTools[i].id, catTools[j].id, catTools[k].id].sort();
+          slugs.push(ids.join("-vs-"));
+        }
+      }
+    }
+  }
+
+  return slugs;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Public API
 // ─────────────────────────────────────────────────────────────────────────────
 export function getVsPage(slug: string): VsPage | undefined {
@@ -1731,5 +1819,8 @@ export function getVsSlugs(): string[] {
     }
   }
 
-  return [...handcraftedSlugs, ...generatedSlugs];
+  // Add same-category 3-tool combos (top 5 tools per category)
+  const multiSlugs = getMultiVsSlugs();
+
+  return [...handcraftedSlugs, ...generatedSlugs, ...multiSlugs];
 }
