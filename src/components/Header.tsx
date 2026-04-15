@@ -111,7 +111,11 @@ export default function Header() {
                   {sectionLabel("Discover")}
                   <Link href="/search" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">Tool Search <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Search and compare any 2–3 AI tools side by side</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Search and compare any 2–5 AI tools side by side</div>
+                  </Link>
+                  <Link href="/for" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">AI by Profession <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Best tools for lawyers, doctors, teachers & 12+ more</div>
                   </Link>
                   <Link href="/categories" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">By Category <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
@@ -515,6 +519,7 @@ export default function Header() {
           <MobileAccordion label="Compare AI" open={mobileCompareOpen} onToggle={() => setMobileCompareOpen(v => !v)}>
             <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Discover</p>
             <MobileLink href="/search"      onClick={closeMobile}>🔍 Tool Search (New)</MobileLink>
+            <MobileLink href="/for"         onClick={closeMobile}>👤 AI by Profession (New)</MobileLink>
             <MobileLink href="/categories"  onClick={closeMobile}>By Category</MobileLink>
             <MobileLink href="/domains"     onClick={closeMobile}>By Domain</MobileLink>
             <MobileLink href="/countries"   onClick={closeMobile}>By Country</MobileLink>
