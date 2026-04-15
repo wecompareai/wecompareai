@@ -103,6 +103,11 @@ export default function Header() {
               Compare Tools
             </Link>
 
+            <Link href="/for" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap font-medium flex items-center gap-1">
+              AI by Profession
+              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-bold">New</span>
+            </Link>
+
             {/* ── Compare AI ── */}
             <div className="relative" onMouseEnter={compare.onEnter} onMouseLeave={compare.onLeave}>
               {navBtn("Compare AI", compare.open)}
