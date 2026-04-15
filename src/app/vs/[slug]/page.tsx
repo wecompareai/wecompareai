@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getVsPage, getVsSlugs } from "@/lib/vs";
+import { getVsPage, getVsSlugs, getMultiVsPage, type MultiVsPage } from "@/lib/vs";
+import { SCORE_DIMENSIONS } from "@/lib/scores";
 import { VsRadarChart } from "@/components/charts/VsRadarChart";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
@@ -19,16 +20,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const page = getVsPage(slug);
-  if (!page) return { title: "Not Found" };
+  const multi = !page ? getMultiVsPage(slug) : null;
+  if (!page && !multi) return { title: "Not Found" };
 
+  const headline = page ? page.headline : multi!.headline;
+  const description = page ? page.description : multi!.description;
   const url = `${SITE_URL}/vs/${slug}`;
   return {
-    title: `${page.toolA.name} vs ${page.toolB.name} (${new Date().getFullYear()}) | We Compare AI`,
-    description: page.description,
+    title: `${headline.replace(" — ", " (").replace(/\?$/, "")} | We Compare AI`,
+    description,
     alternates: { canonical: url },
     openGraph: {
-      title: page.headline,
-      description: page.description,
+      title: headline,
+      description,
       url,
       siteName: "We Compare AI",
       type: "article",
@@ -36,8 +40,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: page.headline,
-      description: page.description,
+      title: headline,
+      description,
       images: ["/og-image.png"],
     },
   };
@@ -113,9 +117,15 @@ export default async function VsPage({
 }) {
   const { slug } = await params;
   const page = getVsPage(slug);
-  if (!page) notFound();
+  const multi = !page ? getMultiVsPage(slug) : null;
+  if (!page && !multi) notFound();
 
-  const { toolA, toolB } = page;
+  // Render multi-tool comparison page
+  if (multi) return <MultiToolPage slug={slug} page={multi} />;
+
+  // From here page is guaranteed to be defined (2-tool path)
+  const p = page!;
+  const { toolA, toolB } = p;
   const aWins = toolA.overall >= toolB.overall;
 
   const dims = [
@@ -127,7 +137,7 @@ export default async function VsPage({
 
   return (
     <div className="py-8 sm:py-10 px-4">
-      <VsJsonLd slug={slug} page={page} />
+      <VsJsonLd slug={slug} page={p} />
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <nav className="mb-5 flex items-center gap-2 text-xs text-muted-foreground">
@@ -141,17 +151,17 @@ export default async function VsPage({
         {/* Category badge */}
         <div className="mb-3">
           <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-border bg-muted text-muted-foreground font-medium">
-            {page.categoryEmoji} {page.category}
+            {p.categoryEmoji} {p.category}
           </span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">{page.headline}</h1>
-        <p className="text-sm text-muted-foreground mb-2">{page.description}</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">{p.headline}</h1>
+        <p className="text-sm text-muted-foreground mb-2">{p.description}</p>
         <div className="flex flex-wrap items-center gap-3 mb-8">
           <span className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Updated: {page.lastUpdated}
+            Updated: {p.lastUpdated}
           </span>
           <Link href="/methodology" className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2">
             How we score →
@@ -227,7 +237,7 @@ export default async function VsPage({
         {/* ── Verdict banner ── */}
         <div className="mb-8 rounded-xl border-l-4 border-primary bg-primary/5 px-5 py-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Our Verdict</p>
-          <p className="text-sm text-foreground leading-relaxed">{page.verdict}</p>
+          <p className="text-sm text-foreground leading-relaxed">{p.verdict}</p>
         </div>
 
         {/* ── Pricing row ── */}
@@ -284,7 +294,7 @@ export default async function VsPage({
               Choose {toolA.name} if…
             </p>
             <ul className="space-y-2">
-              {page.chooseA.map((item) => (
+              {p.chooseA.map((item) => (
                 <li key={item} className="flex gap-2 text-sm text-foreground">
                   <span className="text-indigo-500 shrink-0">→</span>
                   {item}
@@ -297,7 +307,7 @@ export default async function VsPage({
               Choose {toolB.name} if…
             </p>
             <ul className="space-y-2">
-              {page.chooseB.map((item) => (
+              {p.chooseB.map((item) => (
                 <li key={item} className="flex gap-2 text-sm text-foreground">
                   <span className="text-amber-500 shrink-0">→</span>
                   {item}
@@ -308,11 +318,11 @@ export default async function VsPage({
         </div>
 
         {/* ── FAQ ── */}
-        {page.faqs.length > 0 && (
+        {p.faqs.length > 0 && (
           <div className="mb-8">
             <h2 className="text-base font-semibold text-foreground mb-4">Frequently Asked Questions</h2>
             <div className="space-y-4">
-              {page.faqs.map((faq) => (
+              {p.faqs.map((faq) => (
                 <div key={faq.q} className="rounded-xl border border-border bg-card p-4">
                   <p className="text-sm font-semibold text-foreground mb-1.5">{faq.q}</p>
                   <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
@@ -323,11 +333,11 @@ export default async function VsPage({
         )}
 
         {/* ── Related VS ── */}
-        {page.relatedSlugs.length > 0 && (
+        {p.relatedSlugs.length > 0 && (
           <div className="mb-8">
             <h2 className="text-base font-semibold text-foreground mb-3">Related Comparisons</h2>
             <div className="flex flex-wrap gap-2">
-              {page.relatedSlugs.map((s) => {
+              {p.relatedSlugs.map((s) => {
                 const related = getVsPage(s);
                 if (!related) return null;
                 return (
@@ -347,7 +357,214 @@ export default async function VsPage({
         {/* ── CTA ── */}
         <div className="rounded-xl border border-border bg-muted/30 p-6 text-center">
           <p className="text-sm font-semibold text-foreground mb-1">See all VS comparisons</p>
-          <p className="text-xs text-muted-foreground mb-3">28 head-to-head comparisons across AI models, coding tools, image generators & more.</p>
+          <p className="text-xs text-muted-foreground mb-3">4,000+ head-to-head comparisons across AI models, coding tools, image generators & more.</p>
+          <Link href="/vs" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-2">
+            Browse all comparisons →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Multi-tool comparison page (3–5 tools) ────────────────────────────────
+function scoreColor(n: number) {
+  if (n >= 9.0) return "text-emerald-600 dark:text-emerald-400";
+  if (n >= 8.0) return "text-blue-600 dark:text-blue-400";
+  if (n >= 7.0) return "text-amber-600 dark:text-amber-400";
+  return "text-rose-600 dark:text-rose-400";
+}
+
+function MultiToolPage({ page }: { slug: string; page: MultiVsPage }) {
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="max-w-5xl mx-auto px-4 py-10 sm:py-14 space-y-10">
+
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">
+          <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/vs" className="hover:text-foreground transition-colors">VS Comparisons</Link>
+          <span>/</span>
+          <span className="text-foreground font-medium truncate max-w-[300px]">
+            {page.tools.map((t) => t.name).join(" vs ")}
+          </span>
+        </nav>
+
+        {/* Header */}
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold">
+            {page.categoryEmoji} {page.category} · {page.tools.length}-Way Comparison
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight">
+            {page.tools.map((t) => t.name).join(" vs ")}
+          </h1>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">{page.description}</p>
+        </div>
+
+        {/* Winner banner */}
+        <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5 flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-2xl shrink-0">
+            🏆
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] font-bold text-primary uppercase tracking-widest mb-0.5">Top Pick</p>
+            <p className="text-base font-bold text-foreground">{page.winner.name}
+              <span className={`ml-2 text-sm font-bold tabular-nums ${scoreColor(page.winner.overall)}`}>
+                {page.winner.overall}/10
+              </span>
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed mt-0.5 line-clamp-2">{page.verdict}</p>
+          </div>
+        </div>
+
+        {/* Score cards row */}
+        <div className={`grid gap-3 ${page.tools.length === 3 ? "grid-cols-3" : page.tools.length === 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2 sm:grid-cols-5"}`}>
+          {page.tools.map((t) => {
+            const isWinner = t.name === page.winner.name;
+            return (
+              <div key={t.id} className={`rounded-xl border p-3.5 text-center ${isWinner ? "border-primary/40 bg-primary/5" : "border-border bg-card"}`}>
+                {isWinner && <div className="text-[9px] font-bold text-primary uppercase tracking-widest mb-1">Top Pick</div>}
+                <div className="text-xs font-bold text-foreground truncate">{t.name}</div>
+                <div className="text-[10px] text-muted-foreground">{t.provider}</div>
+                <div className={`text-2xl font-black tabular-nums mt-1.5 ${scoreColor(t.overall)}`}>{t.overall}</div>
+                <div className="text-[10px] text-muted-foreground">/ 10</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Comparison table */}
+        <div>
+          <h2 className="text-lg font-bold text-foreground mb-4">Score Breakdown</h2>
+          <div className="rounded-2xl border border-border overflow-x-auto" style={{ backgroundColor: 'var(--background)' }}>
+            <table className="w-full border-collapse" style={{ minWidth: `${180 + page.tools.length * 130}px` }}>
+              <thead>
+                <tr>
+                  <th className="text-left px-5 py-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide border-b border-r border-border bg-muted/30 w-44">
+                    Dimension
+                  </th>
+                  {page.tools.map((t) => {
+                    const isWinner = t.name === page.winner.name;
+                    return (
+                      <th key={t.id} className={`px-4 py-4 border-b border-r last:border-r-0 border-border text-center ${isWinner ? "bg-primary/5" : "bg-muted/10"}`}>
+                        {isWinner && <div className="text-[9px] font-bold text-primary uppercase tracking-widest mb-1">★ Top Pick</div>}
+                        <div className="text-sm font-bold text-foreground">{t.name}</div>
+                        <div className="text-[10px] text-muted-foreground mt-0.5">{t.provider}</div>
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {SCORE_DIMENSIONS.map((dim, rowIdx) => {
+                  const vals = page.toolScores.map((s) => s[dim.key as keyof typeof s] as number);
+                  const maxVal = Math.max(...vals);
+                  return (
+                    <tr key={dim.key} className={rowIdx % 2 === 0 ? "bg-muted/10" : ""}>
+                      <td className="px-5 py-3.5 border-b border-r border-border">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-2 h-2 rounded-full ${dim.color} shrink-0`} />
+                          <span className="text-xs font-medium text-foreground">{dim.label}</span>
+                        </div>
+                        <div className="text-[10px] text-muted-foreground mt-0.5 ml-4">{dim.desc}</div>
+                      </td>
+                      {page.toolScores.map((s) => {
+                        const val = s[dim.key as keyof typeof s] as number;
+                        const isTop = val === maxVal;
+                        return (
+                          <td key={s.id} className={`px-4 py-3.5 border-b border-r last:border-r-0 border-border text-center ${isTop ? "bg-primary/5" : ""}`}>
+                            <span className={`text-base font-bold tabular-nums ${scoreColor(val)}`}>{val}</span>
+                            {isTop && vals.filter((v) => v === maxVal).length === 1 && (
+                              <span className="text-[10px] text-primary font-bold ml-1">▲</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+                {/* Overall row */}
+                <tr style={{ backgroundColor: 'var(--muted)' }}>
+                  <td className="px-5 py-4 border-r border-border">
+                    <span className="text-xs font-bold text-foreground uppercase tracking-wide">Overall Score</span>
+                  </td>
+                  {page.tools.map((t) => {
+                    const isWinner = t.name === page.winner.name;
+                    return (
+                      <td key={t.id} className={`px-4 py-4 border-r last:border-r-0 border-border text-center ${isWinner ? "bg-primary/10" : ""}`}>
+                        <div className={`text-2xl font-black tabular-nums ${scoreColor(t.overall)}`}>{t.overall}</div>
+                        <div className="text-[10px] text-muted-foreground">/ 10</div>
+                      </td>
+                    );
+                  })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Tool cards with pros/cons */}
+        <div>
+          <h2 className="text-lg font-bold text-foreground mb-4">Tool Details</h2>
+          <div className={`grid gap-4 ${page.tools.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+            {page.tools.map((t) => {
+              const isWinner = t.name === page.winner.name;
+              return (
+                <div key={t.id} className={`rounded-xl border p-4 space-y-3 ${isWinner ? "border-primary/40 bg-primary/5" : "border-border"}`}>
+                  <div>
+                    {isWinner && <div className="text-[9px] font-bold text-primary uppercase tracking-widest mb-1">🏆 Top Pick</div>}
+                    <div className="text-sm font-bold text-foreground">{t.name}</div>
+                    <div className="text-[10px] text-muted-foreground">{t.provider} · {t.pricing}</div>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">{t.tagline}</p>
+                  <div className="space-y-1">
+                    {t.pros.slice(0, 2).map((p) => (
+                      <div key={p} className="flex items-start gap-1.5 text-[11px] text-foreground">
+                        <span className="text-emerald-500 shrink-0 mt-0.5">✓</span> {p}
+                      </div>
+                    ))}
+                    {t.cons.slice(0, 1).map((c) => (
+                      <div key={c} className="flex items-start gap-1.5 text-[11px] text-muted-foreground">
+                        <span className="text-rose-400 shrink-0 mt-0.5">✗</span> {c}
+                      </div>
+                    ))}
+                  </div>
+                  {t.href && (
+                    <a href={t.href} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex text-[11px] font-medium text-primary hover:underline">
+                      Visit {t.name} →
+                    </a>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Related 2-way comparisons */}
+        {page.relatedSlugs.length > 0 && (
+          <div>
+            <h2 className="text-lg font-bold text-foreground mb-3">Related Comparisons</h2>
+            <div className="flex flex-wrap gap-2">
+              {page.relatedSlugs.map((s) => {
+                const related = getVsPage(s);
+                if (!related) return null;
+                return (
+                  <Link key={s} href={`/vs/${s}`}
+                    className="text-sm px-3 py-1.5 rounded-full border border-border bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors">
+                    {related.toolA.name} vs {related.toolB.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* CTA */}
+        <div className="rounded-xl border border-border bg-muted/30 p-6 text-center">
+          <p className="text-sm font-semibold text-foreground mb-1">Compare any AI tools</p>
+          <p className="text-xs text-muted-foreground mb-3">4,000+ comparisons · 90+ tools · Free forever</p>
           <Link href="/vs" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-2">
             Browse all comparisons →
           </Link>

@@ -28,6 +28,7 @@ export default function Header() {
   const isAdminOrContributor = session?.user?.role === "admin" || session?.user?.role === "contributor";
 
   const compare      = useDropdown();
+  const profession   = useDropdown();
   const bestFor      = useDropdown();
   const rankings     = useDropdown();
   const alternatives = useDropdown();
@@ -103,6 +104,80 @@ export default function Header() {
               Compare Tools
             </Link>
 
+            {/* ── AI by Profession ── */}
+            <div className="relative" onMouseEnter={profession.onEnter} onMouseLeave={profession.onLeave}>
+              <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap font-medium">
+                AI by Profession
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-bold">New</span>
+                {chevron(profession.open)}
+              </button>
+              {profession.open && (
+                <div className={dropdownClass}>
+                  {sectionLabel("By Profession")}
+                  <Link href="/for/lawyers"         className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">⚖️ Lawyers</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Contract drafting, case law research</div>
+                  </Link>
+                  <Link href="/for/doctors"         className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🩺 Doctors</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Clinical notes, medical transcription</div>
+                  </Link>
+                  <Link href="/for/teachers"        className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">📚 Teachers & Educators</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Lesson plans, grading, student feedback</div>
+                  </Link>
+                  <Link href="/for/developers"      className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">💻 Developers</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">AI coding, code review, debugging</div>
+                  </Link>
+                  <Link href="/for/marketers"       className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">📣 Marketers</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Campaigns, copy, social media</div>
+                  </Link>
+                  <Link href="/for/designers"       className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🎨 Designers</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Image generation, design tools</div>
+                  </Link>
+                  <Link href="/for/writers"         className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">✍️ Writers & Journalists</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Drafting, research, editing</div>
+                  </Link>
+                  <Link href="/for/students"        className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🎓 Students</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Research, essay writing, study aids</div>
+                  </Link>
+                  <Link href="/for/sales-teams"     className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🎯 Sales Teams</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">CRM, outreach, call intelligence</div>
+                  </Link>
+                  <Link href="/for/hr-teams"        className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🤝 HR Teams</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Recruiting, onboarding, policy writing</div>
+                  </Link>
+                  {divider}
+                  <Link href="/for/accountants"     className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">📊 Accountants & Finance</div>
+                  </Link>
+                  <Link href="/for/real-estate"     className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🏠 Real Estate Agents</div>
+                  </Link>
+                  <Link href="/for/content-creators" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🎬 Content Creators</div>
+                  </Link>
+                  <Link href="/for/small-business"  className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🏪 Small Business Owners</div>
+                  </Link>
+                  <Link href="/for/recruiters"      className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground">🔍 Recruiters</div>
+                  </Link>
+                  {divider}
+                  <Link href="/for" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-primary">See all 17 professions →</div>
+                  </Link>
+                </div>
+              )}
+            </div>
+
             {/* ── Compare AI ── */}
             <div className="relative" onMouseEnter={compare.onEnter} onMouseLeave={compare.onLeave}>
               {navBtn("Compare AI", compare.open)}
@@ -111,7 +186,11 @@ export default function Header() {
                   {sectionLabel("Discover")}
                   <Link href="/search" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">Tool Search <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Search and compare any 2–3 AI tools side by side</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Search and compare any 2–5 AI tools side by side</div>
+                  </Link>
+                  <Link href="/for" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    <div className="font-medium text-foreground flex items-center justify-between gap-2">AI by Profession <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span></div>
+                    <div className="text-xs text-muted-foreground mt-0.5">Best tools for lawyers, doctors, teachers & 12+ more</div>
                   </Link>
                   <Link href="/categories" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
                     <div className="font-medium text-foreground flex items-center justify-between gap-2">By Category <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
@@ -515,6 +594,7 @@ export default function Header() {
           <MobileAccordion label="Compare AI" open={mobileCompareOpen} onToggle={() => setMobileCompareOpen(v => !v)}>
             <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Discover</p>
             <MobileLink href="/search"      onClick={closeMobile}>🔍 Tool Search (New)</MobileLink>
+            <MobileLink href="/for"         onClick={closeMobile}>👤 AI by Profession (New)</MobileLink>
             <MobileLink href="/categories"  onClick={closeMobile}>By Category</MobileLink>
             <MobileLink href="/domains"     onClick={closeMobile}>By Domain</MobileLink>
             <MobileLink href="/countries"   onClick={closeMobile}>By Country</MobileLink>

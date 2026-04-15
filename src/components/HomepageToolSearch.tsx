@@ -315,13 +315,9 @@ export default function HomepageToolSearch() {
     const unresolved = tools.find((t) => !t.resolved);
     if (unresolved) { setPremium({ show: true, name: unresolved.query }); return; }
 
-    if (tools.length === 2) {
-      const [a, b] = [...tools.map((t) => t.resolved!)].sort((x, y) => x.id.localeCompare(y.id));
-      router.push(`/vs/${a.id}-vs-${b.id}`);
-    } else {
-      const ids = tools.map((t) => t.resolved!.id).join(",");
-      router.push(`/search?compare=${ids}`);
-    }
+    const sorted = [...tools.map((t) => t.resolved!)].sort((x, y) => x.id.localeCompare(y.id));
+    const slug = sorted.map((t) => t.id).join("-vs-");
+    router.push(`/vs/${slug}`);
   }
 
   function fillExample(ex: { a: ToolScore; b: ToolScore }) {

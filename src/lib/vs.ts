@@ -1655,9 +1655,30 @@ function generateVsPage(a: ToolScore, b: ToolScore): VsPage {
     chooseA,
     chooseB,
     faqs,
-    relatedSlugs: [],
+    relatedSlugs: getRelatedSlugs(first, second),
     lastUpdated: "2026-04-13",
   };
+}
+
+// Generate up to 4 related slugs — same-category pairs not involving either tool
+function getRelatedSlugs(a: ToolScore, b: ToolScore): string[] {
+  const sameCategory = ALL_SCORES.filter(
+    (s) => s.category === a.category && s.id !== a.id && s.id !== b.id
+  ).sort((x, y) => y.overall - x.overall).slice(0, 3);
+
+  const related: string[] = [];
+  // a vs each same-category peer
+  for (const peer of sameCategory) {
+    const [x, y] = [a, peer].sort((p, q) => p.id.localeCompare(q.id));
+    related.push(`${x.id}-vs-${y.id}`);
+  }
+  // b vs top same-category peer
+  if (sameCategory[0]) {
+    const [x, y] = [b, sameCategory[0]].sort((p, q) => p.id.localeCompare(q.id));
+    const s = `${x.id}-vs-${y.id}`;
+    if (!related.includes(s)) related.push(s);
+  }
+  return related.slice(0, 4);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1668,6 +1689,94 @@ const HANDCRAFTED_PAIRS = new Set<string>(
     .filter((p) => p.toolA.id && p.toolB.id)
     .map((p) => [p.toolA.id!, p.toolB.id!].sort().join("|"))
 );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Multi-tool (3–5 way) comparison support
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface MultiVsPage {
+  slug: string;
+  tools: VsTool[];          // 3–5 tools, sorted by id
+  toolScores: ToolScore[];  // raw scores for the table
+  headline: string;
+  description: string;
+  category: string;
+  categoryEmoji: string;
+  winner: VsTool;
+  verdict: string;
+  relatedSlugs: string[];
+  lastUpdated: string;
+}
+
+/** Parse a multi-tool slug and return page data, or undefined if invalid. */
+export function getMultiVsPage(slug: string): MultiVsPage | undefined {
+  const parts = slug.split("-vs-");
+  if (parts.length < 3 || parts.length > 5) return undefined;
+
+  const scores = parts.map((id) => ALL_SCORES.find((s) => s.id === id)).filter(Boolean) as ToolScore[];
+  if (scores.length !== parts.length) return undefined;  // some IDs not found
+
+  const sorted = [...scores].sort((a, b) => a.id.localeCompare(b.id));
+  const canonical = sorted.map((s) => s.id).join("-vs-");
+  if (canonical !== slug) return undefined;              // enforce canonical order
+
+  const tools = sorted.map((s) => scoreToVsTool(s));
+  const winner = tools.reduce((best, t) => (t.overall > best.overall ? t : best));
+  const winnerScore = scores.find((s) => s.id === winner.id)!;
+
+  const catLabel = scores.every((s) => s.category === scores[0].category)
+    ? (SCORE_CAT_TO_VS_LABEL[scores[0].category] ?? scores[0].category)
+    : "AI Tools";
+  const catEmoji = VS_LABEL_TO_EMOJI[catLabel] ?? "🤖";
+
+  const nameList = sorted.map((s) => s.name).join(" vs ");
+  const relatedSlugs = getRelatedSlugs(sorted[0], sorted[1]).slice(0, 3);
+
+  return {
+    slug: canonical,
+    tools,
+    toolScores: sorted,
+    headline: `${nameList} — ${parts.length}-Way Comparison (2026)`,
+    description: `${nameList}: ${parts.length}-way head-to-head scored on Performance, Value, Reliability, and Ease of Use. See scores, pros, cons, and our verdict for each tool.`,
+    category: catLabel,
+    categoryEmoji: catEmoji,
+    winner,
+    verdict: `${winner.name} leads with ${winner.overall.toFixed(1)}/10 overall. ${winnerScore.verdict}`,
+    relatedSlugs,
+    lastUpdated: "2026-04-15",
+  };
+}
+
+/** Build canonical multi-tool slug from an array of tool IDs (sorts them). */
+export function buildMultiVsSlug(ids: string[]): string {
+  return [...ids].sort((a, b) => a.localeCompare(b)).join("-vs-");
+}
+
+/** Generate same-category 3-tool combos for top N tools per category (for static params). */
+export function getMultiVsSlugs(): string[] {
+  const TOP_N = 6; // top 6 tools per category → C(6,3) = 20 combos per category
+  const slugs: string[] = [];
+
+  const categories = [...new Set(ALL_SCORES.map((s) => s.category))];
+  for (const cat of categories) {
+    const catTools = ALL_SCORES
+      .filter((s) => s.category === cat)
+      .sort((a, b) => b.overall - a.overall)
+      .slice(0, TOP_N);
+
+    // All 3-tool combos within top N
+    for (let i = 0; i < catTools.length; i++) {
+      for (let j = i + 1; j < catTools.length; j++) {
+        for (let k = j + 1; k < catTools.length; k++) {
+          const ids = [catTools[i].id, catTools[j].id, catTools[k].id].sort();
+          slugs.push(ids.join("-vs-"));
+        }
+      }
+    }
+  }
+
+  return slugs;
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Public API
@@ -1694,6 +1803,9 @@ export function getVsPage(slug: string): VsPage | undefined {
 export function getVsSlugs(): string[] {
   const handcraftedSlugs = vsPages.map((p) => p.slug);
 
+  // Use a Set of slugs already covered (handcrafted) to avoid duplicates
+  const handcraftedSlugSet = new Set(handcraftedSlugs);
+
   // Generate all pairwise combinations not already covered by hand-crafted pages
   const generatedSlugs: string[] = [];
   for (let i = 0; i < ALL_SCORES.length; i++) {
@@ -1701,14 +1813,21 @@ export function getVsSlugs(): string[] {
       const a = ALL_SCORES[i];
       const b = ALL_SCORES[j];
 
-      // Skip if already covered by a hand-crafted page
+      const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
+      const slug = `${first.id}-vs-${second.id}`;
+
+      // Skip if already covered by a hand-crafted page (by slug OR by ID pair)
+      if (handcraftedSlugSet.has(slug)) continue;
       const pairKey = [a.id, b.id].sort().join("|");
       if (HANDCRAFTED_PAIRS.has(pairKey)) continue;
 
-      const [first, second] = [a, b].sort((x, y) => x.id.localeCompare(y.id));
-      generatedSlugs.push(`${first.id}-vs-${second.id}`);
+      generatedSlugs.push(slug);
     }
   }
 
-  return [...handcraftedSlugs, ...generatedSlugs];
+  // Add same-category 3-tool combos (top 6 tools per category)
+  const multiSlugs = getMultiVsSlugs();
+
+  // Deduplicate across all sources (handcrafted pages missing IDs can cause overlap)
+  return [...new Set([...handcraftedSlugs, ...generatedSlugs, ...multiSlugs])];
 }
