@@ -7,6 +7,7 @@ import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
 import ProfessionPicker from "@/components/ProfessionPicker";
 import AlternativesPicker from "@/components/AlternativesPicker";
+import CountryPicker from "@/components/CountryPicker";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -261,6 +262,7 @@ export default async function HomePage() {
                 <HomepageToolSearch />
                 <ProfessionPicker />
                 <AlternativesPicker />
+                <CountryPicker />
               </div>
             </div>
 
