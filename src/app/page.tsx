@@ -230,9 +230,28 @@ export default async function HomePage() {
                   🎯 Help me pick an AI
                 </Link>
               </div>
+
+              {/* Stats — 4 cols × 2 rows */}
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { value: `${totalCount}`, label: "Battle arenas",  color: "text-primary",                              href: "/vs" },
+                  { value: "100+",          label: "AI tools",       color: "text-violet-600 dark:text-violet-400",      href: "/categories" },
+                  { value: "1,000+",        label: "Data points",    color: "text-emerald-600 dark:text-emerald-400",    href: "/rankings" },
+                  { value: "Live",          label: "Updated",        color: "text-amber-600 dark:text-amber-400",        href: "/research/model-tracker" },
+                  { value: "4,000+",        label: "VS pages",       color: "text-rose-600 dark:text-rose-400",          href: "/vs" },
+                  { value: "53",            label: "Rankings",       color: "text-sky-600 dark:text-sky-400",            href: "/rankings" },
+                  { value: "17",            label: "Professions",    color: "text-fuchsia-600 dark:text-fuchsia-400",    href: "/for" },
+                  { value: "25",            label: "Best For",       color: "text-teal-600 dark:text-teal-400",          href: "/categories" },
+                ].map((s) => (
+                  <Link key={s.label} href={s.href} className="rounded-xl border border-border bg-card px-3 py-2.5 flex flex-col gap-0.5 hover:bg-muted/40 hover:border-primary/30 transition-colors">
+                    <div className={`text-lg font-extrabold leading-tight tabular-nums ${s.color}`}>{s.value}</div>
+                    <div className="text-[10px] font-semibold text-foreground leading-tight">{s.label}</div>
+                  </Link>
+                ))}
+              </div>
             </div>
 
-            {/* Right: search card top, 8 stat boxes below in 4×2 grid */}
+            {/* Right: search card with pickers */}
             <div className="flex flex-col gap-6">
               {/* Search widget */}
               <div className="rounded-2xl border border-primary/20 bg-card p-4 shadow-sm">
@@ -242,25 +261,6 @@ export default async function HomePage() {
                 <HomepageToolSearch />
                 <ProfessionPicker />
                 <AlternativesPicker />
-              </div>
-
-              {/* Stats — 4 cols × 2 rows fills width below search */}
-              <div className="grid grid-cols-4 gap-2">
-                {[
-                  { value: `${totalCount}`, label: "Battle arenas",  color: "text-primary",                              href: "/vs" },
-                  { value: "100+",          label: "AI tools",       color: "text-violet-600 dark:text-violet-400",      href: "/categories" },
-                  { value: "1,000+",        label: "Data points",    color: "text-emerald-600 dark:text-emerald-400",    href: "/rankings" },
-                  { value: "Live",          label: "Updated",        color: "text-amber-600 dark:text-amber-400",        href: "/research/model-tracker" },
-                  { value: "4,000+",        label: "VS pages",       color: "text-rose-600 dark:text-rose-400",          href: "/vs" },
-                  { value: "53",            label: "Rankings",       color: "text-sky-600 dark:text-sky-400",            href: "/rankings" },
-                  { value: "15",            label: "Professions",    color: "text-fuchsia-600 dark:text-fuchsia-400",    href: "/for" },
-                  { value: "25",            label: "Best For",       color: "text-teal-600 dark:text-teal-400",          href: "/categories" },
-                ].map((s) => (
-                  <Link key={s.label} href={s.href} className="rounded-xl border border-border bg-card px-3 py-2.5 flex flex-col gap-0.5 hover:bg-muted/40 hover:border-primary/30 transition-colors">
-                    <div className={`text-lg font-extrabold leading-tight tabular-nums ${s.color}`}>{s.value}</div>
-                    <div className="text-[10px] font-semibold text-foreground leading-tight">{s.label}</div>
-                  </Link>
-                ))}
               </div>
             </div>
 
