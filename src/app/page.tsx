@@ -261,6 +261,9 @@ export default async function HomePage() {
                 <HomepageToolSearch />
               </div>
 
+              {/* 3-question AI finder */}
+              <AiFinderWidget />
+
               {/* Quick finders */}
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
@@ -268,9 +271,6 @@ export default async function HomePage() {
                 </p>
                 <QuickFinders />
               </div>
-
-              {/* 3-question AI finder */}
-              <AiFinderWidget />
             </div>
 
           </div>
