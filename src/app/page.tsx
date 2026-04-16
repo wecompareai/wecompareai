@@ -5,11 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/HomepageScoreWrapper";
 import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
-import dynamic from "next/dynamic";
-
-const ProfessionPicker   = dynamic(() => import("@/components/ProfessionPicker"),   { ssr: false });
-const AlternativesPicker = dynamic(() => import("@/components/AlternativesPicker"), { ssr: false });
-const CountryPicker      = dynamic(() => import("@/components/CountryPicker"),      { ssr: false });
+import QuickFinders from "@/components/QuickFinders";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -269,9 +265,7 @@ export default async function HomePage() {
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
                   Quick finders
                 </p>
-                <ProfessionPicker />
-                <AlternativesPicker />
-                <CountryPicker />
+                <QuickFinders />
               </div>
             </div>
 
