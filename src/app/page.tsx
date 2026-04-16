@@ -187,10 +187,10 @@ export default async function HomePage() {
 
         <div className="max-w-7xl mx-auto">
           {/* Top: 2-column on desktop — headline left, stats right */}
-          <div className="grid lg:grid-cols-2 gap-8 items-start mb-10">
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch mb-10">
 
             {/* Left: headline + CTAs */}
-            <div className="space-y-4 text-center lg:text-left">
+            <div className="flex flex-col gap-4 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Real-time data · 100+ AI tools tracked
@@ -250,9 +250,9 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              {/* 3-question AI finder */}
-              <div className="pt-2">
-                <AiFinderWidget />
+              {/* 3-question AI finder — grows to fill remaining height */}
+              <div className="flex-1">
+                <AiFinderWidget className="h-full" />
               </div>
             </div>
 

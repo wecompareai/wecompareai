@@ -35,7 +35,7 @@ const STEPS = [
   },
 ];
 
-export default function AiFinderWidget() {
+export default function AiFinderWidget({ className = "" }: { className?: string }) {
   const [answers, setAnswers] = useState<(string | null)[]>([null, null, null]);
   const router = useRouter();
 
@@ -51,7 +51,7 @@ export default function AiFinderWidget() {
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+    <div className={`rounded-2xl border border-border bg-card p-5 shadow-sm flex flex-col ${className}`}>
       <div className="flex items-center justify-between mb-4">
         <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
           Find my AI in 3 questions
