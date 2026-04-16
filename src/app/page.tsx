@@ -260,6 +260,13 @@ export default async function HomePage() {
                   Compare any AI tools — free
                 </p>
                 <HomepageToolSearch />
+              </div>
+
+              {/* Quick finders */}
+              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm space-y-1">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                  Quick finders
+                </p>
                 <ProfessionPicker />
                 <AlternativesPicker />
                 <CountryPicker />

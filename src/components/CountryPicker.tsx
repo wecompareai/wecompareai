@@ -28,10 +28,7 @@ export default function CountryPicker() {
   }
 
   return (
-    <div className="mt-2 rounded-xl border border-border bg-muted/30 px-4 py-3">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
-        Find AI models by country
-      </p>
+    <div className="rounded-xl border border-border bg-muted/30 px-4 py-3">
       <div className="flex items-center gap-2 flex-wrap">
         <span className="text-xs text-foreground font-medium whitespace-nowrap shrink-0">AI models from</span>
         <div className="relative flex-1 min-w-[160px]">

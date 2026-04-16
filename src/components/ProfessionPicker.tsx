@@ -34,10 +34,7 @@ export default function ProfessionPicker() {
   const profession = PROFESSIONS.find((p) => p.slug === selected);
 
   return (
-    <div className="mt-3 rounded-xl border border-border bg-muted/30 px-4 py-3">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
-        Find tools by profession
-      </p>
+    <div className="rounded-xl border border-border bg-muted/30 px-4 py-3">
       <div className="flex items-center gap-2 flex-wrap">
         <span className="text-xs text-foreground font-medium whitespace-nowrap shrink-0">I am a</span>
         <div className="relative flex-1 min-w-[160px]">
