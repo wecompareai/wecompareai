@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/HomepageScoreWrapper";
 import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
+import ProfessionPicker from "@/components/ProfessionPicker";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -238,6 +239,7 @@ export default async function HomePage() {
                   Compare any AI tools — free
                 </p>
                 <HomepageToolSearch />
+                <ProfessionPicker />
               </div>
 
               {/* Stats — 4 cols × 2 rows fills width below search */}
