@@ -6,6 +6,7 @@ import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/Homepa
 import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
 import ProfessionPicker from "@/components/ProfessionPicker";
+import AlternativesPicker from "@/components/AlternativesPicker";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -240,6 +241,7 @@ export default async function HomePage() {
                 </p>
                 <HomepageToolSearch />
                 <ProfessionPicker />
+                <AlternativesPicker />
               </div>
 
               {/* Stats — 4 cols × 2 rows fills width below search */}
