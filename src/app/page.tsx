@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/HomepageScoreWrapper";
 import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
+import QuickFinders from "@/components/QuickFinders";
+import AiFinderWidget from "@/components/AiFinderWidget";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -179,16 +181,16 @@ export default async function HomePage() {
       </section>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative pt-10 pb-10 sm:pt-14 sm:pb-14 px-4">
+      <section className="relative pt-6 pb-6 sm:pt-14 sm:pb-14 px-4">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,hsl(var(--border)/0.4)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.4)_1px,transparent_1px)] bg-[size:48px_48px]" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-background/70 to-background" />
 
         <div className="max-w-7xl mx-auto">
           {/* Top: 2-column on desktop — headline left, stats right */}
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-10">
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch mb-10">
 
             {/* Left: headline + CTAs */}
-            <div className="space-y-5 text-center lg:text-left">
+            <div className="flex flex-col gap-4 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Real-time data · 100+ AI tools tracked
@@ -199,14 +201,14 @@ export default async function HomePage() {
                 &amp; Performance —{" "}
                 <span className="italic">Instantly</span>
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google &amp; more.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="hidden sm:block text-sm text-muted-foreground">
                 Trusted by developers, startups &amp; AI teams to make smarter decisions.
               </p>
               {/* 3 Core Pillars */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+              <div className="hidden sm:flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
                 {[
                   { icon: "⚡", label: "Real-time pricing" },
                   { icon: "🧪", label: "Verified benchmarks" },
@@ -217,31 +219,20 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <Link href="/categories" className="group px-7 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/25 flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3">
+                <Link href="/categories" className="group px-7 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
                   Start Comparing Free
                   <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
                 </Link>
-                <Link href="/research/finder" className="px-7 py-3 rounded-xl border border-border bg-background text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-muted active:scale-95 transition-all">
+                <Link href="/research/finder" className="px-7 py-3 rounded-xl border border-border bg-background text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-muted active:scale-95 transition-all text-center">
                   🎯 Help me pick an AI
                 </Link>
               </div>
-            </div>
 
-            {/* Right: search card top, 8 stat boxes below in 4×2 grid */}
-            <div className="flex flex-col gap-6">
-              {/* Search widget */}
-              <div className="rounded-2xl border border-primary/20 bg-card p-4 shadow-sm">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-3">
-                  Compare any AI tools — free
-                </p>
-                <HomepageToolSearch />
-              </div>
-
-              {/* Stats — 4 cols × 2 rows fills width below search */}
-              <div className="grid grid-cols-4 gap-2">
+              {/* Stats — 4 cols × 2 rows */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
                 {[
                   { value: `${totalCount}`, label: "Battle arenas",  color: "text-primary",                              href: "/vs" },
                   { value: "100+",          label: "AI tools",       color: "text-violet-600 dark:text-violet-400",      href: "/categories" },
@@ -249,7 +240,7 @@ export default async function HomePage() {
                   { value: "Live",          label: "Updated",        color: "text-amber-600 dark:text-amber-400",        href: "/research/model-tracker" },
                   { value: "4,000+",        label: "VS pages",       color: "text-rose-600 dark:text-rose-400",          href: "/vs" },
                   { value: "53",            label: "Rankings",       color: "text-sky-600 dark:text-sky-400",            href: "/rankings" },
-                  { value: "15",            label: "Professions",    color: "text-fuchsia-600 dark:text-fuchsia-400",    href: "/for" },
+                  { value: "17",            label: "Professions",    color: "text-fuchsia-600 dark:text-fuchsia-400",    href: "/for" },
                   { value: "25",            label: "Best For",       color: "text-teal-600 dark:text-teal-400",          href: "/categories" },
                 ].map((s) => (
                   <Link key={s.label} href={s.href} className="rounded-xl border border-border bg-card px-3 py-2.5 flex flex-col gap-0.5 hover:bg-muted/40 hover:border-primary/30 transition-colors">
@@ -257,6 +248,32 @@ export default async function HomePage() {
                     <div className="text-[10px] font-semibold text-foreground leading-tight">{s.label}</div>
                   </Link>
                 ))}
+              </div>
+
+              {/* 3-question AI finder — grows to fill remaining height */}
+              <div className="flex-1">
+                <AiFinderWidget className="h-full" />
+              </div>
+            </div>
+
+            {/* Right: search card with pickers */}
+            <div className="flex flex-col gap-4 h-full">
+              {/* Search widget */}
+              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+                <div className="flex items-center gap-2 mb-3">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Compare any AI tools</p>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold uppercase tracking-wide">Free</span>
+                </div>
+                <HomepageToolSearch />
+              </div>
+
+              {/* Quick finders */}
+              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm flex-1 flex flex-col">
+                <div className="flex items-center gap-2 mb-3">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Quick finders</p>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold uppercase tracking-wide">Free</span>
+                </div>
+                <QuickFinders />
               </div>
             </div>
 

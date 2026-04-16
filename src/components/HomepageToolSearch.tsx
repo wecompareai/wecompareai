@@ -334,71 +334,56 @@ export default function HomepageToolSearch() {
   return (
     <>
       <div className="space-y-2.5 w-full">
-        {/* Category selector */}
-        <div className="flex items-center gap-2">
-          <label className="text-xs text-muted-foreground shrink-0 font-medium">Category:</label>
-          <select
-            value={category}
-            onChange={(e) => { setCategory(e.target.value); setTools([blank(), blank()]); setError(null); }}
-            className="flex-1 text-xs px-3 py-1.5 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
-          >
-            <option value="All">All ({ALL_SCORES.length} tools)</option>
-            {CATEGORIES.map((cat) => {
-              const n = ALL_SCORES.filter((s) => s.category === cat).length;
-              return <option key={cat} value={cat}>{CATEGORY_LABELS[cat] ?? cat} ({n})</option>;
-            })}
-          </select>
-        </div>
+        {/* All rows use same 3-col grid: [110px label | flex input | auto action] */}
+        <div className="flex flex-col">
+          {/* Category */}
+          <div className="grid grid-cols-[72px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
+            <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Category</span>
+            <select
+              value={category}
+              onChange={(e) => { setCategory(e.target.value); setTools([blank(), blank()]); setError(null); }}
+              className="w-full text-xs px-3 py-1.5 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer"
+            >
+              <option value="All">All ({ALL_SCORES.length} tools)</option>
+              {CATEGORIES.map((cat) => {
+                const n = ALL_SCORES.filter((s) => s.category === cat).length;
+                return <option key={cat} value={cat}>{CATEGORY_LABELS[cat] ?? cat} ({n})</option>;
+              })}
+            </select>
+            <div className="w-6" />
+          </div>
 
-        {/* Tool inputs — first row is always Tool 1 vs Tool 2 inline */}
-        <div className="flex flex-col gap-2">
-          {/* Row 1: always side-by-side */}
-          <div className="flex items-center gap-2">
-            {[0, 1].map((idx) => (
+          {/* Tool inputs — one per row, same grid */}
+          {tools.map((t, idx) => (
+            <div key={idx} className="grid grid-cols-[72px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
+              <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+                {idx === 0 ? "Tool 1" : idx === 1 ? "Tool 2" : `Tool ${idx + 1}`}
+              </span>
               <MiniCombobox
-                key={idx}
-                placeholder={idx === 0 ? `Tool 1 — e.g. "${currentExample.a.name}"` : `Tool 2 — e.g. "${currentExample.b.name}"`}
-                value={tools[idx]?.query ?? ""}
-                resolved={tools[idx]?.resolved ?? null}
-                matches={getMatches(tools[idx]?.query ?? "")}
+                placeholder={idx === 0 ? `e.g. "${currentExample.a.name}"` : idx === 1 ? `e.g. "${currentExample.b.name}"` : `e.g. "${PLACEHOLDERS[idx] ?? "Gemini"}"`}
+                value={t.query}
+                resolved={t.resolved}
+                matches={getMatches(t.query)}
                 onChange={(v) => handleChange(idx, v)}
                 onSelect={(s) => updateTool(idx, { query: s.name, resolved: s })}
                 onClear={() => updateTool(idx, blank())}
                 onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
               />
-            ))}
-          </div>
-
-          {/* Extra tools 3, 4, 5 — each on own row with remove button */}
-          {tools.slice(2).map((t, i) => {
-            const idx = i + 2;
-            return (
-              <div key={idx} className="flex items-center gap-2">
-                <span className="text-[10px] text-muted-foreground shrink-0 w-10 text-right font-medium">
-                  Tool {idx + 1}
-                </span>
-                <MiniCombobox
-                  placeholder={`e.g. "${PLACEHOLDERS[idx] ?? "Gemini"}"`}
-                  value={t.query}
-                  resolved={t.resolved}
-                  matches={getMatches(t.query)}
-                  onChange={(v) => handleChange(idx, v)}
-                  onSelect={(s) => updateTool(idx, { query: s.name, resolved: s })}
-                  onClear={() => updateTool(idx, blank())}
-                  onPremiumTrigger={(n) => setPremium({ show: true, name: n })}
-                />
+              {idx >= MIN_TOOLS ? (
                 <button
                   onClick={() => removeTool(idx)}
-                  className="shrink-0 w-6 h-6 rounded-full border border-border text-muted-foreground hover:text-rose-500 hover:border-rose-400 transition-colors flex items-center justify-center"
+                  className="w-6 h-6 rounded-full border border-border text-muted-foreground hover:text-rose-500 hover:border-rose-400 transition-colors flex items-center justify-center shrink-0"
                   aria-label="Remove tool"
                 >
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
                   </svg>
                 </button>
-              </div>
-            );
-          })}
+              ) : (
+                <div className="w-6" />
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Error */}
