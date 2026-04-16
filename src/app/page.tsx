@@ -181,7 +181,7 @@ export default async function HomePage() {
       </section>
 
       {/* ══ HERO ════════════════════════════════════════════════════════════ */}
-      <section className="relative pt-10 pb-10 sm:pt-14 sm:pb-14 px-4">
+      <section className="relative pt-6 pb-6 sm:pt-14 sm:pb-14 px-4">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,hsl(var(--border)/0.4)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.4)_1px,transparent_1px)] bg-[size:48px_48px]" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-background/70 to-background" />
 
@@ -201,14 +201,14 @@ export default async function HomePage() {
                 &amp; Performance —{" "}
                 <span className="italic">Instantly</span>
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google &amp; more.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="hidden sm:block text-sm text-muted-foreground">
                 Trusted by developers, startups &amp; AI teams to make smarter decisions.
               </p>
               {/* 3 Core Pillars */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+              <div className="hidden sm:flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
                 {[
                   { icon: "⚡", label: "Real-time pricing" },
                   { icon: "🧪", label: "Verified benchmarks" },
@@ -219,20 +219,20 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <Link href="/categories" className="group px-7 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/25 flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3">
+                <Link href="/categories" className="group px-7 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
                   Start Comparing Free
                   <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
                 </Link>
-                <Link href="/research/finder" className="px-7 py-3 rounded-xl border border-border bg-background text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-muted active:scale-95 transition-all">
+                <Link href="/research/finder" className="px-7 py-3 rounded-xl border border-border bg-background text-foreground font-semibold text-sm hover:border-primary/50 hover:bg-muted active:scale-95 transition-all text-center">
                   🎯 Help me pick an AI
                 </Link>
               </div>
 
               {/* Stats — 4 cols × 2 rows */}
-              <div className="grid grid-cols-4 gap-2 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
                 {[
                   { value: `${totalCount}`, label: "Battle arenas",  color: "text-primary",                              href: "/vs" },
                   { value: "100+",          label: "AI tools",       color: "text-violet-600 dark:text-violet-400",      href: "/categories" },

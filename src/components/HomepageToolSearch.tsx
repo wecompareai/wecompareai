@@ -337,7 +337,7 @@ export default function HomepageToolSearch() {
         {/* All rows use same 3-col grid: [110px label | flex input | auto action] */}
         <div className="flex flex-col">
           {/* Category */}
-          <div className="grid grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
+          <div className="grid grid-cols-[72px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
             <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Category</span>
             <select
               value={category}
@@ -355,7 +355,7 @@ export default function HomepageToolSearch() {
 
           {/* Tool inputs — one per row, same grid */}
           {tools.map((t, idx) => (
-            <div key={idx} className="grid grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
+            <div key={idx} className="grid grid-cols-[72px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
               <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
                 {idx === 0 ? "Tool 1" : idx === 1 ? "Tool 2" : `Tool ${idx + 1}`}
               </span>

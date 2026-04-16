@@ -96,7 +96,7 @@ export default function AiFinderWidget({ className = "" }: { className?: string 
                     <button
                       key={opt.value}
                       onClick={() => pick(stepIdx, opt.value)}
-                      className={`text-xs px-3 py-1.5 rounded-lg border font-medium transition-all ${
+                      className={`text-xs px-3 py-2 sm:py-1.5 rounded-lg border font-medium transition-all ${
                         selected
                           ? "bg-primary text-primary-foreground border-primary"
                           : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground bg-background"

@@ -39,7 +39,7 @@ export default function BestForPicker() {
   const item = USE_CASES.find((u) => u.slug === selected);
 
   return (
-    <div className="grid grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
+    <div className="grid grid-cols-[72px_1fr_auto] sm:grid-cols-[110px_1fr_auto] items-center gap-2 py-2.5 border-b border-border">
       <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Best AI for</span>
       <div className="relative">
         <select
