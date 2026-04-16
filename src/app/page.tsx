@@ -5,9 +5,11 @@ import { prisma } from "@/lib/prisma";
 import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/HomepageScoreWrapper";
 import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
-import ProfessionPicker from "@/components/ProfessionPicker";
-import AlternativesPicker from "@/components/AlternativesPicker";
-import CountryPicker from "@/components/CountryPicker";
+import dynamic from "next/dynamic";
+
+const ProfessionPicker   = dynamic(() => import("@/components/ProfessionPicker"),   { ssr: false });
+const AlternativesPicker = dynamic(() => import("@/components/AlternativesPicker"), { ssr: false });
+const CountryPicker      = dynamic(() => import("@/components/CountryPicker"),      { ssr: false });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
