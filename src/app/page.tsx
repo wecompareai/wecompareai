@@ -6,6 +6,7 @@ import { ScoresAtAGlance, ScoreBreakdownChart } from "@/components/charts/Homepa
 import { ALL_SCORES } from "@/lib/scores";
 import HomepageToolSearch from "@/components/HomepageToolSearchClient";
 import QuickFinders from "@/components/QuickFinders";
+import AiFinderWidget from "@/components/AiFinderWidget";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wecompareai.com";
 
@@ -267,6 +268,9 @@ export default async function HomePage() {
                 </p>
                 <QuickFinders />
               </div>
+
+              {/* 3-question AI finder */}
+              <AiFinderWidget />
             </div>
 
           </div>
