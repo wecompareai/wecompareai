@@ -232,7 +232,7 @@ export default async function HomePage() {
               </div>
 
               {/* Stats — 4 cols × 2 rows */}
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-2 pt-2">
                 {[
                   { value: `${totalCount}`, label: "Battle arenas",  color: "text-primary",                              href: "/vs" },
                   { value: "100+",          label: "AI tools",       color: "text-violet-600 dark:text-violet-400",      href: "/categories" },
@@ -251,7 +251,9 @@ export default async function HomePage() {
               </div>
 
               {/* 3-question AI finder */}
-              <AiFinderWidget />
+              <div className="pt-2">
+                <AiFinderWidget />
+              </div>
             </div>
 
             {/* Right: search card with pickers */}
