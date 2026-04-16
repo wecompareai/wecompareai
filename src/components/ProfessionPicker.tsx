@@ -34,8 +34,7 @@ export default function ProfessionPicker() {
   const profession = PROFESSIONS.find((p) => p.slug === selected);
 
   return (
-    <div className="rounded-xl border border-border bg-muted/30 px-4 py-3">
-      <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex items-center gap-2 flex-wrap py-2.5 border-b border-border last:border-0">
         <span className="text-xs text-foreground font-medium whitespace-nowrap shrink-0">I am a</span>
         <div className="relative flex-1 min-w-[160px]">
           <select
@@ -62,7 +61,6 @@ export default function ProfessionPicker() {
         >
           {profession ? `Best tools for ${profession.emoji}` : "Best tools →"}
         </button>
-      </div>
     </div>
   );
 }
