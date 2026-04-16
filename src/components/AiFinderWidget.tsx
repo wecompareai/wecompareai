@@ -61,9 +61,14 @@ export default function AiFinderWidget({ className = "" }: { className?: string 
   return (
     <div className={`rounded-2xl border border-border bg-card p-5 shadow-sm flex flex-col ${className}`}>
       <div className="flex items-center justify-between mb-5">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-          Find my AI in 3 questions
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            Find my AI in 3 questions
+          </p>
+          <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20 font-bold uppercase tracking-wide">
+            Premium
+          </span>
+        </div>
         {answers.some((a) => a !== null) && (
           <button onClick={reset} className="text-[10px] text-muted-foreground hover:text-foreground transition-colors">
             Reset
@@ -113,6 +118,19 @@ export default function AiFinderWidget({ className = "" }: { className?: string 
         className="mt-6 w-full py-2.5 rounded-xl bg-primary text-primary-foreground text-xs font-semibold disabled:opacity-30 disabled:cursor-not-allowed hover:opacity-90 active:scale-95 transition-all"
       >
         {allAnswered ? "🎯 Get my AI recommendation →" : "Answer all 3 questions to continue"}
+      </button>
+
+      <div className="mt-3 flex items-center gap-2 justify-center">
+        <div className="h-px flex-1 bg-border" />
+        <p className="text-[10px] text-muted-foreground whitespace-nowrap">advanced user?</p>
+        <div className="h-px flex-1 bg-border" />
+      </div>
+      <button
+        onClick={() => router.push("/research/finder")}
+        className="mt-2 w-full py-2 rounded-xl border border-violet-500/30 bg-violet-500/5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:bg-violet-500/10 active:scale-95 transition-all flex items-center justify-center gap-1.5"
+      >
+        <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-violet-500/10 border border-violet-500/20 font-bold uppercase tracking-wide">Premium</span>
+        Take the 6-question deep survey →
       </button>
     </div>
   );
