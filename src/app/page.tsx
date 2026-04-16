@@ -187,10 +187,10 @@ export default async function HomePage() {
 
         <div className="max-w-7xl mx-auto">
           {/* Top: 2-column on desktop — headline left, stats right */}
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-10">
+          <div className="grid lg:grid-cols-2 gap-8 items-start mb-10">
 
             {/* Left: headline + CTAs */}
-            <div className="space-y-5 text-center lg:text-left">
+            <div className="space-y-4 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Real-time data · 100+ AI tools tracked
@@ -255,9 +255,9 @@ export default async function HomePage() {
             </div>
 
             {/* Right: search card with pickers */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
               {/* Search widget */}
-              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
                   Compare any AI tools — free
                 </p>
@@ -265,7 +265,7 @@ export default async function HomePage() {
               </div>
 
               {/* Quick finders */}
-              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
                 <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">
                   Quick finders
                 </p>
