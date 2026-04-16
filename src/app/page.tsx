@@ -249,6 +249,9 @@ export default async function HomePage() {
                   </Link>
                 ))}
               </div>
+
+              {/* 3-question AI finder */}
+              <AiFinderWidget />
             </div>
 
             {/* Right: search card with pickers */}
@@ -260,9 +263,6 @@ export default async function HomePage() {
                 </p>
                 <HomepageToolSearch />
               </div>
-
-              {/* 3-question AI finder */}
-              <AiFinderWidget />
 
               {/* Quick finders */}
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
