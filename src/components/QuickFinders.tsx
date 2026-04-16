@@ -10,12 +10,12 @@ const RankingsPicker     = dynamic(() => import("./RankingsPicker"),     { ssr: 
 
 export default function QuickFinders() {
   return (
-    <>
+    <div className="flex flex-col flex-1 justify-between">
       <BestForPicker />
       <ProfessionPicker />
       <AlternativesPicker />
       <CountryPicker />
       <RankingsPicker />
-    </>
+    </div>
   );
 }

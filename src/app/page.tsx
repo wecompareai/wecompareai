@@ -257,7 +257,7 @@ export default async function HomePage() {
             </div>
 
             {/* Right: search card with pickers */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 h-full">
               {/* Search widget */}
               <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
@@ -268,7 +268,7 @@ export default async function HomePage() {
               </div>
 
               {/* Quick finders */}
-              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm flex-1 flex flex-col">
                 <div className="flex items-center gap-2 mb-3">
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Quick finders</p>
                   <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold uppercase tracking-wide">Free</span>
