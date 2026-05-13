@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "PowerShell(& \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\pg_dump.exe\" --version)",
+      "PowerShell($env:PGPASSWORD = \"npg_lCXK26oNsJcW\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\pg_dump.exe\" --host=\"ep-steep-math-a85d1zpx.eastus2.azure.neon.tech\" --port=5432 --username=\"neondb_owner\" --dbname=\"neondb\" --no-owner --no-acl --file=\"C:\\\\Temp\\\\neon_dump.sql\" 2>&1; echo \"Exit: $LASTEXITCODE\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Temp\" | Out-Null; $env:PGPASSWORD = \"npg_lCXK26oNsJcW\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\pg_dump.exe\" --host=\"ep-steep-math-a85d1zpx.eastus2.azure.neon.tech\" --port=5432 --username=\"neondb_owner\" --dbname=\"neondb\" --no-owner --no-acl --file=\"C:\\\\Temp\\\\neon_dump.sql\" 2>&1; echo \"Exit: $LASTEXITCODE\")",
+      "PowerShell($env:PGPASSWORD = \"admin123\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe\" --host=localhost --port=5432 --username=postgres --dbname=\"compare-ai\" -f \"C:\\\\Temp\\\\neon_dump.sql\" 2>&1 | Select-Object -Last 20; echo \"Exit: $LASTEXITCODE\")",
+      "PowerShell($env:PGPASSWORD = \"admin123\"; & \"C:\\\\Program Files\\\\PostgreSQL\\\\18\\\\bin\\\\psql.exe\" --host=localhost --port=5432 --username=postgres --dbname=\"compare-ai\" --command='\\\\dt' 2>&1)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
+    ]
+  }
+}

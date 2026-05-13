@@ -160,7 +160,7 @@ export default async function HomePage() {
       {/* ══ QUIZ BANNER ═════════════════════════════════════════════════════ */}
       <section className="px-4 pt-4 pb-0">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 via-background to-background p-5 sm:p-6 grid sm:grid-cols-[auto_1fr_auto] gap-4 items-center">
+          <div className="rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/5 via-background to-background p-5 sm:p-6 flex flex-col sm:grid sm:grid-cols-[auto_1fr_auto] gap-4 items-center">
             <div className="text-3xl leading-none">🤔</div>
             <div>
               <p className="text-sm font-bold text-foreground">Not sure which AI to use?</p>
@@ -187,7 +187,7 @@ export default async function HomePage() {
 
         <div className="max-w-7xl mx-auto">
           {/* Top: 2-column on desktop — headline left, stats right */}
-          <div className="grid lg:grid-cols-2 gap-8 items-stretch mb-10">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch mb-10">
 
             {/* Left: headline + CTAs */}
             <div className="flex flex-col gap-4 text-center lg:text-left">
@@ -201,7 +201,7 @@ export default async function HomePage() {
                 &amp; Performance —{" "}
                 <span className="italic">Instantly</span>
               </h1>
-              <p className="text-sm sm:text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-lg text-muted-foreground leading-relaxed">
                 Real-time benchmarks, token costs, and unbiased comparisons across OpenAI, Anthropic, Google &amp; more.
               </p>
               <p className="hidden sm:block text-sm text-muted-foreground">

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import AuthButton from "@/components/auth/AuthButton";
 
 const chevron = (open: boolean) => (
@@ -23,33 +22,29 @@ function useDropdown() {
   return { open, onEnter, onLeave };
 }
 
+const freeBadge = (
+  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span>
+);
+const premiumBadge = (
+  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span>
+);
+const newBadge = (
+  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span>
+);
+
 export default function Header() {
-  const { data: session } = useSession();
-  const isAdminOrContributor = session?.user?.role === "admin" || session?.user?.role === "contributor";
+  const compare  = useDropdown();
+  const forYou   = useDropdown();
+  const rankings = useDropdown();
+  const tools    = useDropdown();
+  const insights = useDropdown();
 
-  const compare      = useDropdown();
-  const profession   = useDropdown();
-  const bestFor      = useDropdown();
-  const rankings     = useDropdown();
-  const alternatives = useDropdown();
-  const vs           = useDropdown();
-  const live         = useDropdown();
-  const business     = useDropdown();
-  const market       = useDropdown();
-  const tech         = useDropdown();
-  const company      = useDropdown();
-
-  const [mobileOpen,              setMobileOpen]              = useState(false);
-  const [mobileCompareOpen,       setMobileCompareOpen]       = useState(false);
-  const [mobileBestForOpen,       setMobileBestForOpen]       = useState(false);
-  const [mobileRankingsOpen,      setMobileRankingsOpen]      = useState(false);
-  const [mobileAlternativesOpen,  setMobileAlternativesOpen]  = useState(false);
-  const [mobileVsOpen,            setMobileVsOpen]            = useState(false);
-  const [mobileLiveOpen,          setMobileLiveOpen]          = useState(false);
-  const [mobileBusinessOpen,      setMobileBusinessOpen]      = useState(false);
-  const [mobileMarketOpen,        setMobileMarketOpen]        = useState(false);
-  const [mobileTechOpen,          setMobileTechOpen]          = useState(false);
-  const [mobileCompanyOpen,       setMobileCompanyOpen]       = useState(false);
+  const [mobileOpen,         setMobileOpen]         = useState(false);
+  const [mobileCompareOpen,  setMobileCompareOpen]  = useState(false);
+  const [mobileForYouOpen,   setMobileForYouOpen]   = useState(false);
+  const [mobileRankingsOpen, setMobileRankingsOpen] = useState(false);
+  const [mobileToolsOpen,    setMobileToolsOpen]    = useState(false);
+  const [mobileInsightsOpen, setMobileInsightsOpen] = useState(false);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -61,29 +56,42 @@ export default function Header() {
   function closeMobile() {
     setMobileOpen(false);
     setMobileCompareOpen(false);
-    setMobileBestForOpen(false);
+    setMobileForYouOpen(false);
     setMobileRankingsOpen(false);
-    setMobileAlternativesOpen(false);
-    setMobileVsOpen(false);
-    setMobileLiveOpen(false);
-    setMobileBusinessOpen(false);
-    setMobileMarketOpen(false);
-    setMobileTechOpen(false);
-    setMobileCompanyOpen(false);
+    setMobileToolsOpen(false);
+    setMobileInsightsOpen(false);
   }
 
-  const dropdownClass = "absolute top-full left-0 mt-2 w-64 rounded-lg border border-border bg-background shadow-lg py-1 z-50";
   const navBtn = (label: string, open: boolean) => (
-    <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
+    <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
       {label} {chevron(open)}
     </button>
   );
-  const sectionLabel = (text: string) => (
-    <div className="px-4 py-1.5">
+
+  const item = (href: string, label: React.ReactNode, badge?: React.ReactNode) => (
+    <Link href={href} className="flex items-center justify-between gap-2 px-4 py-1.5 text-sm text-foreground hover:bg-muted hover:text-primary transition-colors">
+      <span className="truncate">{label}</span>
+      {badge}
+    </Link>
+  );
+
+  const seeAll = (href: string, label: string) => (
+    <Link href={href} className="block px-4 py-2 text-sm font-medium text-primary hover:bg-muted transition-colors">
+      {label}
+    </Link>
+  );
+
+  const colHeader = (text: string) => (
+    <div className="px-4 pt-2 pb-1.5 border-b border-border mb-1">
+      <span className="text-[10px] font-bold uppercase tracking-wider text-primary">{text}</span>
+    </div>
+  );
+
+  const subHeader = (text: string) => (
+    <div className="px-4 pt-2 pb-0.5">
       <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{text}</span>
     </div>
   );
-  const divider = <div className="my-1 border-t border-border" />;
 
   return (
     <header className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-50">
@@ -94,190 +102,96 @@ export default function Header() {
             <Image src="/logo-dark.svg"  alt="We Compare AI" width={240} height={52} className="h-9 sm:h-11 w-auto object-contain hidden dark:block" />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-4 lg:gap-5">
-            <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">
-              Home
-            </Link>
+          {/* Desktop nav (5 parents) */}
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
 
-            <Link href="/search" className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap font-medium">
-              Compare Tools
-            </Link>
-
-            {/* ── AI by Profession ── */}
-            <div className="relative" onMouseEnter={profession.onEnter} onMouseLeave={profession.onLeave}>
-              <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap font-medium">
-                AI by Profession
-                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-bold">New</span>
-                {chevron(profession.open)}
-              </button>
-              {profession.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("By Profession")}
-                  <Link href="/for/lawyers"         className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">⚖️ Lawyers</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Contract drafting, case law research</div>
-                  </Link>
-                  <Link href="/for/doctors"         className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🩺 Doctors</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Clinical notes, medical transcription</div>
-                  </Link>
-                  <Link href="/for/teachers"        className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">📚 Teachers & Educators</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Lesson plans, grading, student feedback</div>
-                  </Link>
-                  <Link href="/for/developers"      className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">💻 Developers</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">AI coding, code review, debugging</div>
-                  </Link>
-                  <Link href="/for/marketers"       className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">📣 Marketers</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Campaigns, copy, social media</div>
-                  </Link>
-                  <Link href="/for/designers"       className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🎨 Designers</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Image generation, design tools</div>
-                  </Link>
-                  <Link href="/for/writers"         className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">✍️ Writers & Journalists</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Drafting, research, editing</div>
-                  </Link>
-                  <Link href="/for/students"        className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🎓 Students</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Research, essay writing, study aids</div>
-                  </Link>
-                  <Link href="/for/sales-teams"     className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🎯 Sales Teams</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">CRM, outreach, call intelligence</div>
-                  </Link>
-                  <Link href="/for/hr-teams"        className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🤝 HR Teams</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Recruiting, onboarding, policy writing</div>
-                  </Link>
-                  {divider}
-                  <Link href="/for/accountants"     className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">📊 Accountants & Finance</div>
-                  </Link>
-                  <Link href="/for/real-estate"     className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🏠 Real Estate Agents</div>
-                  </Link>
-                  <Link href="/for/content-creators" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🎬 Content Creators</div>
-                  </Link>
-                  <Link href="/for/small-business"  className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🏪 Small Business Owners</div>
-                  </Link>
-                  <Link href="/for/recruiters"      className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground">🔍 Recruiters</div>
-                  </Link>
-                  {divider}
-                  <Link href="/for" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-primary">See all 17 professions →</div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* ── Compare AI ── */}
+            {/* ── Compare ── */}
             <div className="relative" onMouseEnter={compare.onEnter} onMouseLeave={compare.onLeave}>
-              {navBtn("Compare AI", compare.open)}
+              {navBtn("Compare", compare.open)}
               {compare.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("Discover")}
-                  <Link href="/search" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Tool Search <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Search and compare any 2–5 AI tools side by side</div>
-                  </Link>
-                  <Link href="/for" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">AI by Profession <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">New</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best tools for lawyers, doctors, teachers & 12+ more</div>
-                  </Link>
-                  <Link href="/categories" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Category <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Browse all AI comparison categories</div>
-                  </Link>
-                  <Link href="/domains" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Domain <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Healthcare, finance, legal, education & more</div>
-                  </Link>
-                  <Link href="/countries" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Country <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">AI availability & compliance by region</div>
-                  </Link>
-                  <Link href="/features" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">By Feature <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Find AI tools by specific capability</div>
-                  </Link>
-                  {divider}
-                  {sectionLabel("Analyze")}
-                  <Link href="/research/integrations" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Integration Graphs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Which AI tools plug into your workflow</div>
-                  </Link>
-                  <Link href="/research/compliance" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Security &amp; Compliance <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">SOC 2, HIPAA, GDPR, on-prem comparison</div>
-                  </Link>
-                  <Link href="/research/cost-per-task" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💸 Cost-Per-Task Benchmarks <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Real cost to write a blog post, debug code & more</div>
-                  </Link>
-                  {divider}
-                  {sectionLabel("Guides")}
-                  <Link href="/research/playbooks" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📖 Use-Case Playbooks <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best AI for Students, Coding, Marketing & more</div>
-                  </Link>
-                  <Link href="/research/model-tracker" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📡 Model Update Tracker <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Every release, price change & deprecation</div>
-                  </Link>
+                <div style={{ width: 720 }} className="absolute top-full left-0 mt-2 rounded-lg border border-border bg-background shadow-lg z-50 grid grid-cols-3 divide-x divide-border">
+                  <div className="py-2 min-w-0">
+                    {colHeader("Discover & Analyze")}
+                    {item("/categories",                "By Category",          freeBadge)}
+                    {item("/domains",                   "By Domain",            freeBadge)}
+                    {item("/countries",                 "By Country",           freeBadge)}
+                    {item("/features",                  "By Feature",           freeBadge)}
+                    {item("/research/integrations",     "Integration Graphs",   freeBadge)}
+                    {item("/research/compliance",       "Security & Compliance",freeBadge)}
+                    {item("/research/cost-per-task",    "Cost-Per-Task",        freeBadge)}
+                    {item("/research/playbooks",        "Use-Case Playbooks",   freeBadge)}
+                    {item("/research/model-tracker",    "Model Update Tracker", freeBadge)}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("Head-to-Head (VS)")}
+                    {subHeader("AI Models")}
+                    {item("/vs/chatgpt-vs-claude",       "ChatGPT vs Claude")}
+                    {item("/vs/chatgpt-vs-gemini",       "ChatGPT vs Gemini")}
+                    {item("/vs/claude-vs-gemini",        "Claude vs Gemini")}
+                    {item("/vs/deepseek-vs-chatgpt",     "DeepSeek vs ChatGPT")}
+                    {subHeader("Coding Tools")}
+                    {item("/vs/copilot-vs-cursor",       "Copilot vs Cursor")}
+                    {item("/vs/cursor-vs-windsurf",      "Cursor vs Windsurf")}
+                    {item("/vs/claude-code-vs-copilot",  "Claude Code vs Copilot")}
+                    {subHeader("Image & Video")}
+                    {item("/vs/midjourney-vs-dalle",     "Midjourney vs DALL-E 3")}
+                    {item("/vs/sora-vs-runway",          "Sora vs Runway Gen-3")}
+                    {seeAll("/vs",                       "See all 28 →")}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("Alternatives")}
+                    {item("/alternatives/chatgpt-alternatives",        "🤖 ChatGPT Alts")}
+                    {item("/alternatives/claude-alternatives",         "🧠 Claude Alts")}
+                    {item("/alternatives/gemini-alternatives",         "✨ Gemini Alts")}
+                    {item("/alternatives/github-copilot-alternatives", "💻 Copilot Alts")}
+                    {item("/alternatives/cursor-alternatives",         "⌨️ Cursor Alts")}
+                    {item("/alternatives/midjourney-alternatives",     "🎨 Midjourney Alts")}
+                    {item("/alternatives/elevenlabs-alternatives",     "🎙️ ElevenLabs Alts")}
+                    {item("/alternatives/perplexity-alternatives",     "🔬 Perplexity Alts")}
+                    {seeAll("/alternatives",                           "See all alternatives →")}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* ── Best For ── */}
-            <div className="relative" onMouseEnter={bestFor.onEnter} onMouseLeave={bestFor.onLeave}>
-              {navBtn("Best For", bestFor.open)}
-              {bestFor.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("Top Picks by Use Case")}
-                  <Link href="/best/coding" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💻 Best for Coding <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Claude vs Copilot vs Cursor — top 3 picks</div>
-                  </Link>
-                  <Link href="/best/writing" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">✍️ Best for Writing <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Top AI writing & content creation tools</div>
-                  </Link>
-                  <Link href="/best/marketing" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📣 Best for Marketing <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best AI for campaigns, copy & social media</div>
-                  </Link>
-                  <Link href="/best/video-generation" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎬 Best for Video Generation <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Sora vs Runway vs Pika compared</div>
-                  </Link>
-                  <Link href="/best/startups" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🚀 Best for Startups <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Cost-efficient AI stack for small teams</div>
-                  </Link>
-                  <Link href="/best/business" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🏢 Best for Business <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Microsoft Copilot vs ChatGPT Team vs Make</div>
-                  </Link>
-                  <Link href="/best/image-generation" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎨 Best for Image Generation <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Midjourney vs DALL-E 3 vs Stable Diffusion</div>
-                  </Link>
-                  <Link href="/best/voice-cloning" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎙️ Best for Voice Cloning <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">ElevenLabs vs Murf vs Play.ht</div>
-                  </Link>
-                  {divider}
-                  <Link href="/best" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-primary">See all 22 use cases →</div>
-                  </Link>
+            {/* ── For You ── */}
+            <div className="relative" onMouseEnter={forYou.onEnter} onMouseLeave={forYou.onLeave}>
+              {navBtn("For You", forYou.open)}
+              {forYou.open && (
+                <div style={{ width: 520 }} className="absolute top-full left-0 mt-2 rounded-lg border border-border bg-background shadow-lg z-50 grid grid-cols-2 divide-x divide-border">
+                  <div className="py-2 min-w-0">
+                    {colHeader("By Profession")}
+                    {item("/for/lawyers",          "⚖️ Lawyers")}
+                    {item("/for/doctors",          "🩺 Doctors")}
+                    {item("/for/teachers",         "📚 Teachers")}
+                    {item("/for/developers",       "💻 Developers")}
+                    {item("/for/marketers",        "📣 Marketers")}
+                    {item("/for/designers",        "🎨 Designers")}
+                    {item("/for/writers",          "✍️ Writers")}
+                    {item("/for/students",         "🎓 Students")}
+                    {item("/for/sales-teams",      "🎯 Sales Teams")}
+                    {item("/for/hr-teams",         "🤝 HR Teams")}
+                    {item("/for/accountants",      "📊 Accountants")}
+                    {item("/for/real-estate",      "🏠 Real Estate")}
+                    {item("/for/content-creators", "🎬 Content Creators")}
+                    {item("/for/small-business",   "🏪 Small Business")}
+                    {item("/for/recruiters",       "🔍 Recruiters")}
+                    {seeAll("/for",                "See all 17 →")}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("By Use Case")}
+                    {item("/best/coding",            "💻 Coding")}
+                    {item("/best/writing",           "✍️ Writing")}
+                    {item("/best/marketing",         "📣 Marketing")}
+                    {item("/best/video-generation",  "🎬 Video Generation")}
+                    {item("/best/startups",          "🚀 Startups")}
+                    {item("/best/business",          "🏢 Business")}
+                    {item("/best/image-generation",  "🎨 Image Generation")}
+                    {item("/best/voice-cloning",     "🎙️ Voice Cloning")}
+                    {item("/best/social-media",      "📱 Social Media")}
+                    {item("/best/students",          "🎓 Students")}
+                    {seeAll("/best",                 "See all 22 →")}
+                  </div>
                 </div>
               )}
             </div>
@@ -286,268 +200,78 @@ export default function Header() {
             <div className="relative" onMouseEnter={rankings.onEnter} onMouseLeave={rankings.onLeave}>
               {navBtn("Rankings", rankings.open)}
               {rankings.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("By Category")}
-                  <Link href="/rankings" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🏆 Overall Rankings <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">All tools scored across 4 dimensions</div>
-                  </Link>
-                  <Link href="/research/llm-leaderboard" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📊 LLM Leaderboard <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Live benchmark scores across all models</div>
-                  </Link>
-                  <Link href="/rankings?category=LLM" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🤖 Best LLMs <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">ChatGPT, Claude, Gemini & more ranked</div>
-                  </Link>
-                  <Link href="/rankings?category=Coding" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💻 Best Coding Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Cursor, Copilot, Claude Code ranked</div>
-                  </Link>
-                  <Link href="/rankings?category=Image" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎨 Best Image Generators <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Midjourney, DALL-E 3, Stable Diffusion</div>
-                  </Link>
-                  <Link href="/rankings?category=Audio" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎙️ Best Audio Tools <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">ElevenLabs, Suno & voice AI ranked</div>
-                  </Link>
-                  <Link href="/rankings?category=Cloud" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">☁️ Best Cloud AI <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">AWS, Azure & GCP AI services ranked</div>
-                  </Link>
+                <div className="absolute top-full left-0 mt-2 w-72 rounded-lg border border-border bg-background shadow-lg py-2 z-50">
+                  {item("/rankings",                  "🏆 Overall Rankings",     freeBadge)}
+                  {item("/research/llm-leaderboard",  "📊 LLM Leaderboard",      freeBadge)}
+                  {item("/rankings?category=LLM",     "🤖 Best LLMs",            freeBadge)}
+                  {item("/rankings?category=Coding",  "💻 Best Coding Tools",    freeBadge)}
+                  {item("/rankings?category=Image",   "🎨 Best Image Generators",freeBadge)}
+                  {item("/rankings?category=Audio",   "🎙️ Best Audio Tools",     freeBadge)}
+                  {item("/rankings?category=Cloud",   "☁️ Best Cloud AI",        freeBadge)}
                 </div>
               )}
             </div>
 
-            {/* ── Alternatives ── */}
-            <div className="relative" onMouseEnter={alternatives.onEnter} onMouseLeave={alternatives.onLeave}>
-              {navBtn("Alternatives", alternatives.open)}
-              {alternatives.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("By Tool")}
-                  <Link href="/alternatives/chatgpt-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🤖 ChatGPT Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Claude, Gemini, Perplexity & more</div>
-                  </Link>
-                  <Link href="/alternatives/claude-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🧠 Claude Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best alternatives to Claude AI</div>
-                  </Link>
-                  <Link href="/alternatives/gemini-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">✨ Gemini Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best alternatives to Google Gemini</div>
-                  </Link>
-                  <Link href="/alternatives/github-copilot-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💻 GitHub Copilot Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Cursor, Windsurf, Claude Code & more</div>
-                  </Link>
-                  <Link href="/alternatives/cursor-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">⌨️ Cursor Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best AI coding tools vs Cursor</div>
-                  </Link>
-                  <Link href="/alternatives/midjourney-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎨 Midjourney Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">DALL-E 3, Stable Diffusion & more</div>
-                  </Link>
-                  <Link href="/alternatives/elevenlabs-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🎙️ ElevenLabs Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Murf, Play.ht, OpenAI TTS & more</div>
-                  </Link>
-                  <Link href="/alternatives/perplexity-alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔬 Perplexity Alternatives <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Best AI search engines vs Perplexity</div>
-                  </Link>
-                  {divider}
-                  <Link href="/alternatives" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-primary">See all alternatives →</div>
-                  </Link>
+            {/* ── Tools ── */}
+            <div className="relative" onMouseEnter={tools.onEnter} onMouseLeave={tools.onLeave}>
+              {navBtn("Tools", tools.open)}
+              {tools.open && (
+                <div style={{ width: 720 }} className="absolute top-full right-0 mt-2 rounded-lg border border-border bg-background shadow-lg z-50 grid grid-cols-3 divide-x divide-border">
+                  <div className="py-2 min-w-0">
+                    {colHeader("Discover")}
+                    {item("/search",          "🔍 Tool Search",   newBadge)}
+                    {item("/research/finder", "🎯 AI Tool Finder",premiumBadge)}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("Live")}
+                    {item("/research/compare",        "Compare Models Live",    premiumBadge)}
+                    {item("/research/benchmark",      "Real-Time Benchmarking", premiumBadge)}
+                    {item("/research/prompt-battle",  "⚔️ Prompt Battle",       premiumBadge)}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("Business")}
+                    {item("/research/roi-calculator",   "💰 ROI Calculator",      premiumBadge)}
+                    {item("/research/workflow-builder", "🔧 Workflow Builder",    premiumBadge)}
+                    {item("/research/procurement",      "📋 Procurement",         premiumBadge)}
+                    {item("/research/ai-stack",         "🧩 Your AI Stack",       premiumBadge)}
+                    {item("/research/migration",        "🔄 Migration",           premiumBadge)}
+                    {item("/research/data-governance",  "🔒 Data Governance",     premiumBadge)}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* ── VS ── */}
-            <div className="relative" onMouseEnter={vs.onEnter} onMouseLeave={vs.onLeave}>
-              {navBtn("VS", vs.open)}
-              {vs.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("🤖 AI Models")}
-                  <Link href="/vs/chatgpt-vs-claude" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">ChatGPT vs Claude <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Claude Opus 4</div>
-                  </Link>
-                  <Link href="/vs/chatgpt-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">ChatGPT vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">GPT-4o vs Gemini 2.5 Pro</div>
-                  </Link>
-                  <Link href="/vs/claude-vs-gemini" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Claude vs Gemini <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  <Link href="/vs/deepseek-vs-chatgpt" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">DeepSeek vs ChatGPT <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  {divider}
-                  {sectionLabel("💻 Coding Tools")}
-                  <Link href="/vs/copilot-vs-cursor" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Copilot vs Cursor <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  <Link href="/vs/cursor-vs-windsurf" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Cursor vs Windsurf <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  <Link href="/vs/claude-code-vs-copilot" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Claude Code vs Copilot <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  {divider}
-                  {sectionLabel("🎨 Image & 🎬 Video")}
-                  <Link href="/vs/midjourney-vs-dalle" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Midjourney vs DALL-E 3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  <Link href="/vs/sora-vs-runway" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Sora vs Runway Gen-3 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  {divider}
-                  <Link href="/vs" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-primary">See all 28 comparisons →</div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* ── Live Tools ── */}
-            <div className="relative" onMouseEnter={live.onEnter} onMouseLeave={live.onLeave}>
-              {navBtn("Live Tools", live.open)}
-              {live.open && (
-                <div className={dropdownClass}>
-                  <Link href="/research/compare" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Compare AI Models Live <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Run a prompt across ChatGPT, Claude & Gemini</div>
-                  </Link>
-                  <Link href="/research/benchmark" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Real-Time Benchmarking <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Speed, cost, tokens & performance charts</div>
-                  </Link>
-                  <Link href="/research/finder" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">AI Tool Finder <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Answer 6 questions, get your perfect AI stack</div>
-                  </Link>
-                  <Link href="/research/prompt-battle" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">⚔️ Prompt Battle <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">6 models, one prompt, instant comparison</div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* ── Business Tools ── */}
-            <div className="relative" onMouseEnter={business.onEnter} onMouseLeave={business.onLeave}>
-              {navBtn("Business Tools", business.open)}
-              {business.open && (
-                <div className={dropdownClass}>
-                  <Link href="/research/roi-calculator" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💰 AI ROI Calculator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Time saved, cost saved, payback period</div>
-                  </Link>
-                  <Link href="/research/workflow-builder" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔧 AI Workflow Builder <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Build AI pipelines with drag & drop</div>
-                  </Link>
-                  <Link href="/research/procurement" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📋 Procurement Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Generate RFPs, compare vendors, export checklists</div>
-                  </Link>
-                  <Link href="/research/ai-stack" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🧩 Your AI Stack <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Personalized tool stack by role & budget</div>
-                  </Link>
-                  <Link href="/research/migration" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔄 Migration Assistant <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Switch models — cost diff, effort, code snippets</div>
-                  </Link>
-                  <Link href="/research/data-governance" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🔒 Data Governance Simulator <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/10 text-violet-600 border border-violet-500/20 shrink-0">Premium</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Toggle region, PII & compliance — see who passes</div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* ── Market Intelligence ── */}
-            <div className="relative" onMouseEnter={market.onEnter} onMouseLeave={market.onLeave}>
-              {navBtn("Market Intelligence", market.open)}
-              {market.open && (
-                <div className={dropdownClass}>
-                  <Link href="/research/market-share" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📊 Market Share Dashboard <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Consumer, enterprise & developer usage trends</div>
-                  </Link>
-                  <Link href="/research/pricing-index" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">💲 AI Pricing Index <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Token prices, subscriptions & recent changes</div>
-                  </Link>
-                  <Link href="/research/vendor-risk" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🛡️ Vendor Risk Score <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Funding, compliance & outage risk per vendor</div>
-                  </Link>
-                  <Link href="/research/dependency-graph" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🕸️ Dependency Graph <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Which apps rely on which models & infra</div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* ── Company ── */}
-            <div className="relative" onMouseEnter={company.onEnter} onMouseLeave={company.onLeave}>
-              {navBtn("Company", company.open)}
-              {company.open && (
-                <div className={dropdownClass}>
-                  {sectionLabel("Company")}
-                  <Link href="/about"   className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">About Us <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  <Link href="/contact" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">Contact Us <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                  </Link>
-                  <Link href="/press" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📰 Press & Media Kit <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Logos, stats & media contact</div>
-                  </Link>
-                  <Link href="/submit" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">➕ Submit Your AI Tool <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Get listed on We Compare AI</div>
-                  </Link>
-                  {divider}
-                  {sectionLabel("Technical")}
-                  <Link href="/research/latency-heatmap" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🌍 Latency Heatmap <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Model speed by US, EU & Asia region</div>
-                  </Link>
-                  <Link href="/research/reasoning-tests" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">🧪 Reasoning Stress Tests <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Multi-step, code, long-context & tool-use scores</div>
-                  </Link>
-                  {divider}
-                  {sectionLabel("Content")}
-                  <Link href="/blog" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">✍️ Blog <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">AI news, guides & deep dives</div>
-                  </Link>
-                  <Link href="/research/ai-news" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📡 AI News Digest <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Weekly pricing & model release updates</div>
-                  </Link>
-                  <Link href="/newsletter" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📬 Newsletter <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Weekly digest every Thursday</div>
-                  </Link>
-                  <Link href="/directory" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📁 Directory <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">Browse all AI tools in one place</div>
-                  </Link>
-                  <Link href="/glossary" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
-                    <div className="font-medium text-foreground flex items-center justify-between gap-2">📖 Glossary <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">Free</span></div>
-                    <div className="text-xs text-muted-foreground mt-0.5">AI terms, concepts & definitions explained</div>
-                  </Link>
+            {/* ── Insights ── */}
+            <div className="relative" onMouseEnter={insights.onEnter} onMouseLeave={insights.onLeave}>
+              {navBtn("Insights", insights.open)}
+              {insights.open && (
+                <div style={{ width: 720 }} className="absolute top-full right-0 mt-2 rounded-lg border border-border bg-background shadow-lg z-50 grid grid-cols-3 divide-x divide-border">
+                  <div className="py-2 min-w-0">
+                    {colHeader("Market & Technical")}
+                    {subHeader("Market Intelligence")}
+                    {item("/research/market-share",     "📊 Market Share",      freeBadge)}
+                    {item("/research/pricing-index",    "💲 Pricing Index",     freeBadge)}
+                    {item("/research/vendor-risk",      "🛡️ Vendor Risk",       freeBadge)}
+                    {item("/research/dependency-graph", "🕸️ Dependency Graph",  freeBadge)}
+                    {subHeader("Technical")}
+                    {item("/research/latency-heatmap",  "🌍 Latency Heatmap",   freeBadge)}
+                    {item("/research/reasoning-tests",  "🧪 Reasoning Tests",   freeBadge)}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("Content")}
+                    {item("/blog",            "✍️ Blog",          freeBadge)}
+                    {item("/research/ai-news","📡 AI News Digest",freeBadge)}
+                    {item("/newsletter",      "📬 Newsletter",    freeBadge)}
+                    {item("/directory",       "📁 Directory",     freeBadge)}
+                    {item("/glossary",        "📖 Glossary",      freeBadge)}
+                  </div>
+                  <div className="py-2 min-w-0">
+                    {colHeader("Company")}
+                    {item("/about",   "About Us",            freeBadge)}
+                    {item("/contact", "Contact Us",          freeBadge)}
+                    {item("/press",   "📰 Press & Media Kit",freeBadge)}
+                    {item("/submit",  "➕ Submit Your Tool", freeBadge)}
+                  </div>
                 </div>
               )}
             </div>
@@ -556,7 +280,7 @@ export default function Header() {
           </nav>
 
           {/* Mobile: auth + hamburger */}
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             <AuthButton />
             <button
               type="button"
@@ -580,128 +304,137 @@ export default function Header() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-background px-4 py-3 space-y-1">
-          <Link href="/" onClick={closeMobile} className="block px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors">
-            Home
-          </Link>
+        <div className="lg:hidden border-t border-border bg-background px-4 py-3 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
 
-          <MobileLink href="/search" onClick={closeMobile}>
-            <span className="font-semibold text-foreground">Compare Tools</span>
-            <span className="ml-2 text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">New</span>
-          </MobileLink>
+          {/* Compare */}
+          <MobileAccordion label="Compare" open={mobileCompareOpen} onToggle={() => setMobileCompareOpen(v => !v)}>
+            <MobileSection label="Discover & Analyze" />
+            <MobileLink href="/categories"              onClick={closeMobile}>By Category</MobileLink>
+            <MobileLink href="/domains"                 onClick={closeMobile}>By Domain</MobileLink>
+            <MobileLink href="/countries"               onClick={closeMobile}>By Country</MobileLink>
+            <MobileLink href="/features"                onClick={closeMobile}>By Feature</MobileLink>
+            <MobileLink href="/research/integrations"   onClick={closeMobile}>Integration Graphs</MobileLink>
+            <MobileLink href="/research/compliance"     onClick={closeMobile}>Security &amp; Compliance</MobileLink>
+            <MobileLink href="/research/cost-per-task"  onClick={closeMobile}>💸 Cost-Per-Task</MobileLink>
+            <MobileLink href="/research/playbooks"      onClick={closeMobile}>📖 Use-Case Playbooks</MobileLink>
+            <MobileLink href="/research/model-tracker"  onClick={closeMobile}>📡 Model Update Tracker</MobileLink>
 
-          {/* Compare AI */}
-          <MobileAccordion label="Compare AI" open={mobileCompareOpen} onToggle={() => setMobileCompareOpen(v => !v)}>
-            <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Discover</p>
-            <MobileLink href="/search"      onClick={closeMobile}>🔍 Tool Search (New)</MobileLink>
-            <MobileLink href="/for"         onClick={closeMobile}>👤 AI by Profession (New)</MobileLink>
-            <MobileLink href="/categories"  onClick={closeMobile}>By Category</MobileLink>
-            <MobileLink href="/domains"     onClick={closeMobile}>By Domain</MobileLink>
-            <MobileLink href="/countries"   onClick={closeMobile}>By Country</MobileLink>
-            <MobileLink href="/features"    onClick={closeMobile}>By Feature</MobileLink>
-            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Analyze</p>
-            <MobileLink href="/research/integrations" onClick={closeMobile}>Integration Graphs</MobileLink>
-            <MobileLink href="/research/compliance"   onClick={closeMobile}>Security &amp; Compliance</MobileLink>
-            <MobileLink href="/research/cost-per-task" onClick={closeMobile}>💸 Cost-Per-Task Benchmarks</MobileLink>
-            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Guides</p>
-            <MobileLink href="/research/playbooks"     onClick={closeMobile}>📖 Use-Case Playbooks</MobileLink>
-            <MobileLink href="/research/model-tracker" onClick={closeMobile}>📡 Model Update Tracker</MobileLink>
-          </MobileAccordion>
-
-          {/* Rankings */}
-          <MobileAccordion label="Rankings" open={mobileRankingsOpen} onToggle={() => setMobileRankingsOpen(v => !v)}>
-            <MobileLink href="/rankings"                       onClick={closeMobile}>🏆 Overall Rankings</MobileLink>
-            <MobileLink href="/research/llm-leaderboard"       onClick={closeMobile}>📊 LLM Leaderboard</MobileLink>
-            <MobileLink href="/rankings?category=LLM"          onClick={closeMobile}>🤖 Best LLMs</MobileLink>
-            <MobileLink href="/rankings?category=Coding"  onClick={closeMobile}>💻 Best Coding Tools</MobileLink>
-            <MobileLink href="/rankings?category=Image"   onClick={closeMobile}>🎨 Best Image Generators</MobileLink>
-            <MobileLink href="/rankings?category=Audio"   onClick={closeMobile}>🎙️ Best Audio Tools</MobileLink>
-            <MobileLink href="/rankings?category=Cloud"   onClick={closeMobile}>☁️ Best Cloud AI</MobileLink>
-          </MobileAccordion>
-
-          {/* Alternatives */}
-          <MobileAccordion label="Alternatives" open={mobileAlternativesOpen} onToggle={() => setMobileAlternativesOpen(v => !v)}>
-            <MobileLink href="/alternatives/chatgpt-alternatives"       onClick={closeMobile}>🤖 ChatGPT Alternatives</MobileLink>
-            <MobileLink href="/alternatives/claude-alternatives"        onClick={closeMobile}>🧠 Claude Alternatives</MobileLink>
-            <MobileLink href="/alternatives/gemini-alternatives"        onClick={closeMobile}>✨ Gemini Alternatives</MobileLink>
-            <MobileLink href="/alternatives/github-copilot-alternatives" onClick={closeMobile}>💻 GitHub Copilot Alternatives</MobileLink>
-            <MobileLink href="/alternatives/cursor-alternatives"        onClick={closeMobile}>⌨️ Cursor Alternatives</MobileLink>
-            <MobileLink href="/alternatives/midjourney-alternatives"    onClick={closeMobile}>🎨 Midjourney Alternatives</MobileLink>
-            <MobileLink href="/alternatives/elevenlabs-alternatives"    onClick={closeMobile}>🎙️ ElevenLabs Alternatives</MobileLink>
-            <MobileLink href="/alternatives/perplexity-alternatives"    onClick={closeMobile}>🔬 Perplexity Alternatives</MobileLink>
-            <MobileLink href="/alternatives"                            onClick={closeMobile}>See all alternatives →</MobileLink>
-          </MobileAccordion>
-
-          {/* VS */}
-          <MobileAccordion label="VS Comparisons" open={mobileVsOpen} onToggle={() => setMobileVsOpen(v => !v)}>
-            <p className="px-3 pt-1 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">AI Models</p>
+            <MobileSection label="Head-to-Head (VS)" />
+            <MobileSubLabel>AI Models</MobileSubLabel>
             <MobileLink href="/vs/chatgpt-vs-claude"       onClick={closeMobile}>ChatGPT vs Claude</MobileLink>
             <MobileLink href="/vs/chatgpt-vs-gemini"       onClick={closeMobile}>ChatGPT vs Gemini</MobileLink>
             <MobileLink href="/vs/claude-vs-gemini"        onClick={closeMobile}>Claude vs Gemini</MobileLink>
             <MobileLink href="/vs/deepseek-vs-chatgpt"     onClick={closeMobile}>DeepSeek vs ChatGPT</MobileLink>
-            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Coding Tools</p>
+            <MobileSubLabel>Coding Tools</MobileSubLabel>
             <MobileLink href="/vs/copilot-vs-cursor"       onClick={closeMobile}>Copilot vs Cursor</MobileLink>
             <MobileLink href="/vs/cursor-vs-windsurf"      onClick={closeMobile}>Cursor vs Windsurf</MobileLink>
             <MobileLink href="/vs/claude-code-vs-copilot"  onClick={closeMobile}>Claude Code vs Copilot</MobileLink>
-            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Image & Video</p>
+            <MobileSubLabel>Image &amp; Video</MobileSubLabel>
             <MobileLink href="/vs/midjourney-vs-dalle"     onClick={closeMobile}>Midjourney vs DALL-E 3</MobileLink>
             <MobileLink href="/vs/sora-vs-runway"          onClick={closeMobile}>Sora vs Runway Gen-3</MobileLink>
             <MobileLink href="/vs"                         onClick={closeMobile}>See all 28 comparisons →</MobileLink>
+
+            <MobileSection label="Alternatives" />
+            <MobileLink href="/alternatives/chatgpt-alternatives"        onClick={closeMobile}>🤖 ChatGPT Alternatives</MobileLink>
+            <MobileLink href="/alternatives/claude-alternatives"         onClick={closeMobile}>🧠 Claude Alternatives</MobileLink>
+            <MobileLink href="/alternatives/gemini-alternatives"         onClick={closeMobile}>✨ Gemini Alternatives</MobileLink>
+            <MobileLink href="/alternatives/github-copilot-alternatives" onClick={closeMobile}>💻 GitHub Copilot Alternatives</MobileLink>
+            <MobileLink href="/alternatives/cursor-alternatives"         onClick={closeMobile}>⌨️ Cursor Alternatives</MobileLink>
+            <MobileLink href="/alternatives/midjourney-alternatives"     onClick={closeMobile}>🎨 Midjourney Alternatives</MobileLink>
+            <MobileLink href="/alternatives/elevenlabs-alternatives"     onClick={closeMobile}>🎙️ ElevenLabs Alternatives</MobileLink>
+            <MobileLink href="/alternatives/perplexity-alternatives"     onClick={closeMobile}>🔬 Perplexity Alternatives</MobileLink>
+            <MobileLink href="/alternatives"                             onClick={closeMobile}>See all alternatives →</MobileLink>
           </MobileAccordion>
 
-          {/* Best For */}
-          <MobileAccordion label="Best For" open={mobileBestForOpen} onToggle={() => setMobileBestForOpen(v => !v)}>
-            <MobileLink href="/best/coding"            onClick={closeMobile}>💻 Best for Coding</MobileLink>
-            <MobileLink href="/best/writing"           onClick={closeMobile}>✍️ Best for Writing</MobileLink>
-            <MobileLink href="/best/marketing"         onClick={closeMobile}>📣 Best for Marketing</MobileLink>
-            <MobileLink href="/best/video-generation"  onClick={closeMobile}>🎬 Best for Video Generation</MobileLink>
-            <MobileLink href="/best/startups"          onClick={closeMobile}>🚀 Best for Startups</MobileLink>
-            <MobileLink href="/best/business"          onClick={closeMobile}>🏢 Best for Business</MobileLink>
-            <MobileLink href="/best/image-generation"  onClick={closeMobile}>🎨 Best for Image Generation</MobileLink>
-            <MobileLink href="/best/voice-cloning"     onClick={closeMobile}>🎙️ Best for Voice Cloning</MobileLink>
-            <MobileLink href="/best/social-media"      onClick={closeMobile}>📱 Best for Social Media</MobileLink>
-            <MobileLink href="/best/students"          onClick={closeMobile}>🎓 Best for Students</MobileLink>
+          {/* For You */}
+          <MobileAccordion label="For You" open={mobileForYouOpen} onToggle={() => setMobileForYouOpen(v => !v)}>
+            <MobileSection label="By Profession" />
+            <MobileLink href="/for/lawyers"          onClick={closeMobile}>⚖️ Lawyers</MobileLink>
+            <MobileLink href="/for/doctors"          onClick={closeMobile}>🩺 Doctors</MobileLink>
+            <MobileLink href="/for/teachers"         onClick={closeMobile}>📚 Teachers</MobileLink>
+            <MobileLink href="/for/developers"       onClick={closeMobile}>💻 Developers</MobileLink>
+            <MobileLink href="/for/marketers"        onClick={closeMobile}>📣 Marketers</MobileLink>
+            <MobileLink href="/for/designers"        onClick={closeMobile}>🎨 Designers</MobileLink>
+            <MobileLink href="/for/writers"          onClick={closeMobile}>✍️ Writers</MobileLink>
+            <MobileLink href="/for/students"         onClick={closeMobile}>🎓 Students</MobileLink>
+            <MobileLink href="/for/sales-teams"      onClick={closeMobile}>🎯 Sales Teams</MobileLink>
+            <MobileLink href="/for/hr-teams"         onClick={closeMobile}>🤝 HR Teams</MobileLink>
+            <MobileLink href="/for/accountants"      onClick={closeMobile}>📊 Accountants</MobileLink>
+            <MobileLink href="/for/real-estate"      onClick={closeMobile}>🏠 Real Estate</MobileLink>
+            <MobileLink href="/for/content-creators" onClick={closeMobile}>🎬 Content Creators</MobileLink>
+            <MobileLink href="/for/small-business"   onClick={closeMobile}>🏪 Small Business</MobileLink>
+            <MobileLink href="/for/recruiters"       onClick={closeMobile}>🔍 Recruiters</MobileLink>
+            <MobileLink href="/for"                  onClick={closeMobile}>See all 17 professions →</MobileLink>
+
+            <MobileSection label="By Use Case" />
+            <MobileLink href="/best/coding"            onClick={closeMobile}>💻 Coding</MobileLink>
+            <MobileLink href="/best/writing"           onClick={closeMobile}>✍️ Writing</MobileLink>
+            <MobileLink href="/best/marketing"         onClick={closeMobile}>📣 Marketing</MobileLink>
+            <MobileLink href="/best/video-generation"  onClick={closeMobile}>🎬 Video Generation</MobileLink>
+            <MobileLink href="/best/startups"          onClick={closeMobile}>🚀 Startups</MobileLink>
+            <MobileLink href="/best/business"          onClick={closeMobile}>🏢 Business</MobileLink>
+            <MobileLink href="/best/image-generation"  onClick={closeMobile}>🎨 Image Generation</MobileLink>
+            <MobileLink href="/best/voice-cloning"     onClick={closeMobile}>🎙️ Voice Cloning</MobileLink>
+            <MobileLink href="/best/social-media"      onClick={closeMobile}>📱 Social Media</MobileLink>
+            <MobileLink href="/best/students"          onClick={closeMobile}>🎓 Students</MobileLink>
             <MobileLink href="/best"                   onClick={closeMobile}>See all 22 use cases →</MobileLink>
           </MobileAccordion>
 
-          <MobileAccordion label="Live Tools" open={mobileLiveOpen} onToggle={() => setMobileLiveOpen(v => !v)}>
-            <MobileLink href="/research/compare"      onClick={closeMobile}>Compare AI Models Live</MobileLink>
-            <MobileLink href="/research/benchmark"    onClick={closeMobile}>Real-Time Benchmarking</MobileLink>
-            <MobileLink href="/research/finder"       onClick={closeMobile}>AI Tool Finder</MobileLink>
-            <MobileLink href="/research/prompt-battle" onClick={closeMobile}>⚔️ Prompt Battle</MobileLink>
+          {/* Rankings */}
+          <MobileAccordion label="Rankings" open={mobileRankingsOpen} onToggle={() => setMobileRankingsOpen(v => !v)}>
+            <MobileLink href="/rankings"                   onClick={closeMobile}>🏆 Overall Rankings</MobileLink>
+            <MobileLink href="/research/llm-leaderboard"   onClick={closeMobile}>📊 LLM Leaderboard</MobileLink>
+            <MobileLink href="/rankings?category=LLM"      onClick={closeMobile}>🤖 Best LLMs</MobileLink>
+            <MobileLink href="/rankings?category=Coding"   onClick={closeMobile}>💻 Best Coding Tools</MobileLink>
+            <MobileLink href="/rankings?category=Image"    onClick={closeMobile}>🎨 Best Image Generators</MobileLink>
+            <MobileLink href="/rankings?category=Audio"    onClick={closeMobile}>🎙️ Best Audio Tools</MobileLink>
+            <MobileLink href="/rankings?category=Cloud"    onClick={closeMobile}>☁️ Best Cloud AI</MobileLink>
           </MobileAccordion>
 
-          <MobileAccordion label="Business Tools" open={mobileBusinessOpen} onToggle={() => setMobileBusinessOpen(v => !v)}>
-            <MobileLink href="/research/roi-calculator"   onClick={closeMobile}>💰 AI ROI Calculator</MobileLink>
-            <MobileLink href="/research/workflow-builder" onClick={closeMobile}>🔧 AI Workflow Builder</MobileLink>
-            <MobileLink href="/research/procurement"      onClick={closeMobile}>📋 Procurement Assistant</MobileLink>
-            <MobileLink href="/research/ai-stack"         onClick={closeMobile}>🧩 Your AI Stack</MobileLink>
-            <MobileLink href="/research/migration"        onClick={closeMobile}>🔄 Migration Assistant</MobileLink>
-            <MobileLink href="/research/data-governance"  onClick={closeMobile}>🔒 Data Governance Simulator</MobileLink>
+          {/* Tools */}
+          <MobileAccordion label="Tools" open={mobileToolsOpen} onToggle={() => setMobileToolsOpen(v => !v)}>
+            <MobileSection label="Discover" />
+            <MobileLink href="/search"                  onClick={closeMobile}>🔍 Tool Search (New)</MobileLink>
+            <MobileLink href="/research/finder"         onClick={closeMobile}>🎯 AI Tool Finder</MobileLink>
+
+            <MobileSection label="Live" />
+            <MobileLink href="/research/compare"        onClick={closeMobile}>Compare AI Models Live</MobileLink>
+            <MobileLink href="/research/benchmark"      onClick={closeMobile}>Real-Time Benchmarking</MobileLink>
+            <MobileLink href="/research/prompt-battle"  onClick={closeMobile}>⚔️ Prompt Battle</MobileLink>
+
+            <MobileSection label="Business" />
+            <MobileLink href="/research/roi-calculator"    onClick={closeMobile}>💰 ROI Calculator</MobileLink>
+            <MobileLink href="/research/workflow-builder"  onClick={closeMobile}>🔧 Workflow Builder</MobileLink>
+            <MobileLink href="/research/procurement"       onClick={closeMobile}>📋 Procurement Assistant</MobileLink>
+            <MobileLink href="/research/ai-stack"          onClick={closeMobile}>🧩 Your AI Stack</MobileLink>
+            <MobileLink href="/research/migration"         onClick={closeMobile}>🔄 Migration Assistant</MobileLink>
+            <MobileLink href="/research/data-governance"   onClick={closeMobile}>🔒 Data Governance Simulator</MobileLink>
           </MobileAccordion>
 
-          <MobileAccordion label="Market Intelligence" open={mobileMarketOpen} onToggle={() => setMobileMarketOpen(v => !v)}>
+          {/* Insights */}
+          <MobileAccordion label="Insights" open={mobileInsightsOpen} onToggle={() => setMobileInsightsOpen(v => !v)}>
+            <MobileSection label="Market Intelligence" />
             <MobileLink href="/research/market-share"     onClick={closeMobile}>📊 Market Share Dashboard</MobileLink>
             <MobileLink href="/research/pricing-index"    onClick={closeMobile}>💲 AI Pricing Index</MobileLink>
             <MobileLink href="/research/vendor-risk"      onClick={closeMobile}>🛡️ Vendor Risk Score</MobileLink>
             <MobileLink href="/research/dependency-graph" onClick={closeMobile}>🕸️ Dependency Graph</MobileLink>
-          </MobileAccordion>
 
-          {/* Company */}
-          <MobileAccordion label="Company" open={mobileCompanyOpen} onToggle={() => setMobileCompanyOpen(v => !v)}>
+            <MobileSection label="Technical" />
+            <MobileLink href="/research/latency-heatmap" onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
+            <MobileLink href="/research/reasoning-tests" onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
+
+            <MobileSection label="Content" />
+            <MobileLink href="/blog"             onClick={closeMobile}>✍️ Blog</MobileLink>
+            <MobileLink href="/research/ai-news" onClick={closeMobile}>📡 AI News Digest</MobileLink>
+            <MobileLink href="/newsletter"       onClick={closeMobile}>📬 Newsletter</MobileLink>
+            <MobileLink href="/directory"        onClick={closeMobile}>📁 Directory</MobileLink>
+            <MobileLink href="/glossary"         onClick={closeMobile}>📖 Glossary</MobileLink>
+
+            <MobileSection label="Company" />
             <MobileLink href="/about"   onClick={closeMobile}>About Us</MobileLink>
             <MobileLink href="/contact" onClick={closeMobile}>Contact Us</MobileLink>
-            <MobileLink href="/press"   onClick={closeMobile}>📰 Press & Media Kit</MobileLink>
+            <MobileLink href="/press"   onClick={closeMobile}>📰 Press &amp; Media Kit</MobileLink>
             <MobileLink href="/submit"  onClick={closeMobile}>➕ Submit Your AI Tool</MobileLink>
-            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Technical</p>
-            <MobileLink href="/research/latency-heatmap"  onClick={closeMobile}>🌍 Latency Heatmap</MobileLink>
-            <MobileLink href="/research/reasoning-tests"  onClick={closeMobile}>🧪 Reasoning Stress Tests</MobileLink>
-            <p className="px-3 pt-2 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Content</p>
-            <MobileLink href="/blog"                      onClick={closeMobile}>✍️ Blog</MobileLink>
-            <MobileLink href="/research/ai-news"          onClick={closeMobile}>📡 AI News Digest</MobileLink>
-            <MobileLink href="/newsletter"                onClick={closeMobile}>📬 Newsletter</MobileLink>
-            <MobileLink href="/directory"                 onClick={closeMobile}>📁 Directory</MobileLink>
-            <MobileLink href="/glossary"                  onClick={closeMobile}>📖 Glossary</MobileLink>
           </MobileAccordion>
         </div>
       )}
@@ -720,15 +453,27 @@ function MobileAccordion({ label, open, onToggle, children }: {
       <button
         type="button"
         onClick={onToggle}
-        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm font-semibold text-foreground hover:bg-muted transition-colors"
       >
         {label}
         <svg className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {open && <div className="pl-4 mt-1 space-y-1">{children}</div>}
+      {open && <div className="pl-2 mt-1 space-y-1 pb-2">{children}</div>}
     </div>
+  );
+}
+
+function MobileSection({ label }: { label: string }) {
+  return (
+    <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-primary">{label}</p>
+  );
+}
+
+function MobileSubLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{children}</p>
   );
 }
 
